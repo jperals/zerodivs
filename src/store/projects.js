@@ -10,12 +10,14 @@ const projects = {
     projects: state => state.projects
   },
   mutations: {
-    addNewProject (state) {
-      state.projects = state.projects.concat([{
-        id: uuid()
-      }]);
+    addNewProject(state) {
+      state.projects = state.projects.concat([
+        {
+          id: uuid()
+        }
+      ]);
     },
-    removeProject (state, project) {
+    removeProject(state, project) {
       const index = state.projects.findIndex(item => item === project);
       if (-1 < index) {
         state.projects.splice(index, 1);
@@ -26,7 +28,7 @@ const projects = {
   },
   actions: {
     addNewProject({ commit }) {
-      return commit("AddProject", project)
+      return commit("AddProject", project);
     },
     modifyProject({ commit }, { project, newProps }) {
       return commit("modifyProject", { project, newProps });
