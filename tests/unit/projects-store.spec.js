@@ -11,9 +11,10 @@ describe("Projects store", () => {
     store.commit("addNewProject");
     store.commit("addNewProject");
     store.commit("addNewProject");
-    const projects = [].concat(store.getters.projects);
+    const projects = store.getters.projects;
+    const projectsCopy = [...projects];
     store.commit("removeProject", projects[1]);
     expect(store.getters.projects.length).toBe(2);
-    expect(store.getters.projects).toStrictEqual([projects[0], projects[2]]);
+    expect(store.getters.projects).toStrictEqual([projectsCopy[0], projectsCopy[2]]);
   });
 });
