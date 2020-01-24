@@ -8,9 +8,9 @@ const store = new Vuex.Store(projectsStore);
 
 describe("Projects store", () => {
   it("remove a project", () => {
-    store.commit("addNewProject");
-    store.commit("addNewProject");
-    store.commit("addNewProject");
+    store.commit("createNewProject");
+    store.commit("createNewProject");
+    store.commit("createNewProject");
     const projects = store.getters.projects;
     const projectsCopy = [...projects];
     store.commit("removeProject", projects[1]);

@@ -10,7 +10,7 @@ const projects = {
     projects: state => state.projects
   },
   mutations: {
-    addNewProject(state) {
+    createNewProject(state) {
       state.projects = state.projects.concat([
         {
           id: uuid()
@@ -27,8 +27,8 @@ const projects = {
     }
   },
   actions: {
-    addNewProject({ commit }) {
-      return commit("AddProject", project);
+    createNewProject({ commit }) {
+      return commit("createNewProject");
     },
     modifyProject({ commit }, { project, newProps }) {
       return commit("modifyProject", { project, newProps });
