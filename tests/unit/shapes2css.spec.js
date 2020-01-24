@@ -90,10 +90,10 @@ describe("shapes2css", () => {
       }
     ];
     const expectedCss = `\
-background-image: radial-gradient(circle at bottom, transparent, transparent 15%, #e66465 15%, #9198e5 45%, transparent 45%, transparent),
-linear-gradient(230deg, transparent, transparent 15%, #e66465 15%, #e66465 65%, transparent 65%, transparent);
-background-position: 300px 700px, 300px 300px;
-background-size: 300px 300px, 200px 300px`;
+background-image: radial-gradient(circle at bottom, transparent, transparent 15%, #e66465 15%, #9198e5 45%, transparent 45%, transparent), linear-gradient(230deg, transparent, transparent 15%, #e66465 15%, #e66465 65%, transparent 65%, transparent),
+background-position: 700px 300px, 300px 300px,
+background-size: 300px 300px, 200px 300px
+`;
     const computedCss = shapes2css(shapes);
     expect(computedCss).toEqual(expectedCss);
   });
