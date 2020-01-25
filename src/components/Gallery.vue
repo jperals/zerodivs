@@ -24,6 +24,9 @@ export default {
     divs() {
       return store.getters.projects;
     }
+  },
+  mounted() {
+    store.dispatch("loadProjects");
   }
 };
 </script>
