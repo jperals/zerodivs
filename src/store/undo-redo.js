@@ -4,27 +4,15 @@ export default {
     snapshotIndex: null
   },
   getters: {
-    canUndo: state => {
-
-    },
-    canRedo: state => {
-
-    }
+    canUndo: state => 0 < state.snapshotIndex && 0 < state.snapshots.length,
+    canRedo: state => state.snapshotIndex < state.snapshots.length - 1
   },
   mutations: {
-    undo() {
-
-    },
-    redo() {
-
-    }
+    undo() {},
+    redo() {}
   },
   actions: {
-    undo() {
-
-    },
-    redo() {
-      
-    }
+    undo() {},
+    redo() {}
   }
-}
+};

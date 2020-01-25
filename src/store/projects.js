@@ -8,6 +8,9 @@ const projects = {
     projects: []
   },
   getters: {
+    currentProject: state => state.currentProject,
+    projectById: state => id =>
+      state.projects.find(project => project.id === id),
     projects: state => state.projects
   },
   mutations: {
@@ -26,6 +29,9 @@ const projects = {
         warn("Project to be removed not found");
       }
     },
+    setCurrentProject(state, project) {
+      state.currentProject = project;
+    },
     setProjects(state, projects) {
       state.projects = projects;
     }
@@ -35,8 +41,14 @@ const projects = {
       commit("createNewProject");
       return persistence.set("divs", getters.projects);
     },
+    loadProjectById({ commit, getters }, id) {
+      const project = getters.projectById(id);
+      return commit("setCurrentProject", project);
+    },
     loadProjects({ commit }) {
-      return persistence.get("divs").then(projects => commit("setProjects", projects || []));
+      return persistence
+        .get("divs")
+        .then(projects => commit("setProjects", projects || []));
     },
     modifyProject({ commit, getters }, { project, newProps }) {
       commit("modifyProject", { project, newProps });
@@ -45,6 +57,9 @@ const projects = {
     removeProject({ commit, getters }, project) {
       commit("removeProject", project);
       return persistence.set("divs", getters.projects);
+    },
+    setCurrentProject({ commit }, project) {
+      return commit("setCurrentProject", project);
     }
   }
 };
