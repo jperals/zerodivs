@@ -1,9 +1,13 @@
 const ui = {
   state: {
     selectedLayer: "main",
-    selectedShape: null
+    selectedShape: null,
+    currentColor: "lightgray"
   },
   mutations: {
+    selectColor(state, color) {
+      state.currentColor = color;
+    },
     selectLayer(state, layerName) {
       state.selectedLayer = layerName;
     },
@@ -12,10 +16,14 @@ const ui = {
     }
   },
   getters: {
+    currentColor: state => state.currentColor,
     selectedLayer: state => state.selectedLayer,
     selectedShape: state => state.selectedShape
   },
   actions: {
+    selectColor({ commit }, color) {
+      commit("selectColor", color);
+    },
     selectLayer({ commit }, layerName) {
       commit("selectLayer", layerName);
     },

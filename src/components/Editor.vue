@@ -63,7 +63,12 @@ export default {
   top: 0;
   bottom: 0;
 }
-.layers {
+.layers,
+.canvas {
   left: 0;
+}
+.canvas,
+.shape-properties {
+  right: 0;
 }
 </style>

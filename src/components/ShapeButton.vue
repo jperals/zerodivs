@@ -1,17 +1,22 @@
 <template>
-  <ToolbarButton :style="style" :callback="callback" />
+  <ToolbarButton :style="style" :callback="addShape" />
 </template>
 
 <script>
 import ToolbarButton from "@/components/ToolbarButton";
 import { formatImage } from "@/shapes2css";
+import store from "@/store";
 export default {
   props: {
-    callback: Function,
     shape: Object
   },
   components: {
     ToolbarButton
+  },
+  methods: {
+    addShape() {
+      store.dispatch("setShapeToBeAdded", this.shape);
+    }
   },
   data() {
     return {

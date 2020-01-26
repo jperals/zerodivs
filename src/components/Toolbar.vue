@@ -9,7 +9,6 @@
         v-for="(shape, index) in buttonShapes"
         :key="index"
         :shape="shape"
-        :callback="addShape"
       />
     </section>
   </div>
@@ -36,9 +35,6 @@ export default {
     },
     redo() {
       store.dispatch("redo");
-    },
-    addShape(shape) {
-      console.log("TODO Add shape", shape.type);
     }
   }
 };
