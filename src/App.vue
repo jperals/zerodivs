@@ -16,6 +16,7 @@ export default {
 #app {
   --panel-bg-color: hsla(0, 0%, 90%, 0.5);
   --panel-border-color: hsl(0, 0%, 90%);
+  --selected-color: hsl(224, 100%, 67%);
 }
 html,
 body {

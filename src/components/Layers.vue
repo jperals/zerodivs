@@ -1,6 +1,10 @@
 <template>
   <ul class="layers">
-    <li class="main" v-on:click="selectLayer('main')">
+    <li
+      class="main"
+      :class="{ selected: isLayerSelected('main') }"
+      v-on:click="selectLayer('main')"
+    >
       <label>main</label>
       <ul class="main--layers">
         <li
@@ -14,17 +18,13 @@
     </li>
     <li
       class="pseudo before"
-      :class="{ active: isLayerActive('before') }"
+      :class="{ active: isLayerActive('before'), selected: isLayerSelected('before') }"
       v-on:click="selectLayer('before')"
     >
       <div class="layer--root-node">
         <label>:before</label>
         <span class="checkbox">
-          <input
-            type="checkbox"
-            :checked="activeLayers.before"
-            v-on:click="toggleLayer('before')"
-          />
+          <input type="checkbox" :checked="activeLayers.before" v-on:click.stop="toggleLayer('before')" />
         </span>
       </div>
       <ul class="before--layers" v-if="activeLayers.before">
@@ -39,13 +39,13 @@
     </li>
     <li
       class="pseudo after"
-      :class="{ active: isLayerActive('after') }"
+      :class="{ active: isLayerActive('after'), selected: isLayerSelected('after') }"
       v-on:click="selectLayer('after')"
     >
       <div class="layer--root-node">
         <label>:after</label>
         <span class="checkbox">
-          <input type="checkbox" :checked="activeLayers.after" v-on:click="toggleLayer('after')" />
+          <input type="checkbox" :checked="activeLayers.after" v-on:click.stop="toggleLayer('after')" />
         </span>
       </div>
       <ul class="after--layers" v-if="activeLayers.after">
@@ -77,14 +77,17 @@ export default {
     isLayerActive(layerName) {
       return store.getters.isLayerActive(layerName);
     },
+    isLayerSelected(layerName) {
+      return this.selectedLayer === layerName;
+    },
     isSelected(shape) {
       return store.getters.selectedShape === shape;
     },
     shapeLabel(shape) {
       return shape.type;
     },
-    selectLayer(shapeLabel) {
-      store.dispatch("selectLayer", shapeLabel);
+    selectLayer(layerName) {
+      this.selectedLayer = layerName;
     },
     toggleLayer(layerName) {
       store.dispatch("toggleLayer", layerName);
@@ -126,5 +129,9 @@ li li {
 .layer--root-node .checkbox {
   flex-grow: 1;
   text-align: right;
+}
+.layers > .selected {
+  background-color: var(--selected-color);
+  color: white;
 }
 </style>
