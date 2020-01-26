@@ -70,7 +70,7 @@ export default {
         before: false,
         after: false
       },
-      selectedLayer: null
+      selectedLayer: "main"
     };
   },
   methods: {
