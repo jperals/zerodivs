@@ -26,7 +26,7 @@ function formatImages(shapes) {
   return shapes.map(shape => formatImage(shape)).join(", ");
 }
 
-function formatImage(shape) {
+export function formatImage(shape) {
   return `${formatType(shape.type)}(${[
     shape.direction,
     formatStops(shape.stops)

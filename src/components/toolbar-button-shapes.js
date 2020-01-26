@@ -19,18 +19,18 @@ export default function toolbarButtonShapes(color) {
     },
     {
       type: "radial",
-      direction: "from center",
+      direction: "at center",
       stops: [
         {
           color
         },
         {
           color,
-          position: "42.3%"
+          position: "71%"
         },
         {
           color: "transparent",
-          position: "42.3%"
+          position: "71%"
         }
       ]
     }
