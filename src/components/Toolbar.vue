@@ -24,3 +24,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.toolbar {
+  padding: 0.25rem 1rem;
+  border-bottom: 1px solid var(--panel-border-color);
+}
+</style>

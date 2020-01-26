@@ -11,3 +11,22 @@ export default {
   components: { Nav }
 };
 </script>
+
+<style>
+#app {
+  --panel-bg-color: hsla(0, 0%, 90%, 0.5);
+  --panel-border-color: hsl(0, 0%, 90%);
+}
+html,
+body {
+  margin: 0;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+#app .editor {
+  flex-grow: 1;
+}
+</style>

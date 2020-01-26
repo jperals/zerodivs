@@ -2,9 +2,11 @@
   <div class="editor">
     <template v-if="project">
       <Toolbar />
-      <Canvas />
-      <Layers />
-      <ShapeProperties />
+      <div>
+        <Canvas />
+        <Layers />
+        <ShapeProperties />
+      </div>
     </template>
     <div v-else>Couldn't find this div. :-/</div>
   </div>
@@ -31,7 +33,11 @@ export default {
   },
   mounted() {
     const projectId = get(this, "$route.params.id");
-    store.dispatch("loadProjectById", projectId);
+    if (projectId === undefined) {
+      this.$router.history.push("/");
+      } else {
+      store.dispatch("loadProjectById", projectId);
+    }
   },
   computed: {
     project() {
@@ -40,3 +46,24 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.editor {
+  display: flex;
+  flex-direction: column;
+}
+.toolbar + div {
+  flex-grow: 1;
+  position: relative;
+}
+.layers,
+.canvas,
+.shape-properties {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.layers {
+  left: 0;
+}
+</style>

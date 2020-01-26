@@ -9,22 +9,28 @@ export default function toolbarButtonShapes(color) {
         },
         {
           color: "transparent",
-          position: "15%"
+          position: "50%"
         },
         {
           color,
-          position: "15%"
+          position: "50%"
+        }
+      ]
+    },
+    {
+      type: "radial",
+      direction: "from center",
+      stops: [
+        {
+          color
         },
         {
           color,
-          position: "65%"
+          position: "42.3%"
         },
         {
           color: "transparent",
-          position: "65%"
-        },
-        {
-          color: "transparent"
+          position: "42.3%"
         }
       ]
     }

@@ -41,9 +41,11 @@ const projects = {
       commit("createNewProject");
       return persistence.set("divs", getters.projects);
     },
-    loadProjectById({ commit, getters }, id) {
-      const project = getters.projectById(id);
-      return commit("setCurrentProject", project);
+    loadProjectById({ commit, dispatch, getters }, id) {
+      dispatch("loadProjects").then(() => {
+        const project = getters.projectById(id);
+        return commit("setCurrentProject", project);
+      });
     },
     loadProjects({ commit }) {
       return persistence
