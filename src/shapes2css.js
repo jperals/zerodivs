@@ -1,12 +1,12 @@
 export default function shapes2css(shapes, padding = "") {
   const reversed = [...shapes].reverse();
   return `\
-${padding}background-image: ${formatImages(reversed)},
-${padding}background-position: ${formatPositions(reversed)},
-${padding}background-size: ${formatSizes(reversed)}${
+${padding}background-image: ${formatImages(reversed)};
+${padding}background-position: ${formatPositions(reversed)};
+${padding}background-size: ${formatSizes(reversed)};${
     someRepeat(shapes)
-      ? `,reverted
-${padding}background-repeat: ${formatRepeats(shapes)}`
+      ? `
+${padding}background-repeat: ${formatRepeats(reversed)};`
       : ``
   }
 `;
