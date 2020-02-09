@@ -23,7 +23,7 @@ const shapes = {
       state.layers[layerName].shapes.push(shape);
     },
     setShapeToBeAdded(state, shape) {
-      state.shapeToBeAdded = shape;
+      state.shapeToBeAdded = deepCopy(shape);
     },
     toggleLayer(state, layerName) {
       state.layers[layerName].active = !state.layers[layerName].active;
@@ -68,10 +68,8 @@ const shapes = {
         typeof get(state, "shapeToBeAdded.width.value") === "number" &&
         typeof get(state, "shapeToBeAdded.height.value") === "number"
       ) {
-        console.log(state.shapeToBeAdded);
         shapes.push(state.shapeToBeAdded);
       }
-      console.log(shapes);
       return shapes;
     }
   },
@@ -84,7 +82,6 @@ const shapes = {
       commit("unsetShapeToBeAdded");
     },
     setShapeToBeAdded({ commit }, shape) {
-      console.log(shape);
       commit("setShapeToBeAdded", shape);
     },
     toggleLayer({ commit }, layerName) {
@@ -95,5 +92,9 @@ const shapes = {
     }
   }
 };
+
+function deepCopy(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
 
 export default shapes;

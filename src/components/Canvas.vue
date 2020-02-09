@@ -59,14 +59,13 @@ export default {
       if (!this.addingShape) {
         return;
       }
-      const rect = this.$refs.canvas.getBoundingClientRect().top;
+      const rect = this.$refs.canvas.getBoundingClientRect();
       this.canvasPosition = { x: rect.left, y: rect.top };
       this.initialPointerPosition = { x: event.x, y: event.y };
       this.initialNewShapePosition = {
         x: event.x - this.canvasPosition.x,
-        y: event - this.canvasPosition.y
+        y: event.y - this.canvasPosition.y
       };
-      //console.log(rect, this.initialNewShapePosition);
       store.dispatch("setShapeToBeAdded", {
         ...store.getters.shapeToBeAdded,
         width: {

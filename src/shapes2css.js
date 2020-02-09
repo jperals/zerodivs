@@ -1,6 +1,5 @@
 export default function shapes2css(shapes, padding = "") {
   const reversed = [...shapes].reverse();
-  console.log(shapes, reversed);
   if (!reversed || reversed.length < 1) {
     return ``;
   }
