@@ -1,4 +1,5 @@
 import { get } from "lodash";
+import uuid from "uuid/v1";
 
 const shapes = {
   state: {
@@ -20,7 +21,8 @@ const shapes = {
   },
   mutations: {
     addShape(state, { layerName, shape }) {
-      state.layers[layerName].shapes.push(shape);
+      const shapeWithId = {...shape, id: uuid()};
+      state.layers[layerName].shapes.push(shapeWithId);
     },
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
@@ -47,7 +49,7 @@ const shapes = {
       for (const layerName of ["main", "before", "active"]) {
         const isActive = getters.isLayerActive(layerName);
         if (isActive) {
-          shapes.concat(getters.layerShapes(layerName));
+          shapes = shapes.concat(getters.layerShapes(layerName));
         }
       }
       return shapes;

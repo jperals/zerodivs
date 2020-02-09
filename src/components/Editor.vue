@@ -3,7 +3,7 @@
     <template v-if="project">
       <Toolbar />
       <div>
-        <Canvas />
+        <Workspace />
         <Layers />
         <ShapeProperties />
       </div>
@@ -14,7 +14,7 @@
 
 <script>
 import { get } from "lodash";
-import Canvas from "@/components/Canvas";
+import Workspace from "@/components/Workspace";
 import Layers from "@/components/Layers";
 import ShapeProperties from "@/components/ShapeProperties";
 import Toolbar from "@/components/Toolbar";
@@ -26,7 +26,7 @@ export default {
     };
   },
   components: {
-    Canvas,
+    Workspace,
     Layers,
     ShapeProperties,
     Toolbar

@@ -1,7 +1,6 @@
 <template>
   <div
     class="canvas"
-    :class="{'adding-shape': addingShape}"
     ref="canvas"
     :style="computedStyle"
     v-on:mousemove="onDrag"
@@ -94,6 +93,10 @@ export default {
           shape: store.getters.shapeToBeAdded
         });
       }
+    },
+    onShapeClick(event) {
+      event.stopPropagation();
+      console.log("shape click", event);
     }
   },
   computed: {
@@ -109,7 +112,11 @@ export default {
 </script>
 
 <style scoped>
-.canvas.adding-shape {
-  cursor: crosshair;
+.canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 </style>
