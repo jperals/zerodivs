@@ -15,7 +15,8 @@ export default function toolbarButtonShapes(color) {
           color,
           position: "50%"
         }
-      ]
+      ],
+      repeat: "no-repeat"
     },
     {
       type: "radial",
@@ -32,7 +33,8 @@ export default function toolbarButtonShapes(color) {
           color: "transparent",
           position: "71%"
         }
-      ]
+      ],
+      repeat: "no-repeat"
     }
   ];
 }

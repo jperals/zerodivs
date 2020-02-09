@@ -1,14 +1,14 @@
 export default function shapes2css(shapes, padding = "") {
   const reversed = [...shapes].reverse();
+  console.log(shapes, reversed);
+  if (!reversed || reversed.length < 1) {
+    return ``;
+  }
   return `\
 ${padding}background-image: ${formatImages(reversed)};
 ${padding}background-position: ${formatPositions(reversed)};
-${padding}background-size: ${formatSizes(reversed)};${
-    someRepeat(shapes)
-      ? `
-${padding}background-repeat: ${formatRepeats(reversed)};`
-      : ``
-  }
+${padding}background-size: ${formatSizes(reversed)};
+${padding}background-repeat: ${formatRepeats(reversed)};
 `;
 }
 
@@ -54,6 +54,9 @@ function formatSize(shape) {
 }
 
 function formatRepeats(shapes) {
+  if (!someRepeat(shapes)) {
+    return "no-repeat";
+  }
   return shapes
     .map(shape => (isRepeat(shape.repeat) ? shape.repeat : "no-repeat"))
     .join(", ");
