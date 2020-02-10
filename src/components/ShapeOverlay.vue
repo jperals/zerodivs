@@ -1,5 +1,10 @@
 <template>
-  <div class="overlay" :style="computedStyle" v-on:mousedown.stop="() => onMouseDown(shape, $event)" v-on:mouseup.stop="() => onMouseUp(shape, $event)" />
+  <div
+    class="overlay"
+    :style="computedStyle"
+    v-on:mousedown="$event => onMouseDown(shape, $event)"
+    v-on:mouseup="$event => onMouseUp(shape, $event)"
+  />
 </template>
 
 <script>
@@ -19,7 +24,7 @@ export default {
       };
     }
   }
-}
+};
 </script>
 
 <style scoped>
