@@ -35,7 +35,7 @@ export default {
     const projectId = get(this, "$route.params.id");
     if (projectId === undefined) {
       this.$router.history.push("/");
-      } else {
+    } else {
       store.dispatch("loadProjectById", projectId);
     }
   },

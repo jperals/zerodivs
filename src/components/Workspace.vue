@@ -2,7 +2,7 @@
   <div
     class="workspace"
     ref="workspace"
-    :class="{'adding-shape': addingShape}"
+    :class="{ 'adding-shape': addingShape }"
     v-on:mousemove="onDrag"
     v-on:mousedown="onMouseDown"
     v-on:mouseup="onMouseUp"
