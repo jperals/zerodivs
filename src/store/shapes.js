@@ -21,8 +21,7 @@ const shapes = {
   },
   mutations: {
     addShape(state, { layerName, shape }) {
-      const shapeWithId = { ...shape, id: uuid() };
-      state.layers[layerName].shapes.push(shapeWithId);
+      state.layers[layerName].shapes.push(shape);
     },
     moveShape(state, { shape, left, top }) {
       if (typeof left === "object" && left.units === shape.left.units) {
@@ -89,8 +88,10 @@ const shapes = {
       { commit, getters },
       { layerName = getters.selectedLayer, shape = getters.shapeToBeAdded }
     ) {
-      commit("addShape", { layerName, shape });
+      const shapeWithId = { ...shape, id: uuid() };
+      commit("addShape", { layerName, shape: shapeWithId });
       commit("unsetShapeToBeAdded");
+      return shapeWithId;
     },
     moveShape({ commit }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });

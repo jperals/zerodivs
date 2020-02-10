@@ -78,8 +78,6 @@ export default {
         });
       }
     },
-    onDragEnd() {},
-    onDragStart() {},
     onMouseDown() {
       if (this.addingShape) {
         const rect = this.$refs.workspace.getBoundingClientRect();
@@ -113,11 +111,17 @@ export default {
     },
     onMouseUp() {
       if (this.addingShape) {
-        store.dispatch("addShape", {
-          layerName: store.getters.selectedLayer,
-          shape: store.getters.shapeToBeAdded
-        });
+        store
+          .dispatch("addShape", {
+            layerName: store.getters.selectedLayer,
+            shape: store.getters.shapeToBeAdded
+          })
+          .then(newShape => {
+            store.dispatch("selectShape", newShape);
+          });
         this.shapeBeingAdded = null;
+      } else {
+        store.dispatch("unselectShape");
       }
     },
     onShapeMouseDown(shape, event) {
@@ -130,8 +134,12 @@ export default {
       this.workspacePosition = { x: rect.left, y: rect.top };
       this.initialPointerPosition = { x: event.x, y: event.y };
       this.initialShapePosition = { left: shape.left, top: shape.top };
+      store.dispatch("selectShape", shape);
     },
     onShapeMouseUp(shape, event) {
+      if (this.addingShape) {
+        return;
+      }
       event.stopPropagation();
       this.shapeBeingMoved = null;
     }

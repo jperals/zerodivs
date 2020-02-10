@@ -29,6 +29,9 @@ const ui = {
     },
     selectShape({ commit }, shape) {
       commit("selectShape", shape);
+    },
+    unselectShape({ commit }) {
+      commit("selectShape", null);
     }
   }
 };
