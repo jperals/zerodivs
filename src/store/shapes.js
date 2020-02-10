@@ -24,6 +24,15 @@ const shapes = {
       const shapeWithId = { ...shape, id: uuid() };
       state.layers[layerName].shapes.push(shapeWithId);
     },
+    moveShape(state, { shape, left, top }) {
+      if (typeof left === "object" && left.units === shape.left.units) {
+        shape.left = left;
+      }
+      if (typeof top === "object" && top.units === shape.top.units) {
+        shape.top = top;
+      }
+      state.layers = { ...state.layers };
+    },
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
     },
@@ -82,6 +91,9 @@ const shapes = {
     ) {
       commit("addShape", { layerName, shape });
       commit("unsetShapeToBeAdded");
+    },
+    moveShape({ commit }, { shape, left, top }) {
+      commit("moveShape", { shape, left, top });
     },
     setShapeToBeAdded({ commit }, shape) {
       commit("setShapeToBeAdded", shape);

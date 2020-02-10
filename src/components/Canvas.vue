@@ -54,7 +54,6 @@ export default {
       console.log(event);
     },
     onMouseDown(event) {
-      console.log(event);
       if (!this.addingShape) {
         return;
       }
@@ -93,10 +92,6 @@ export default {
           shape: store.getters.shapeToBeAdded
         });
       }
-    },
-    onShapeClick(event) {
-      event.stopPropagation();
-      console.log("shape click", event);
     }
   },
   computed: {

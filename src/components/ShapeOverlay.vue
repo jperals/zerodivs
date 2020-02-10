@@ -1,11 +1,12 @@
 <template>
-  <div class="overlay" :style="computedStyle" v-on:click.stop="onClick" />
+  <div class="overlay" :style="computedStyle" v-on:mousedown.stop="() => onMouseDown(shape, $event)" v-on:mouseup.stop="() => onMouseUp(shape, $event)" />
 </template>
 
 <script>
 export default {
   props: {
-    onClick: Function,
+    onMouseDown: Function,
+    onMouseUp: Function,
     shape: Object
   },
   computed: {
