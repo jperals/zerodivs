@@ -21,7 +21,7 @@ const shapes = {
   },
   mutations: {
     addShape(state, { layerName, shape }) {
-      const shapeWithId = {...shape, id: uuid()};
+      const shapeWithId = { ...shape, id: uuid() };
       state.layers[layerName].shapes.push(shapeWithId);
     },
     setShapeToBeAdded(state, shape) {
@@ -96,7 +96,7 @@ const shapes = {
 };
 
 function deepCopy(obj) {
-  return JSON.parse(JSON.stringify(obj))
+  return JSON.parse(JSON.stringify(obj));
 }
 
 export default shapes;
