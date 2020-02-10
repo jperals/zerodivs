@@ -10,7 +10,7 @@
         <li
           class="main--layer"
           :class="{ active: isSelected(shape) }"
-          v-for="shape in shapes.main"
+          v-for="shape in shapesFromLayer('main')"
           :key="shape.id"
           v-on:click="selectShape(shape)"
         >{{ shapeLabel(shape) }}</li>
@@ -31,7 +31,7 @@
         <li
           class="before--layer"
           :class="{ active: isSelected(shape) }"
-          v-for="shape in shapes.before"
+          v-for="shape in shapesFromLayer('before')"
           :key="shape.id"
           v-on:click="selectShape(shape)"
         >{{ shapeLabel(shape) }}</li>
@@ -52,7 +52,7 @@
         <li
           class="after--layer"
           :class="{ active: isSelected(shape) }"
-          v-for="shape in shapes.after"
+          v-for="shape in shapesFromLayer('after')"
           :key="shape.id"
           v-on:click="selectShape(shape)"
         >{{ shapeLabel(shape) }}</li>
@@ -69,8 +69,7 @@ export default {
       activeLayers: {
         before: false,
         after: false
-      },
-      selectedLayer: "main"
+      }
     };
   },
   methods: {
@@ -78,7 +77,7 @@ export default {
       return store.getters.isLayerActive(layerName);
     },
     isLayerSelected(layerName) {
-      return this.selectedLayer === layerName;
+      return store.getters.selectedLayer === layerName;
     },
     isSelected(shape) {
       return store.getters.selectedShape === shape;
@@ -87,7 +86,13 @@ export default {
       return shape.type;
     },
     selectLayer(layerName) {
-      this.selectedLayer = layerName;
+      store.dispatch("selectLayer", layerName);
+    },
+    selectShape(shape) {
+      store.dispatch("selectShape", shape);
+    },
+    shapesFromLayer(layerName) {
+      return store.getters.layerShapes(layerName);
     },
     toggleLayer(layerName) {
       store.dispatch("toggleLayer", layerName);

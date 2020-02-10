@@ -87,7 +87,7 @@ const shapes = {
   actions: {
     addShape(
       { commit, getters },
-      { layerName, shape = getters.shapeToBeAdded }
+      { layerName = getters.selectedLayer, shape = getters.shapeToBeAdded }
     ) {
       commit("addShape", { layerName, shape });
       commit("unsetShapeToBeAdded");
