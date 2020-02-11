@@ -15,6 +15,9 @@ describe("Projects store", () => {
     const projectsCopy = [...projects];
     store.commit("removeProject", projects[1]);
     expect(store.getters.projects.length).toBe(2);
-    expect(store.getters.projects).toStrictEqual([projectsCopy[0], projectsCopy[2]]);
+    expect(store.getters.projects).toStrictEqual([
+      projectsCopy[0],
+      projectsCopy[2]
+    ]);
   });
 });

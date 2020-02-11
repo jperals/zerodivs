@@ -5,16 +5,22 @@
     :style="computedStyle"
     v-on:mousedown="$event => onMouseDown(shape, $event)"
     v-on:mouseup="$event => onMouseUp(shape, $event)"
-  />
+  >
+    <ShapeResizeHandles v-if="isSelected" />
+  </div>
 </template>
 
 <script>
 import store from "@/store";
+import ShapeResizeHandles from "@/components/ShapeResizeHandles";
 export default {
   props: {
     onMouseDown: Function,
     onMouseUp: Function,
     shape: Object
+  },
+  components: {
+    ShapeResizeHandles
   },
   data() {
     return {
@@ -23,9 +29,12 @@ export default {
   },
   computed: {
     computedStyle() {
+      const left =
+        this.shape.left.value - this.borderWidth + this.shape.left.units;
+      const top =
+        this.shape.top.value - this.borderWidth + this.shape.left.units;
       return {
-        left: this.shape.left.value - this.borderWidth + this.shape.left.units,
-        top: this.shape.top.value - this.borderWidth + this.shape.left.units,
+        transform: `translate(${left}, ${top})`,
         width: this.shape.width.value + this.shape.width.units,
         height: this.shape.height.value + this.shape.height.units
       };
@@ -43,5 +52,8 @@ export default {
 }
 .overlay.selected {
   border: 1px solid lightpink;
+}
+.overlay:not(.selected):hover {
+  border: 1px dashed hsl(200, 80%, 85%);
 }
 </style>
