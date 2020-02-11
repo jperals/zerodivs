@@ -1,7 +1,7 @@
 <template>
   <div
     class="overlay"
-    :class="{selected: isSelected}"
+    :class="{ selected: isSelected }"
     :style="computedStyle"
     v-on:mousedown="$event => onMouseDown(shape, $event)"
     v-on:mouseup="$event => onMouseUp(shape, $event)"

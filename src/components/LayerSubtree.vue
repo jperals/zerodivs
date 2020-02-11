@@ -1,12 +1,16 @@
 <template>
   <li
     class="layer"
-    :class="{active: isLayerActive, layerName, selected: isLayerSelected }"    
+    :class="{ active: isLayerActive, layerName, selected: isLayerSelected }"
   >
     <div class="node root-node" v-on:click="selectLayer">
-      <label>{{label}}</label>
+      <label>{{ label }}</label>
       <span class="checkbox">
-        <input type="checkbox" :checked="isLayerActive" v-on:click.stop="toggleLayer" />
+        <input
+          type="checkbox"
+          :checked="isLayerActive"
+          v-on:click.stop="toggleLayer"
+        />
       </span>
     </div>
     <ul class="shapes">
@@ -52,7 +56,10 @@ export default {
       return store.getters.isLayerActive(this.layerName);
     },
     isLayerSelected() {
-      return store.getters.selectedLayer === this.layerName && !store.getters.selectedShape;
+      return (
+        store.getters.selectedLayer === this.layerName &&
+        !store.getters.selectedShape
+      );
     },
     label() {
       if (this.layerName === "before" || this.layerName === "after") {
