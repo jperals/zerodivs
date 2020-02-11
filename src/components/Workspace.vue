@@ -13,6 +13,7 @@
       :shape="shape"
       :onMouseDown="onShapeMouseDown"
       :onMouseUp="onShapeMouseUp"
+      :onResizeHandleMouseDown="onResizeHandleMouseDown"
       :key="shape.id"
     />
   </div>
@@ -25,12 +26,13 @@ import ShapeOverlay from "@/components/ShapeOverlay";
 export default {
   data() {
     return {
-      initialNewShapePosition: {},
-      initialShapePosition: {},
-      initialPointerPosition: {},
+      initialNewShapePosition: null,
+      initialShapeProps: null,
+      initialPointerPosition: null,
+      resizeDirection: null,
       shapeBeingAdded: null,
       shapeBeingMoved: null,
-      workspacePosition: {}
+      workspacePosition: null
     };
   },
   components: {
@@ -38,54 +40,60 @@ export default {
     ShapeOverlay
   },
   methods: {
+    dragNewShape(diff) {
+      const x =
+        0 <= diff.left
+          ? this.initialNewShapePosition.left
+          : this.initialNewShapePosition.left + diff.left;
+      const width = Math.abs(diff.left);
+      const y =
+        0 <= diff.top
+          ? this.initialNewShapePosition.top
+          : this.initialNewShapePosition.top + diff.top;
+      const height = Math.abs(diff.top);
+      store.dispatch("updateShape", {
+        shape: store.getters.shapeToBeAdded,
+        width: { value: width },
+        height: { value: height },
+        top: { value: y },
+        left: { value: x }
+      });
+    },
+    moveShape(diff) {
+      const newPosition = {
+        left: this.initialShapeProps.left.value + diff.left,
+        top: this.initialShapeProps.top.value + diff.top
+      };
+      store.dispatch("moveShape", {
+        shape: this.shapeBeingMoved,
+        left: { value: newPosition.left, units: "px" },
+        top: { value: newPosition.top, units: "px" }
+      });
+    },
     onDrag(event) {
-      if (this.shapeBeingMoved) {
-        const diff = {
-          left: event.x - this.initialPointerPosition.x,
-          top: event.y - this.initialPointerPosition.y
-        };
-        const newPosition = {
-          left: this.initialShapePosition.left.value + diff.left,
-          top: this.initialShapePosition.top.value + diff.top
-        };
-        store.dispatch("moveShape", {
-          shape: this.shapeBeingMoved,
-          left: { value: newPosition.left, units: "px" },
-          top: { value: newPosition.top, units: "px" }
-        });
+      if (!this.initialPointerPosition) {
+        return;
       }
+      const diff = {
+        left: event.x - this.initialPointerPosition.x,
+        top: event.y - this.initialPointerPosition.y
+      };
       if (this.addingShape) {
-        const diff = {
-          x: event.x - this.initialPointerPosition.x,
-          y: event.y - this.initialPointerPosition.y
-        };
-        const x =
-          0 <= diff.x
-            ? this.initialNewShapePosition.x
-            : this.initialNewShapePosition.x + diff.x;
-        const width = Math.abs(diff.x);
-        const y =
-          0 <= diff.y
-            ? this.initialNewShapePosition.y
-            : this.initialNewShapePosition.y + diff.y;
-        const height = Math.abs(diff.y);
-        store.dispatch("updateShape", {
-          shape: store.getters.shapeToBeAdded,
-          width: { value: width },
-          height: { value: height },
-          top: { value: y },
-          left: { value: x }
-        });
+        this.dragNewShape(diff);
+      } else if (this.resizeDirection) {
+        this.resizeShape(diff);
+      } else if (this.shapeBeingMoved) {
+        this.moveShape(diff);
       }
     },
-    onMouseDown() {
+    onMouseDown(event) {
       if (this.addingShape) {
         const rect = this.$refs.workspace.getBoundingClientRect();
         this.workspacePosition = { x: rect.left, y: rect.top };
         this.initialPointerPosition = { x: event.x, y: event.y };
         this.initialNewShapePosition = {
-          x: event.x - this.workspacePosition.x,
-          y: event.y - this.workspacePosition.y
+          left: event.x - this.workspacePosition.x,
+          top: event.y - this.workspacePosition.y
         };
         this.shapeBeingAdded = {
           ...store.getters.shapeToBeAdded,
@@ -99,17 +107,21 @@ export default {
           },
           left: {
             units: "px",
-            value: this.initialNewShapePosition.x
+            value: this.initialNewShapePosition.left
           },
           top: {
             units: "px",
-            value: this.initialNewShapePosition.y
+            value: this.initialNewShapePosition.top
           }
         };
         store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
       }
     },
     onMouseUp() {
+      this.initialPointerPosition = null;
+      this.initialShapeProps = null;
+      this.resizeDirection = null;
+      this.shapeBeingMoved = null;
       if (this.addingShape) {
         store
           .dispatch("addShape", {
@@ -124,6 +136,22 @@ export default {
         store.dispatch("unselectShape");
       }
     },
+    onResizeHandleMouseDown(direction, event) {
+      const shape = store.getters.selectedShape;
+      if (!shape) {
+        return;
+      }
+      this.resizeDirection = direction;
+      const rect = this.$refs.workspace.getBoundingClientRect();
+      this.workspacePosition = { x: rect.left, y: rect.top };
+      this.initialPointerPosition = { x: event.x, y: event.y };
+      this.initialShapeProps = {
+        left: { ...shape.left },
+        top: { ...shape.top },
+        width: { ...shape.width },
+        height: { ...shape.height }
+      };
+    },
     onShapeMouseDown(shape, event) {
       if (this.addingShape) {
         return;
@@ -133,7 +161,12 @@ export default {
       const rect = this.$refs.workspace.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
       this.initialPointerPosition = { x: event.x, y: event.y };
-      this.initialShapePosition = { left: shape.left, top: shape.top };
+      this.initialShapeProps = {
+        left: { ...shape.left },
+        top: { ...shape.top },
+        width: { ...shape.width },
+        height: { ...shape.height }
+      };
       store.dispatch("selectShape", shape);
     },
     onShapeMouseUp(shape, event) {
@@ -141,7 +174,18 @@ export default {
         return;
       }
       event.stopPropagation();
+      this.initialPointerPosition = null;
+      this.initialShapeProps = null;
+      this.resizeDirection = null;
       this.shapeBeingMoved = null;
+    },
+    resizeShape(diff) {
+      store.dispatch("resizeShape", {
+        diff,
+        direction: this.resizeDirection,
+        initialShapeProps: this.initialShapeProps,
+        shape: store.getters.selectedShape
+      });
     }
   },
   computed: {

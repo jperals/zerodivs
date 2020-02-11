@@ -6,7 +6,7 @@
     v-on:mousedown="$event => onMouseDown(shape, $event)"
     v-on:mouseup="$event => onMouseUp(shape, $event)"
   >
-    <ShapeResizeHandles v-if="isSelected" />
+    <ShapeResizeHandles v-if="isSelected" :onMouseDown="onResizeHandleMouseDown" />
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   props: {
     onMouseDown: Function,
     onMouseUp: Function,
+    onResizeHandleMouseDown: Function,
     shape: Object
   },
   components: {

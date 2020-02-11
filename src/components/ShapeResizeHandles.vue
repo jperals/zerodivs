@@ -1,19 +1,21 @@
 <template>
   <div class="handles">
-    <div class="handle top-left"></div>
-    <div class="handle top"></div>
-    <div class="handle top-right"></div>
-    <div class="handle right"></div>
-    <div class="handle bottom-right"></div>
-    <div class="handle bottom"></div>
-    <div class="handle bottom-left"></div>
-    <div class="handle left"></div>
+    <div class="handle top-left" v-on:mousedown="($event) => onMouseDown('top-left', $event)"></div>
+    <div class="handle top" v-on:mousedown="($event) => onMouseDown('top', $event)"></div>
+    <div class="handle top-right" v-on:mousedown="($event) => onMouseDown('top-right', $event)"></div>
+    <div class="handle right" v-on:mousedown="($event) => onMouseDown('right', $event)"></div>
+    <div class="handle bottom-right" v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"></div>
+    <div class="handle bottom" v-on:mousedown="($event) => onMouseDown('bottom', $event)"></div>
+    <div class="handle bottom-left" v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"></div>
+    <div class="handle left" v-on:mousedown="($event) => onMouseDown('left', $event)"></div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {}
+  props: {
+    onMouseDown: Function
+  }
 };
 </script>
 

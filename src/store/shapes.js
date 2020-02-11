@@ -32,6 +32,23 @@ const shapes = {
       }
       state.layers = { ...state.layers };
     },
+    resizeShape(state, { shape, initialShapeProps = { ...shape }, direction, diff }) {
+      if (direction.includes("top")) {
+        shape.top.value = initialShapeProps.top.value + diff.top;
+        shape.height.value = initialShapeProps.height.value - diff.top;
+      }
+      if (direction.includes("left")) {
+        shape.left.value = initialShapeProps.left.value + diff.left;
+        shape.width.value = initialShapeProps.width.value - diff.left;
+      }
+      if (direction.includes("right")) {
+        shape.width.value = initialShapeProps.width.value + diff.left;
+      }
+      if (direction.includes("bottom")) {
+        shape.height.value = initialShapeProps.height.value + diff.top;
+      }
+      state.layers = { ...state.layers };
+    },
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
     },
@@ -95,6 +112,9 @@ const shapes = {
     },
     moveShape({ commit }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });
+    },
+    resizeShape({ commit }, { diff, direction, initialShapeProps, shape }) {
+      commit("resizeShape", { diff, direction, initialShapeProps, shape });
     },
     setShapeToBeAdded({ commit }, shape) {
       commit("setShapeToBeAdded", shape);
