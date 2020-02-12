@@ -50,7 +50,7 @@
               <input
                 type="text"
                 v-model="stop.color"
-                v-on:change="(value) => updateStop(stop, {color: value})"
+                v-on:change="(event) => updateStop(stop, {color: event.target.value})"
               />
             </label>
           </div>
@@ -60,7 +60,7 @@
               <input
                 type="text"
                 v-model="stop.position"
-                v-on:change="(value) => updateStop(stop, {position: value})"
+                v-on:change="(event) => updateStop(stop, {position: event.target.value})"
               />
             </label>
           </div>
@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     updateStop(stop, newProps) {
-      store.dispatch("updateShapeStop", { shape: this.shape, ...newProps });
+      store.dispatch("updateShapeStop", { shape: this.shape, stop, ...newProps });
     }
   }
 };
