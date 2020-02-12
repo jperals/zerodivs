@@ -6,27 +6,32 @@
     </section>
     <section>
       <ShapeButton
-        v-for="(shape, index) in buttonShapes"
+        v-for="(shapeGenerator, index) in buttonShapeGenerators"
         :key="index"
-        :shape="shape"
+        :shapeGenerator="shapeGenerator"
       />
+    </section>
+    <section>
+      <ColorPicker />
     </section>
   </div>
 </template>
 
 <script>
 import Button from "@/components/ToolbarButton";
+import ColorPicker from "@/components/ColorPicker";
 import ShapeButton from "@/components/ShapeButton";
-import buttonShapes from "@/components/toolbar-button-shapes";
+import buttonShapeGenerators from "@/components/toolbar-button-shapes";
 import store from "@/store";
 export default {
   components: {
     Button,
+    ColorPicker,
     ShapeButton
   },
   data() {
     return {
-      buttonShapes: buttonShapes("lightgray")
+      buttonShapeGenerators
     };
   },
   methods: {

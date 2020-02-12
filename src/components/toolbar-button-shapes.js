@@ -1,6 +1,6 @@
-export default function toolbarButtonShapes(color) {
-  return [
-    {
+export default [
+  function (color) {
+    return {
       type: "linear",
       direction: "to bottom right",
       stops: [
@@ -17,8 +17,10 @@ export default function toolbarButtonShapes(color) {
         }
       ],
       repeat: "no-repeat"
-    },
-    {
+    }
+  },
+  function (color) {
+    return {
       type: "radial",
       direction: "at center",
       stops: [
@@ -36,5 +38,5 @@ export default function toolbarButtonShapes(color) {
       ],
       repeat: "no-repeat"
     }
-  ];
-}
+  }
+];

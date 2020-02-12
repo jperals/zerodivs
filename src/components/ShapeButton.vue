@@ -8,7 +8,7 @@ import { formatImage } from "@/shapes2css";
 import store from "@/store";
 export default {
   props: {
-    shape: Object
+    shapeGenerator: Function
   },
   components: {
     ToolbarButton
@@ -18,15 +18,18 @@ export default {
       store.dispatch("setShapeToBeAdded", this.shape);
     }
   },
-  data() {
-    return {
-      style: {
+  computed: {
+    shape() {
+      return this.shapeGenerator(store.getters.currentColor);
+    },
+    style() {
+      return {
         backgroundImage: formatImage(this.shape),
         backgroundSize: "60% 60%",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"
-      }
-    };
+      };
+    }
   }
 };
 </script>
