@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
 
 const shapes = {
@@ -60,7 +60,11 @@ const shapes = {
     },
     updateShape(state, { shape, ...newProps }) {
       for (const key in newProps) {
-        shape[key] = { ...shape[key], ...newProps[key] };
+        if (isObject(shape[key]) && isObject(newProps[key])) {
+          shape[key] = { ...shape[key], ...newProps[key] };
+        } else {
+          shape[key] = newProps[key];
+        }
       }
     }
   },

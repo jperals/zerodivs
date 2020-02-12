@@ -5,7 +5,7 @@
       <div>
         <Workspace />
         <Layers />
-        <ShapeProperties />
+        <PropsForm />
       </div>
     </template>
     <div v-else>Couldn't find this div. :-/</div>
@@ -16,7 +16,7 @@
 import { get } from "lodash";
 import Workspace from "@/components/Workspace";
 import Layers from "@/components/Layers";
-import ShapeProperties from "@/components/ShapeProperties";
+import PropsForm from "@/components/PropsForm";
 import Toolbar from "@/components/Toolbar";
 import store from "@/store";
 export default {
@@ -28,7 +28,7 @@ export default {
   components: {
     Workspace,
     Layers,
-    ShapeProperties,
+    PropsForm,
     Toolbar
   },
   mounted() {
@@ -58,7 +58,7 @@ export default {
 }
 .layers,
 .canvas,
-.shape-properties {
+.props {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -68,7 +68,7 @@ export default {
   left: 0;
 }
 .canvas,
-.shape-properties {
+.props {
   right: 0;
 }
 </style>
