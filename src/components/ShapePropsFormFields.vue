@@ -40,6 +40,33 @@
         <span class="units">{{shape.height.units}}</span>
       </label>
     </div>
+    <div>
+      <label>Stops</label>
+      <ul>
+        <li v-for="stop in shape.stops" :key="stop.id">
+          <div>
+            <label>
+              <span>Color</span>
+              <input
+                type="text"
+                v-model="stop.color"
+                v-on:change="(value) => updateStop(stop, {color: value})"
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              <span>Position</span>
+              <input
+                type="text"
+                v-model="stop.position"
+                v-on:change="(value) => updateStop(stop, {position: value})"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -125,6 +152,11 @@ export default {
           }
         });
       }
+    }
+  },
+  methods: {
+    updateStop(stop, newProps) {
+      store.dispatch("updateShapeStop", { shape: this.shape, ...newProps });
     }
   }
 };

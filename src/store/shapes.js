@@ -21,6 +21,7 @@ const shapes = {
   },
   mutations: {
     addShape(state, { layerName, shape }) {
+      get(shape, "stops", []).forEach(stop => (stop.id = uuid()));
       state.layers[layerName].shapes.push(shape);
     },
     moveShape(state, { shape, left, top }) {
@@ -32,7 +33,10 @@ const shapes = {
       }
       state.layers = { ...state.layers };
     },
-    resizeShape(state, { shape, initialShapeProps = { ...shape }, direction, diff }) {
+    resizeShape(
+      state,
+      { shape, initialShapeProps = { ...shape }, direction, diff }
+    ) {
       if (direction.includes("top")) {
         shape.top.value = initialShapeProps.top.value + diff.top;
         shape.height.value = initialShapeProps.height.value - diff.top;
@@ -66,6 +70,16 @@ const shapes = {
           shape[key] = newProps[key];
         }
       }
+    },
+    updateShapeStop(state, { shape, stop, ...newProps }) {
+      for (const key in newProps) {
+        if (isObject(stop[key]) && isObject(newProps[key])) {
+          stop[key] = { ...stop[key], ...newProps[key] };
+        } else {
+          stop[key] = newProps[key];
+        }
+      }
+      shape.stops = [...shape.stops];
     }
   },
   getters: {
@@ -128,6 +142,9 @@ const shapes = {
     },
     updateShape({ commit }, { shape, ...newProps }) {
       commit("updateShape", { shape, ...newProps });
+    },
+    updateShapeStop({ commit }, { shape, stop, ...newProps }) {
+      commit("updateShapeStop", { shape, stop, ...newProps });
     }
   }
 };
