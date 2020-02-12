@@ -27,25 +27,32 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$side: 1.5rem;
 .color-picker {
+  height: $side;
   display: flex;
   flex-direction: row;
 }
+.color-picker > * {
+  height: 100%;
+}
 input[type="text"] {
+  display: inline-block;
   width: 15ch;
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+  border-right: 0 none;
 }
 input[type="color"] {
   opacity: 0;
-  height: 1.5rem;
-  width: 1.5rem;
-  margin-left: -1.5rem;
+  width: $side;
+  margin-left: - $side;
   border: 0 none;
   padding: 0;
 }
 .sample {
   display: inline-block;
-  height: 1.5rem;
-  width: 1.5rem;
+  width: $side;
 }
 </style>
