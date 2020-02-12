@@ -23,10 +23,10 @@ export default {
 $handle-width: 8px;
 .handles {
   position: absolute;
-  left: -1px;
-  top: -1px;
-  right: -1px;
-  bottom: -1px;
+  left: -2px;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
 }
 .handle {
   background-color: white;
