@@ -1,27 +1,34 @@
 <template>
   <div class="color-picker">
-    <input type="text" v-model="color" />
-    <span class="sample" :style="{ backgroundColor: color }" />
-    <input type="color" v-on:change="selectColor" :style="{ backgroundColor: color }" />
+    <input type="text" v-model="selectedColor" />
+    <span class="sample" :style="{ backgroundColor: selectedColor }" />
+    <input type="color" v-on:change="selectColor" :style="{ backgroundColor: selectedColor }" />
   </div>
 </template>
 
 <script>
-import store from "@/store";
 export default {
+  props: {
+    value: String,
+    onPick: Function
+  },
   computed: {
-    color: {
-      get () {
-        return store.getters.currentColor;
+    selectedColor: {
+      get() {
+        return this.value;
       },
-      set (value) {
-        store.dispatch("selectColor", value);
+      set(value) {
+        if (typeof this.onPick === "function") {
+          this.onPick(value);
+        }
       }
     }
   },
   methods: {
     selectColor(event) {
-      store.dispatch("selectColor", event.target.value);
+        if (typeof this.onPick === "function") {
+          this.onPick(event.target.value);
+        }
     }
   }
 };
@@ -29,6 +36,7 @@ export default {
 
 <style scoped lang="scss">
 $side: 1.5rem;
+$border-color: lightgray;
 .color-picker {
   height: $side;
   display: flex;
@@ -41,18 +49,20 @@ input[type="text"] {
   display: inline-block;
   width: 15ch;
   box-sizing: border-box;
-  border: 1px solid lightgray;
+  border: 1px solid $border-color;
   border-right: 0 none;
 }
 input[type="color"] {
   opacity: 0;
   width: $side;
-  margin-left: - $side;
+  margin-left: -$side;
   border: 0 none;
   padding: 0;
 }
 .sample {
   display: inline-block;
   width: $side;
+  box-sizing: border-box;
+  border: 1px solid $border-color;
 }
 </style>

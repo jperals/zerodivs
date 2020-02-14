@@ -15,9 +15,10 @@ export default {
 <style>
 #app {
   --panel-bg-color: hsla(0, 0%, 90%, 0.5);
-  --panel-border-color: hsl(0, 0%, 90%);
-  --panel-border-color-strong: hsl(0, 0%, 85%);
+  --panel-border-color: hsl(0, 0%, 85%);
+  --panel-border-color-strong: hsl(0, 0%, 80%);
   --selected-color: hsl(224, 100%, 67%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 html,
 body {
@@ -30,5 +31,14 @@ body {
 }
 #app .editor {
   flex-grow: 1;
+}
+.list-node {
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-bottom: 1px solid var(--panel-border-color);
+  font-size: 0.75rem;
+}
+input[type="text"],
+input[type="number"] {
+  padding: .125rem .25rem;
 }
 </style>

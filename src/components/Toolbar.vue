@@ -12,21 +12,21 @@
       />
     </section>
     <section>
-      <ColorPicker />
+      <CurrentColorPicker />
     </section>
   </div>
 </template>
 
 <script>
 import Button from "@/components/ToolbarButton";
-import ColorPicker from "@/components/ColorPicker";
+import CurrentColorPicker from "@/components/CurrentColorPicker";
 import ShapeButton from "@/components/ShapeButton";
 import buttonShapeGenerators from "@/components/toolbar-button-shapes";
 import store from "@/store";
 export default {
   components: {
     Button,
-    ColorPicker,
+    CurrentColorPicker,
     ShapeButton
   },
   data() {

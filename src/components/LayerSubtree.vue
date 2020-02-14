@@ -3,7 +3,7 @@
     class="layer"
     :class="{ active: isLayerActive, layerName, selected: isLayerSelected }"
   >
-    <div class="node root-node" v-on:click="selectLayer">
+    <div class="list-node root-node" v-on:click="selectLayer">
       <label>{{ label }}</label>
       <span class="checkbox">
         <input
@@ -15,7 +15,7 @@
     </div>
     <ul class="shapes">
       <li
-        class="shape node"
+        class="shape list-node"
         :class="{ selected: isShapeSelected(shape) }"
         v-for="shape in shapesFromLayer"
         :key="shape.id"
@@ -80,14 +80,10 @@ ul {
   list-style: none;
   padding: 0;
 }
-.node {
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
-  border-bottom: 1px solid var(--panel-border-color);
-}
-.shape.node {
+.shape.list-node {
   padding-left: 2rem;
 }
-.node:last-child {
+.list-node:last-child {
   border-bottom-color: var(--panel-border-color-strong);
 }
 li li {

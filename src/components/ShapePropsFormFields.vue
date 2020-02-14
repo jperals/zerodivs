@@ -1,69 +1,60 @@
 <template>
   <div>
-    <div>
-      <label>
-        <span>Type</span>
-        <input type="text" v-model="type" />
+    <div class="list-node">
+      <label class="wrapper">
+        <span class="label">Type</span>
+        <input type="text" v-model="type" class="w-l" />
       </label>
     </div>
-    <div>
-      <label>
-        <span>Direction</span>
-        <input type="text" v-model="direction" />
+    <div class="list-node">
+      <label class="wrapper">
+        <span class="label">Direction</span>
+        <input type="text" v-model="direction" class="w-l" />
       </label>
     </div>
-    <div>
-      <label>
-        <span>Top</span>
-        <input type="number" v-model="top" :class="{error: errors.top}" />
-        <span class="units">{{shape.top.units}}</span>
-      </label>
+    <div class="list-node">
+      <div>
+        <label class="wrapper">
+          <span class="label">Top</span>
+          <input type="number" v-model="top" class="w-m" />
+          <span class="units">{{shape.top.units}}</span>
+        </label>
+      </div>
+      <div>
+        <label class="wrapper">
+          <span class="label">Left</span>
+          <input type="number" v-model="left" class="w-m" />
+          <span class="units">{{shape.left.units}}</span>
+        </label>
+      </div>
     </div>
-    <div>
-      <label>
-        <span>Left</span>
-        <input type="number" v-model="left" :class="{error: errors.left}" />
-        <span class="units">{{shape.left.units}}</span>
-      </label>
+    <div class="list-node">
+      <div>
+        <label class="wrapper">
+          <span class="label">Width</span>
+          <input type="number" v-model="width" class="w-m" />
+          <span class="units">{{shape.width.units}}</span>
+        </label>
+      </div>
+      <div>
+        <label class="wrapper">
+          <span class="label">Height</span>
+          <input type="number" v-model="height" class="w-m" />
+          <span class="units">{{shape.height.units}}</span>
+        </label>
+      </div>
     </div>
-    <div>
-      <label>
-        <span>Width</span>
-        <input type="number" v-model="width" :class="{error: errors.width}" />
-        <span class="units">{{shape.width.units}}</span>
-      </label>
-    </div>
-    <div>
-      <label>
-        <span>Height</span>
-        <input type="number" v-model="height" :class="{error: errors.height}" />
-        <span class="units">{{shape.height.units}}</span>
-      </label>
-    </div>
-    <div>
+    <div class="list-node">
       <label>Stops</label>
-      <ul>
-        <li v-for="stop in shape.stops" :key="stop.id">
-          <div>
-            <label>
-              <span>Color</span>
-              <input
-                type="text"
-                v-model="stop.color"
-                v-on:change="(event) => updateStop(stop, {color: event.target.value})"
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              <span>Position</span>
-              <input
-                type="text"
-                v-model="stop.position"
-                v-on:change="(event) => updateStop(stop, {position: event.target.value})"
-              />
-            </label>
-          </div>
+      <ul class="stops">
+        <li v-for="stop in shape.stops" :key="stop.id" class="stop wrapper">
+          <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
+          <input
+            type="text"
+            class="w-s"
+            v-model="stop.position"
+            v-on:change="(event) => updateStop(stop, {position: event.target.value})"
+          />
         </li>
       </ul>
     </div>
@@ -72,7 +63,11 @@
 
 <script>
 import store from "@/store";
+import ColorPicker from "@/components/ColorPicker";
 export default {
+  components: {
+    ColorPicker
+  },
   props: {
     shape: Object
   },
@@ -155,16 +150,65 @@ export default {
     }
   },
   methods: {
+    onStopColorPick(stop, color) {
+      this.updateStop(stop, { color });
+    },
     updateStop(stop, newProps) {
-      store.dispatch("updateShapeStop", { shape: this.shape, stop, ...newProps });
+      store.dispatch("updateShapeStop", {
+        shape: this.shape,
+        stop,
+        ...newProps
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-input.error {
-  background-color: hsl(0, 70%, 95%);
-  border-color: hsl(0, 90%, 75%);
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: .25rem 0;
+}
+.label,
+.units {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.label {
+  flex-grow: 1;
+}
+input[type="text"],
+input[type="number"] {
+  font-size: .75rem;
+}
+input[type="text"].w-s,
+input[type="number"].w-s {
+  width: 4ch;
+}
+input[type="text"].w-m,
+input[type="number"].w-m {
+  width: 10ch;
+}
+input[type="text"].w-l,
+input[type="number"].w-l {
+  width: 14ch;
+}
+.units {
+  margin-left: .5ch;
+}
+.stops {
+  list-style: none;
+  padding-left: 0;
+}
+.stop {
+  display: flex;
+  flex-direction: row;
+}
+.stop .color-picker {
+  flex-grow: 1;
 }
 </style>
