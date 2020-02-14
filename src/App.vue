@@ -14,9 +14,9 @@ export default {
 
 <style>
 #app {
-  --panel-bg-color: hsla(0, 0%, 90%, 0.5);
-  --panel-border-color: hsl(0, 0%, 85%);
-  --panel-border-color-strong: hsl(0, 0%, 80%);
+  --panel-bg-color: hsla(0, 0%, 93%, 0.75);
+  --panel-border-color: hsl(0, 0%, 83%);
+  --panel-border-color-strong: hsl(0, 0%, 78%);
   --selected-color: hsl(224, 100%, 67%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -33,7 +33,7 @@ body {
   flex-grow: 1;
 }
 .list-node {
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   border-bottom: 1px solid var(--panel-border-color);
   font-size: 0.75rem;
 }

@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="list-node">
-      <label>Stops</label>
+      <label class="wrapper">Stops</label>
       <ul class="stops">
         <li v-for="stop in shape.stops" :key="stop.id" class="stop wrapper">
           <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
@@ -219,7 +219,8 @@ input[type="number"].w-l {
 }
 .stops {
   list-style: none;
-  padding-left: 0;
+  padding: 0.25rem 0;
+  margin: 0;
 }
 .stop {
   display: flex;

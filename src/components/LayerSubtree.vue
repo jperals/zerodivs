@@ -95,6 +95,7 @@ li li {
 .root-node {
   display: flex;
   flex-direction: row;
+  padding-right: .5rem;
 }
 .root-node .checkbox {
   flex-grow: 1;
