@@ -58,6 +58,12 @@
         </li>
       </ul>
     </div>
+    <div class="list-node">
+      <label class="wrapper">
+        <div class="label">Repeat</div>
+        <input type="text" v-model="backgroundRepeat" class="w-l" />
+      </label>
+    </div>
   </div>
 </template>
 
@@ -77,6 +83,17 @@ export default {
     };
   },
   computed: {
+    backgroundRepeat: {
+      get() {
+        return this.shape.backgroundRepeat;
+      },
+      set(value) {
+        store.dispatch("updateShape", {
+          shape: this.shape,
+          repeat: value
+        });
+      }
+    },
     direction: {
       get() {
         return this.shape.direction;
@@ -170,7 +187,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  padding: .25rem 0;
+  padding: 0.25rem 0;
 }
 .label,
 .units {
@@ -183,7 +200,7 @@ export default {
 }
 input[type="text"],
 input[type="number"] {
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 input[type="text"].w-s,
 input[type="number"].w-s {
@@ -198,7 +215,7 @@ input[type="number"].w-l {
   width: 14ch;
 }
 .units {
-  margin-left: .5ch;
+  margin-left: 0.5ch;
 }
 .stops {
   list-style: none;
