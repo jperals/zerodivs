@@ -7,6 +7,7 @@
     v-on:mousedown="onMouseDown"
     v-on:mouseup="onMouseUp"
   >
+    <KeyboardInterface />
     <Canvas />
     <ShapeOverlay
       v-for="shape in shapes"
@@ -22,6 +23,7 @@
 <script>
 import store from "@/store";
 import Canvas from "@/components/Canvas";
+import KeyboardInterface from "@/components/KeyboardInterface";
 import ShapeOverlay from "@/components/ShapeOverlay";
 export default {
   data() {
@@ -37,6 +39,7 @@ export default {
   },
   components: {
     Canvas,
+    KeyboardInterface,
     ShapeOverlay
   },
   methods: {

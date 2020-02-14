@@ -33,6 +33,16 @@ const shapes = {
       }
       state.layers = { ...state.layers };
     },
+    removeShape(state, shape) {
+      for (const layer of Object.values(state.layers)) {
+        const index = layer.shapes.findIndex(s => s === shape);
+        if (index !== -1) {
+          layer.shapes.splice(index, 1);
+          break;
+        }
+      }
+      state.layers = { ...state.layers };
+    },
     resizeShape(
       state,
       { shape, initialShapeProps = { ...shape }, direction, diff }
@@ -130,6 +140,13 @@ const shapes = {
     },
     moveShape({ commit }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });
+    },
+    removeSelectedShape({ dispatch, getters }) {
+      dispatch("removeShape", getters.selectedShape);
+      dispatch("unselectShape");
+    },
+    removeShape({ commit }, shape) {
+      commit("removeShape", shape);
     },
     resizeShape({ commit }, { diff, direction, initialShapeProps, shape }) {
       commit("resizeShape", { diff, direction, initialShapeProps, shape });
