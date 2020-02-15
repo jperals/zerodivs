@@ -1,5 +1,5 @@
 <template>
-  <form class="props">
+  <form class="props panel">
     <LayerPropsFormFields v-if="layerName" :layer-name="layerName" />
     <ShapePropsFormFields v-if="shape" :shape="shape" />
   </form>

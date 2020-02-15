@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <router-link to="/">DeepDiv</router-link>
+    <router-link to="/">Stretch</router-link>
   </nav>
 </template>
 

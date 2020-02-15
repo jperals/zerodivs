@@ -1,5 +1,5 @@
 <template>
-  <ul class="layers">
+  <ul class="layers panel">
     <LayerSubtree layerName="main" />
     <LayerSubtree layerName="before" />
     <LayerSubtree layerName="after" />

@@ -19,3 +19,10 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+$side: 2rem;
+.color-picker {
+  height: 2rem;
+}
+</style>

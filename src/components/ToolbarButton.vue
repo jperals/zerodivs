@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="callback"></button>
+  <button v-on:click="callback" title="Click to add this shape"></button>
 </template>
 
 <script>
@@ -12,8 +12,14 @@ export default {
 
 <style scoped>
 button {
-  height: 1.5rem;
-  width: 1.5rem;
-  border-color: var(--panel-border-color);
+  height: 2rem;
+  width: 2rem;
+  margin: 2px;
+  border-color: var(--panel-border-color-strong);
+  border-radius: 2px;
+}
+button:hover {
+  border-color: var(--panel-border-color-stronger);
+  background-color: hsl(0, 0%, 97%);
 }
 </style>

@@ -53,4 +53,10 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+section button:first-child {
+  margin-left: 0;
+}
+section button:last-child {
+  margin-right: 0;
+}
 </style>

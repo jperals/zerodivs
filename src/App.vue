@@ -17,6 +17,7 @@ export default {
   --panel-bg-color: hsla(0, 0%, 93%, 0.75);
   --panel-border-color: hsl(0, 0%, 83%);
   --panel-border-color-strong: hsl(0, 0%, 78%);
+  --panel-border-color-stronger: hsl(0, 0%, 70%);
   --selected-color: hsl(224, 100%, 67%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -31,6 +32,9 @@ body {
 }
 #app .editor {
   flex-grow: 1;
+}
+.panel {
+  backdrop-filter: blur(4px);
 }
 .list-node {
   padding: 0.5rem 1rem;
