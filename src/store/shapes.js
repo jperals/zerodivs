@@ -57,18 +57,20 @@ const shapes = {
       { shape, initialShapeProps = { ...shape }, direction, diff }
     ) {
       if (direction.includes("top")) {
-        shape.top.value = initialShapeProps.top.value + diff.top;
-        shape.height.value = initialShapeProps.height.value - diff.top;
+        const bottom = initialShapeProps.top.value + initialShapeProps.height.value;
+        shape.top.value = Math.min(initialShapeProps.top.value + diff.top, bottom);
+        shape.height.value = bottom - shape.top.value;
       }
       if (direction.includes("left")) {
-        shape.left.value = initialShapeProps.left.value + diff.left;
-        shape.width.value = initialShapeProps.width.value - diff.left;
+        const right = initialShapeProps.left.value + initialShapeProps.width.value;
+        shape.left.value = Math.min(initialShapeProps.left.value + diff.left, right);
+        shape.width.value = right - shape.left.value;
       }
       if (direction.includes("right")) {
-        shape.width.value = initialShapeProps.width.value + diff.left;
+        shape.width.value = Math.max(0, initialShapeProps.width.value + diff.left);
       }
       if (direction.includes("bottom")) {
-        shape.height.value = initialShapeProps.height.value + diff.top;
+        shape.height.value = Math.max(0, initialShapeProps.height.value + diff.top);
       }
       state.layers = { ...state.layers };
     },
