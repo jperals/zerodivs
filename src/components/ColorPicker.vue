@@ -1,8 +1,9 @@
 <template>
   <div class="color-picker">
     <input type="text" v-model="selectedColor" />
-    <span class="sample" :style="{ backgroundColor: selectedColor }" />
-    <input type="color" v-on:change="selectColor" :style="{ backgroundColor: selectedColor }" />
+    <span class="sample" :style="{ backgroundColor: selectedColor }">
+      <input type="color" v-on:change="selectColor" :style="{ backgroundColor: selectedColor }" />
+    </span>
   </div>
 </template>
 
@@ -35,10 +36,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$side: 1.5rem;
 $border-color: lightgray;
 .color-picker {
-  height: $side;
+  --side: 1.5rem;
+  height: var(--side);
   display: flex;
   flex-direction: row;
 }
@@ -52,17 +53,18 @@ input[type="text"] {
   border: 1px solid $border-color;
   border-right: 0 none;
 }
-input[type="color"] {
-  opacity: 0;
-  width: $side;
-  margin-left: -$side;
-  border: 0 none;
-  padding: 0;
-}
 .sample {
   display: inline-block;
-  width: $side;
+  width: var(--side);
+  height: 100%;
   box-sizing: border-box;
   border: 1px solid $border-color;
+}
+input[type="color"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  border: 0 none;
+  padding: 0;
 }
 </style>
