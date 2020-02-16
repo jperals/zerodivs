@@ -33,6 +33,15 @@ const shapes = {
       }
       state.layers = { ...state.layers };
     },
+    moveShapeBy(state, { shape, left, top }) {
+      if (typeof left === "object" && left.units === shape.left.units) {
+        shape.left.value += left.value;
+      }
+      if (typeof top === "object" && top.units === shape.top.units) {
+        shape.top.value += top.value;
+      }
+      state.layers = { ...state.layers };
+    },
     removeShape(state, shape) {
       for (const layer of Object.values(state.layers)) {
         const index = layer.shapes.findIndex(s => s === shape);
@@ -140,6 +149,9 @@ const shapes = {
     },
     moveShape({ commit }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });
+    },
+    moveShapeBy({ commit }, { shape, left, top }) {
+      commit("moveShapeBy", { shape, left, top });
     },
     removeSelectedShape({ dispatch, getters }) {
       dispatch("removeShape", getters.selectedShape);
