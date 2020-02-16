@@ -21,7 +21,12 @@ const shapes = {
   },
   mutations: {
     addNewStop(state, { shape, index }) {
-      shape.stops.splice(index, 0, { color: "", position: "" });
+      const newStop = { color: "", position: "" };
+      if (typeof index === "number") {
+        shape.stops.splice(index, 0, newStop);
+      } else {
+        shape.stops.push(newStop);
+      }
     },
     addShape(state, { layerName, shape }) {
       get(shape, "stops", []).forEach(stop => (stop.id = uuid()));

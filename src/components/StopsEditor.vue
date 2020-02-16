@@ -3,13 +3,6 @@
     <label class="wrapper">Stops</label>
     <ul class="stops">
       <li v-for="(stop, index) in shape.stops" :key="stop.id" class="stop">
-        <div>
-          <button
-            class="add-new-stop"
-            v-on:click="() => addNewStop(index)"
-            title="Add new stop"
-          >Add</button>
-        </div>
         <div class="wrapper">
           <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
           <input
@@ -18,28 +11,30 @@
             v-model="stop.position"
             v-on:change="(event) => updateStop(stop, {position: event.target.value})"
           />
-          <button class="remove-stop" v-on:click="() => removeStop(index)" title="Remove stop">x</button>
+          <CloseButton class="remove-stop" :on-click="() => removeStop(index)" title="Remove stop" />
         </div>
       </li>
     </ul>
     <div>
-      <button class="add-new-stop" v-on:click="() => addNewStop()">Add</button>
+      <button class="add-new-stop" v-on:click="() => addNewStop()" title="Add new stop">Add</button>
     </div>
   </div>
 </template>
 
 <script>
+import CloseButton from "@/components/CloseButton";
 import ColorPicker from "@/components/ColorPicker";
 import store from "@/store";
 export default {
   components: {
+    CloseButton,
     ColorPicker
   },
   props: {
     shape: Object
   },
   methods: {
-    addNewStop(index = this.shape.stops.length) {
+    addNewStop(index) {
       store.dispatch("addNewStop", { shape: this.shape, index });
     },
     onStopColorPick(stop, color) {
@@ -68,10 +63,23 @@ export default {
 .stop .color-picker {
   flex-grow: 1;
 }
+.add-new-stop{
+  margin: 0.25rem 0;
+}
 .remove-stop {
-  border: 1px solid var(--panel-border-color-strong);
   box-sizing: border-box;
-  margin-left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  opacity: 0;
+}
+.stop .wrapper {
+  align-items: center;
+}
+.stop .wrapper:hover .remove-stop {
+  opacity: 1;
 }
 </style>
 
