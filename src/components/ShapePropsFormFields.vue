@@ -85,7 +85,7 @@ export default {
   computed: {
     backgroundRepeat: {
       get() {
-        return this.shape.backgroundRepeat;
+        return this.shape.repeat;
       },
       set(value) {
         store.dispatch("updateShape", {
