@@ -44,9 +44,6 @@ body {
 input[type="text"],
 input[type="number"] {
   padding: .125rem .25rem;
-}
-input[type="text"],
-input[type="number"] {
   font-size: 0.75rem;
 }
 input[type="text"].w-s,

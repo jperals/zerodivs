@@ -20,6 +20,9 @@ const shapes = {
     shapeToBeAdded: null
   },
   mutations: {
+    addNewStop(state, { shape, index }) {
+      shape.stops.splice(index, 0, { color: "", position: "" });
+    },
     addShape(state, { layerName, shape }) {
       get(shape, "stops", []).forEach(stop => (stop.id = uuid()));
       state.layers[layerName].shapes.push(shape);
@@ -52,25 +55,42 @@ const shapes = {
       }
       state.layers = { ...state.layers };
     },
+    removeStop(state, { shape, index }) {
+      shape.stops.splice(index, 1);
+    },
     resizeShape(
       state,
       { shape, initialShapeProps = { ...shape }, direction, diff }
     ) {
       if (direction.includes("top")) {
-        const bottom = initialShapeProps.top.value + initialShapeProps.height.value;
-        shape.top.value = Math.min(initialShapeProps.top.value + diff.top, bottom);
+        const bottom =
+          initialShapeProps.top.value + initialShapeProps.height.value;
+        shape.top.value = Math.min(
+          initialShapeProps.top.value + diff.top,
+          bottom
+        );
         shape.height.value = bottom - shape.top.value;
       }
       if (direction.includes("left")) {
-        const right = initialShapeProps.left.value + initialShapeProps.width.value;
-        shape.left.value = Math.min(initialShapeProps.left.value + diff.left, right);
+        const right =
+          initialShapeProps.left.value + initialShapeProps.width.value;
+        shape.left.value = Math.min(
+          initialShapeProps.left.value + diff.left,
+          right
+        );
         shape.width.value = right - shape.left.value;
       }
       if (direction.includes("right")) {
-        shape.width.value = Math.max(0, initialShapeProps.width.value + diff.left);
+        shape.width.value = Math.max(
+          0,
+          initialShapeProps.width.value + diff.left
+        );
       }
       if (direction.includes("bottom")) {
-        shape.height.value = Math.max(0, initialShapeProps.height.value + diff.top);
+        shape.height.value = Math.max(
+          0,
+          initialShapeProps.height.value + diff.top
+        );
       }
       state.layers = { ...state.layers };
     },
@@ -141,6 +161,9 @@ const shapes = {
     }
   },
   actions: {
+    addNewStop({ commit }, { shape, index }) {
+      commit("addNewStop", { shape, index });
+    },
     addShape(
       { commit, getters },
       { layerName = getters.selectedLayer, shape = getters.shapeToBeAdded }
@@ -162,6 +185,9 @@ const shapes = {
     },
     removeShape({ commit }, shape) {
       commit("removeShape", shape);
+    },
+    removeStop({ commit }, { shape, index }) {
+      commit("removeStop", { shape, index });
     },
     resizeShape({ commit }, { diff, direction, initialShapeProps, shape }) {
       commit("resizeShape", { diff, direction, initialShapeProps, shape });
