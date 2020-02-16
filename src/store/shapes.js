@@ -89,6 +89,7 @@ const shapes = {
           shape[key] = newProps[key];
         }
       }
+      state.layers = { ...state.layers };
     },
     updateShapeStop(state, { shape, stop, ...newProps }) {
       for (const key in newProps) {
