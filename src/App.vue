@@ -45,4 +45,20 @@ input[type="text"],
 input[type="number"] {
   padding: .125rem .25rem;
 }
+input[type="text"],
+input[type="number"] {
+  font-size: 0.75rem;
+}
+input[type="text"].w-s,
+input[type="number"].w-s {
+  width: 4ch;
+}
+input[type="text"].w-m,
+input[type="number"].w-m {
+  width: 10ch;
+}
+input[type="text"].w-l,
+input[type="number"].w-l {
+  width: 14ch;
+}
 </style>

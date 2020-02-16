@@ -44,20 +44,7 @@
         </label>
       </div>
     </div>
-    <div class="list-node">
-      <label class="wrapper">Stops</label>
-      <ul class="stops">
-        <li v-for="stop in shape.stops" :key="stop.id" class="stop wrapper">
-          <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
-          <input
-            type="text"
-            class="w-s"
-            v-model="stop.position"
-            v-on:change="(event) => updateStop(stop, {position: event.target.value})"
-          />
-        </li>
-      </ul>
-    </div>
+    <StopsEditor :shape="shape" />
     <div class="list-node">
       <label class="wrapper">
         <div class="label">Repeat</div>
@@ -69,18 +56,13 @@
 
 <script>
 import store from "@/store";
-import ColorPicker from "@/components/ColorPicker";
+import StopsEditor from "@/components/StopsEditor";
 export default {
   components: {
-    ColorPicker
+    StopsEditor
   },
   props: {
     shape: Object
-  },
-  data() {
-    return {
-      errors: {}
-    };
   },
   computed: {
     backgroundRepeat: {
@@ -165,23 +147,11 @@ export default {
         });
       }
     }
-  },
-  methods: {
-    onStopColorPick(stop, color) {
-      this.updateStop(stop, { color });
-    },
-    updateStop(stop, newProps) {
-      store.dispatch("updateShapeStop", {
-        shape: this.shape,
-        stop,
-        ...newProps
-      });
-    }
   }
 };
 </script>
 
-<style scoped>
+<style>
 .wrapper {
   display: flex;
   flex-direction: row;
@@ -198,35 +168,7 @@ export default {
 .label {
   flex-grow: 1;
 }
-input[type="text"],
-input[type="number"] {
-  font-size: 0.75rem;
-}
-input[type="text"].w-s,
-input[type="number"].w-s {
-  width: 4ch;
-}
-input[type="text"].w-m,
-input[type="number"].w-m {
-  width: 10ch;
-}
-input[type="text"].w-l,
-input[type="number"].w-l {
-  width: 14ch;
-}
 .units {
   margin-left: 0.5ch;
-}
-.stops {
-  list-style: none;
-  padding: 0.25rem 0;
-  margin: 0;
-}
-.stop {
-  display: flex;
-  flex-direction: row;
-}
-.stop .color-picker {
-  flex-grow: 1;
 }
 </style>
