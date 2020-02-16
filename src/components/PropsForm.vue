@@ -31,6 +31,8 @@ form {
   margin: 0;
   padding-right: 0;
   width: 200px;
+  height: 100%;
   border-left: 1px solid var(--panel-border-color);
+  overflow: auto;
 }
 </style>
