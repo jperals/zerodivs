@@ -1,18 +1,6 @@
 <template>
   <div>
     <div class="list-node">
-      <label class="wrapper">
-        <span class="label">Type</span>
-        <input type="text" v-model="type" class="w-l" />
-      </label>
-    </div>
-    <div class="list-node">
-      <label class="wrapper">
-        <span class="label">Direction</span>
-        <input type="text" v-model="direction" class="w-l" />
-      </label>
-    </div>
-    <div class="list-node">
       <div>
         <label class="wrapper">
           <span class="label">Top</span>
@@ -43,6 +31,18 @@
           <span class="units">{{shape.height.units}}</span>
         </label>
       </div>
+    </div>
+    <div class="list-node">
+      <label class="wrapper">
+        <span class="label">Type</span>
+        <input type="text" v-model="type" class="w-l" />
+      </label>
+    </div>
+    <div class="list-node">
+      <label class="wrapper">
+        <span class="label">Direction</span>
+        <input type="text" v-model="direction" class="w-l" />
+      </label>
     </div>
     <StopsEditor :shape="shape" />
     <div class="list-node">
