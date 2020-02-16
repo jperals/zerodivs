@@ -16,6 +16,7 @@ export default {
   methods: {
     addShape() {
       store.dispatch("setShapeToBeAdded", this.shape);
+      store.dispatch("unselectShape");
     }
   },
   computed: {

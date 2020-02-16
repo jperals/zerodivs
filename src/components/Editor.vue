@@ -18,6 +18,7 @@ import Workspace from "@/components/Workspace";
 import Layers from "@/components/Layers";
 import PropsForm from "@/components/PropsForm";
 import Toolbar from "@/components/Toolbar";
+import reactToKeyboard from "@/react-to-keyboard";
 import store from "@/store";
 export default {
   data() {
@@ -31,6 +32,12 @@ export default {
     PropsForm,
     Toolbar
   },
+  created() {
+    window.addEventListener("keydown", this.onKeyPress);
+  },
+  destroyed() {
+    window.removeEventListener("keydown", this.onKeyPress);
+  },
   mounted() {
     const projectId = get(this, "$route.params.id");
     if (projectId === undefined) {
@@ -42,6 +49,11 @@ export default {
   computed: {
     project() {
       return store.getters.currentProject;
+    }
+  },
+  methods: {
+    onKeyPress(event) {
+      reactToKeyboard(event);
     }
   }
 };
