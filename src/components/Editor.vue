@@ -64,6 +64,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.toolbar {
+  z-index: 10;
+}
 .toolbar + div {
   flex-grow: 1;
   position: relative;

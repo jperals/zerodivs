@@ -1,21 +1,26 @@
 <template>
-  <div
-    class="workspace"
-    ref="workspace"
-    :class="{ 'adding-shape': addingShape }"
-    v-on:mousemove="onDrag"
-    v-on:mousedown="onMouseDown"
-    v-on:mouseup="onMouseUp"
-  >
-    <Canvas />
-    <ShapeOverlay
-      v-for="shape in shapes"
-      :shape="shape"
-      :onMouseDown="onShapeMouseDown"
-      :onMouseUp="onShapeMouseUp"
-      :onResizeHandleMouseDown="onResizeHandleMouseDown"
-      :key="shape.id"
-    />
+  <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape }">
+    <pinch-zoom>
+      <div
+        class="pinch-zoom-wrapper"
+        v-on:mousemove="onDrag"
+        v-on:mousedown="onMouseDown"
+        v-on:mouseup="onMouseUp"
+        ref="pinch"
+      >
+        <Canvas />
+        <div class="overlays">
+          <ShapeOverlay
+            v-for="shape in shapes"
+            :shape="shape"
+            :onMouseDown="onShapeMouseDown"
+            :onMouseUp="onShapeMouseUp"
+            :onResizeHandleMouseDown="onResizeHandleMouseDown"
+            :key="shape.id"
+          />
+        </div>
+      </div>
+    </pinch-zoom>
   </div>
 </template>
 
@@ -23,16 +28,25 @@
 import store from "@/store";
 import Canvas from "@/components/Canvas";
 import ShapeOverlay from "@/components/ShapeOverlay";
+import "pinch-zoom-element";
 export default {
   data() {
     return {
+      currentAction: null,
       initialNewShapePosition: null,
       initialShapeProps: null,
+      initialMousePosition: null,
       initialPointerPosition: null,
       resizeDirection: null,
       shapeBeingAdded: null,
       shapeBeingMoved: null,
-      workspacePosition: null
+      viewport: {
+        offset: {
+          left: 0,
+          top: 0
+        },
+        zoom: 1
+      }
     };
   },
   components: {
@@ -71,12 +85,13 @@ export default {
       });
     },
     onDrag(event) {
-      if (!this.initialPointerPosition) {
+      event.stopPropagation();
+      if (!this.initialMousePosition) {
         return;
       }
       const diff = {
-        left: event.x - this.initialPointerPosition.x,
-        top: event.y - this.initialPointerPosition.y
+        left: event.x - this.initialMousePosition.x,
+        top: event.y - this.initialMousePosition.y
       };
       if (this.addingShape) {
         this.dragNewShape(diff);
@@ -87,10 +102,11 @@ export default {
       }
     },
     onMouseDown(event) {
+      event.stopPropagation();
       if (this.addingShape) {
         const rect = this.$refs.workspace.getBoundingClientRect();
         this.workspacePosition = { x: rect.left, y: rect.top };
-        this.initialPointerPosition = { x: event.x, y: event.y };
+        this.initialMousePosition = { x: event.x, y: event.y };
         this.initialNewShapePosition = {
           left: event.x - this.workspacePosition.x,
           top: event.y - this.workspacePosition.y
@@ -118,7 +134,7 @@ export default {
       }
     },
     onMouseUp() {
-      this.initialPointerPosition = null;
+      this.initialMousePosition = null;
       this.initialShapeProps = null;
       this.resizeDirection = null;
       this.shapeBeingMoved = null;
@@ -137,6 +153,7 @@ export default {
       }
     },
     onResizeHandleMouseDown(direction, event) {
+      event.stopPropagation();
       const shape = store.getters.selectedShape;
       if (!shape) {
         return;
@@ -144,7 +161,7 @@ export default {
       this.resizeDirection = direction;
       const rect = this.$refs.workspace.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
-      this.initialPointerPosition = { x: event.x, y: event.y };
+      this.initialMousePosition = { x: event.x, y: event.y };
       this.initialShapeProps = {
         left: { ...shape.left },
         top: { ...shape.top },
@@ -153,14 +170,14 @@ export default {
       };
     },
     onShapeMouseDown(shape, event) {
+      event.stopPropagation();
       if (this.addingShape) {
         return;
       }
-      event.stopPropagation();
       this.shapeBeingMoved = shape;
       const rect = this.$refs.workspace.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
-      this.initialPointerPosition = { x: event.x, y: event.y };
+      this.initialMousePosition = { x: event.x, y: event.y };
       this.initialShapeProps = {
         left: { ...shape.left },
         top: { ...shape.top },
@@ -174,7 +191,7 @@ export default {
         return;
       }
       event.stopPropagation();
-      this.initialPointerPosition = null;
+      this.initialMousePosition = null;
       this.initialShapeProps = null;
       this.resizeDirection = null;
       this.shapeBeingMoved = null;
@@ -186,7 +203,25 @@ export default {
         initialShapeProps: this.initialShapeProps,
         shape: store.getters.selectedShape
       });
+    },
+    preventZoom(event) {
+      // console.log(this.addingShape, this.initialShapeProps);
+      // if (this.addingShape || this.initialShapeProps) {
+      //   }
+        event.stopPropagation();
     }
+  },
+  mounted() {
+    this.$refs.pinch.addEventListener("touchstart", this.preventZoom);
+    this.$refs.pinch.addEventListener("touchmove", this.preventZoom);
+    this.$refs.pinch.addEventListener("mousemove", this.preventZoom);
+    this.$refs.pinch.addEventListener("pointerdown", this.preventZoom);
+    this.$refs.pinch.addEventListener("pointermove", this.preventZoom);
+    this.$refs.pinch.addEventListener("mousedown", this.preventZoom);
+    // this.$refs.pinch.addEventListener("wheel", this.preventZoom);
+  },
+  beforeDestroy() {
+    this.$refs.workspace.removeEventListener("touchstart", this.touchstart);
   },
   computed: {
     addingShape() {
@@ -200,7 +235,28 @@ export default {
 </script>
 
 <style scoped>
+.workspace,
+pinch-zoom {
+  height: 100%;
+}
+.workspace {
+  background-color: var(--panel-border-color);
+}
+.canvas {
+  background-color: white;
+}
 .workspace.adding-shape {
   cursor: crosshair;
+}
+.pinch-zoom-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.overlays {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

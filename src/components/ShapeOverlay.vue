@@ -3,8 +3,8 @@
     class="overlay"
     :class="{ selected: isSelected }"
     :style="computedStyle"
-    v-on:mousedown="$event => onMouseDown(shape, $event)"
-    v-on:mouseup="$event => onMouseUp(shape, $event)"
+    v-on:mousedown.stop="$event => onMouseDown(shape, $event)"
+    v-on:mouseup.stop="$event => onMouseUp(shape, $event)"
   >
     <ShapeResizeHandles v-if="isSelected" :onMouseDown="onResizeHandleMouseDown" />
   </div>

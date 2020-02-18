@@ -52,6 +52,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: var(--panel-bg-color);
 }
 section button:first-child {
   margin-left: 0;
