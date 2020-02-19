@@ -248,5 +248,105 @@ export default [
       ],
       repeat: "no-repeat"
     };
+  },
+  function(color) {
+    return {
+      type: "radial",
+      direction: "at top left",
+      stops: [
+        {
+          color: "transparent",
+          position: "29%"
+        },
+        {
+          color,
+          position: "29%"
+        },
+        {
+          color,
+          position: "71%"
+        },
+        {
+          color: "transparent",
+          position: "71%"
+        }
+      ],
+      repeat: "no-repeat"
+    };
+  },
+  function(color) {
+    return {
+      type: "radial",
+      direction: "at top right",
+      stops: [
+        {
+          color: "transparent",
+          position: "29%"
+        },
+        {
+          color,
+          position: "29%"
+        },
+        {
+          color,
+          position: "71%"
+        },
+        {
+          color: "transparent",
+          position: "71%"
+        }
+      ],
+      repeat: "no-repeat"
+    };
+  },
+  function(color) {
+    return {
+      type: "radial",
+      direction: "at bottom right",
+      stops: [
+        {
+          color: "transparent",
+          position: "29%"
+        },
+        {
+          color,
+          position: "29%"
+        },
+        {
+          color,
+          position: "71%"
+        },
+        {
+          color: "transparent",
+          position: "71%"
+        }
+      ],
+      repeat: "no-repeat"
+    };
+  },
+  function(color) {
+    return {
+      type: "radial",
+      direction: "at bottom left",
+      stops: [
+        {
+          color: "transparent",
+          position: "29%"
+        },
+        {
+          color,
+          position: "29%"
+        },
+        {
+          color,
+          position: "71%"
+        },
+        {
+          color: "transparent",
+          position: "71%"
+        }
+      ],
+      repeat: "no-repeat"
+    };
   }
 ];
