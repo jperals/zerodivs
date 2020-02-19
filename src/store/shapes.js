@@ -17,6 +17,7 @@ const shapes = {
         shapes: []
       }
     },
+    round: true,
     shapeToBeAdded: null
   },
   mutations: {
@@ -99,6 +100,11 @@ const shapes = {
       }
       state.layers = { ...state.layers };
     },
+    roundShapeProperty(state, { shape, propertyName }) {
+      if (state.round) {
+        shape[propertyName].value = Math.round(shape[propertyName].value);
+      }
+    },
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
     },
@@ -178,11 +184,13 @@ const shapes = {
       commit("unsetShapeToBeAdded");
       return shapeWithId;
     },
-    moveShape({ commit }, { shape, left, top }) {
+    moveShape({ commit, dispatch }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });
+      dispatch("roundShapeProperties", { shape, left, top });
     },
-    moveShapeBy({ commit }, { shape, left, top }) {
+    moveShapeBy({ commit, dispatch }, { shape, left, top }) {
       commit("moveShapeBy", { shape, left, top });
+      dispatch("roundShapeProperties", { shape, left, top });
     },
     removeSelectedShape({ dispatch, getters }) {
       dispatch("removeShape", getters.selectedShape);
@@ -194,8 +202,19 @@ const shapes = {
     removeStop({ commit }, { shape, index }) {
       commit("removeStop", { shape, index });
     },
-    resizeShape({ commit }, { diff, direction, initialShapeProps, shape }) {
+    resizeShape(
+      { commit, dispatch },
+      { diff, direction, initialShapeProps, shape }
+    ) {
       commit("resizeShape", { diff, direction, initialShapeProps, shape });
+      dispatch("roundShapeProperties", { shape, ...initialShapeProps });
+    },
+    roundShapeProperties({ commit }, { shape, ...properties }) {
+      for (const key in properties) {
+        if (properties[key] !== undefined) {
+          commit("roundShapeProperty", { shape, propertyName: key });
+        }
+      }
     },
     setShapeToBeAdded({ commit }, shape) {
       commit("setShapeToBeAdded", shape);
