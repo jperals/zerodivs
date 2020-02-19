@@ -322,7 +322,7 @@ pinch-zoom {
 }
 .reset-zoom .zoom-value {
   font-size: 0.75rem;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.25rem;
   text-align: left;
 }
 </style>
