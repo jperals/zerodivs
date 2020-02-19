@@ -1,6 +1,6 @@
 <template>
   <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape }">
-    <pinch-zoom>
+    <pinch-zoom ref="zoom">
       <div
         class="pinch-zoom-wrapper"
         v-on:mousemove="onDrag"
@@ -89,9 +89,10 @@ export default {
       if (!this.initialMousePosition) {
         return;
       }
+      const { x, y } = this.transformCoords({ x: event.x, y: event.y });
       const diff = {
-        left: event.x - this.initialMousePosition.x,
-        top: event.y - this.initialMousePosition.y
+        left: x - this.initialMousePosition.x,
+        top: y - this.initialMousePosition.y
       };
       if (this.addingShape) {
         this.dragNewShape(diff);
@@ -106,10 +107,13 @@ export default {
       if (this.addingShape) {
         const rect = this.$refs.workspace.getBoundingClientRect();
         this.workspacePosition = { x: rect.left, y: rect.top };
-        this.initialMousePosition = { x: event.x, y: event.y };
+        this.initialMousePosition = this.transformCoords({
+          x: event.x,
+          y: event.y
+        });
         this.initialNewShapePosition = {
-          left: event.x - this.workspacePosition.x,
-          top: event.y - this.workspacePosition.y
+          left: this.initialMousePosition.x - this.workspacePosition.x,
+          top: this.initialMousePosition.y - this.workspacePosition.y
         };
         this.shapeBeingAdded = {
           ...store.getters.shapeToBeAdded,
@@ -161,7 +165,10 @@ export default {
       this.resizeDirection = direction;
       const rect = this.$refs.workspace.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
-      this.initialMousePosition = { x: event.x, y: event.y };
+      this.initialMousePosition = this.transformCoords({
+        x: event.x,
+        y: event.y
+      });
       this.initialShapeProps = {
         left: { ...shape.left },
         top: { ...shape.top },
@@ -177,7 +184,10 @@ export default {
       this.shapeBeingMoved = shape;
       const rect = this.$refs.workspace.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
-      this.initialMousePosition = { x: event.x, y: event.y };
+      this.initialMousePosition = this.transformCoords({
+        x: event.x,
+        y: event.y
+      });
       this.initialShapeProps = {
         left: { ...shape.left },
         top: { ...shape.top },
@@ -208,7 +218,18 @@ export default {
       // console.log(this.addingShape, this.initialShapeProps);
       // if (this.addingShape || this.initialShapeProps) {
       //   }
-        event.stopPropagation();
+      event.stopPropagation();
+    },
+    transformCoords({ x, y }) {
+      const viewportTransform = {
+        x: this.$refs.zoom.x,
+        y: this.$refs.zoom.y,
+        scale: this.$refs.zoom.scale
+      };
+      return {
+        x: x / viewportTransform.scale - viewportTransform.x,
+        y: y / viewportTransform.scale - viewportTransform.y
+      };
     }
   },
   mounted() {
@@ -229,6 +250,13 @@ export default {
     },
     shapes() {
       return store.getters.shapes;
+    },
+    viewportTransform() {
+      return {
+        x: this.$refs.zoom.x,
+        y: this.$refs.zoom.y,
+        scale: this.$refs.zoom.scale
+      };
     }
   }
 };
