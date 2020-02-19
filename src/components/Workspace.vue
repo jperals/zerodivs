@@ -21,6 +21,10 @@
         </div>
       </div>
     </pinch-zoom>
+    <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
+      <p class="zoom-value">Zoom: {{zoomLevel | decimals(2)}}x</p>
+      <button v-on:click="resetZoom">Reset</button>
+    </div>
   </div>
 </template>
 
@@ -46,7 +50,8 @@ export default {
           top: 0
         },
         zoom: 1
-      }
+      },
+      zoomLevel: null
     };
   },
   components: {
@@ -177,10 +182,10 @@ export default {
       };
     },
     onShapeMouseDown(shape, event) {
-      event.stopPropagation();
       if (this.addingShape) {
         return;
       }
+      event.stopPropagation();
       this.shapeBeingMoved = shape;
       const rect = this.$refs.workspace.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
@@ -206,6 +211,10 @@ export default {
       this.resizeDirection = null;
       this.shapeBeingMoved = null;
     },
+    resetZoom() {
+      this.$refs.zoom.setTransform({ scale: 1, x: 0, y: 0 });
+      this.updateZoomLevel();
+    },
     resizeShape(diff) {
       store.dispatch("resizeShape", {
         diff,
@@ -215,9 +224,6 @@ export default {
       });
     },
     preventZoom(event) {
-      // console.log(this.addingShape, this.initialShapeProps);
-      // if (this.addingShape || this.initialShapeProps) {
-      //   }
       event.stopPropagation();
     },
     transformCoords({ x, y }) {
@@ -230,6 +236,9 @@ export default {
         x: x / viewportTransform.scale - viewportTransform.x,
         y: y / viewportTransform.scale - viewportTransform.y
       };
+    },
+    updateZoomLevel() {
+      this.zoomLevel = this.$refs.zoom.scale;
     }
   },
   mounted() {
@@ -239,7 +248,7 @@ export default {
     this.$refs.pinch.addEventListener("pointerdown", this.preventZoom);
     this.$refs.pinch.addEventListener("pointermove", this.preventZoom);
     this.$refs.pinch.addEventListener("mousedown", this.preventZoom);
-    // this.$refs.pinch.addEventListener("wheel", this.preventZoom);
+    this.$refs.pinch.addEventListener("wheel", this.updateZoomLevel);
   },
   beforeDestroy() {
     this.$refs.workspace.removeEventListener("touchstart", this.touchstart);
@@ -250,13 +259,28 @@ export default {
     },
     shapes() {
       return store.getters.shapes;
-    },
-    viewportTransform() {
-      return {
-        x: this.$refs.zoom.x,
-        y: this.$refs.zoom.y,
-        scale: this.$refs.zoom.scale
-      };
+    }
+  },
+  filters: {
+    decimals(n, desiredDecimals) {
+      if (!desiredDecimals) {
+        return Math.round(n);
+      }
+      const rounded =
+        Math.round(n * Math.pow(10, desiredDecimals)) /
+        Math.pow(10, desiredDecimals);
+      let str = String(rounded);
+      const actualDecimalDigits = str.split(".")[1];
+      let actualLength = 0;
+      if (actualDecimalDigits === undefined) {
+        str += ".";
+      } else {
+        actualLength = actualDecimalDigits.length;
+      }
+      for (let i = 0; i < desiredDecimals - actualLength; i++) {
+        str += "0";
+      }
+      return str;
     }
   }
 };
@@ -286,5 +310,19 @@ pinch-zoom {
   top: 0;
   width: 100%;
   height: 100%;
+}
+.reset-zoom {
+  position: absolute;
+  right: 210px;
+  top: 10px;
+  background-color: hsla(0, 0%, 92%, 0.5);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  text-align: right;
+}
+.reset-zoom .zoom-value {
+  font-size: 0.75rem;
+  margin: 0 0 0.5rem;
+  text-align: left;
 }
 </style>
