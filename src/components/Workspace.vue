@@ -116,9 +116,13 @@ export default {
           x: event.x,
           y: event.y
         });
+        const { x, y } = this.transformCoords({
+          x: event.x - this.workspacePosition.x,
+          y: event.y - this.workspacePosition.y
+        });
         this.initialNewShapePosition = {
-          left: this.initialMousePosition.x - this.workspacePosition.x,
-          top: this.initialMousePosition.y - this.workspacePosition.y
+          left: x,
+          top: y
         };
         this.shapeBeingAdded = {
           ...store.getters.shapeToBeAdded,
@@ -233,8 +237,8 @@ export default {
         scale: this.$refs.zoom.scale
       };
       return {
-        x: x / viewportTransform.scale - viewportTransform.x,
-        y: y / viewportTransform.scale - viewportTransform.y
+        x: (x - viewportTransform.x) / viewportTransform.scale,
+        y: (y - viewportTransform.y) / viewportTransform.scale
       };
     },
     updateZoomLevel() {
