@@ -1,6 +1,6 @@
 <template>
   <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape }">
-    <pinch-zoom ref="zoom">
+    <pinch-zoom ref="pinchZoom">
       <div
         class="pinch-zoom-wrapper"
         v-on:mousemove="onDrag"
@@ -9,7 +9,7 @@
         v-on:pointermove="onDrag"
         v-on:pointerdown="onMouseDown"
         v-on:pointerup="onMouseUp"
-        ref="pinch"
+        ref="pinchZoomInner"
       >
         <Canvas />
         <div class="overlays">
@@ -219,7 +219,7 @@ export default {
       this.shapeBeingMoved = null;
     },
     resetZoom() {
-      this.$refs.zoom.setTransform({ scale: 1, x: 0, y: 0 });
+      this.$refs.pinchZoom.setTransform({ scale: 1, x: 0, y: 0 });
       this.updateZoomLevel();
     },
     resizeShape(diff) {
@@ -235,9 +235,9 @@ export default {
     },
     transformCoords({ x, y }) {
       const viewportTransform = {
-        x: this.$refs.zoom.x,
-        y: this.$refs.zoom.y,
-        scale: this.$refs.zoom.scale
+        x: this.$refs.pinchZoom.x,
+        y: this.$refs.pinchZoom.y,
+        scale: this.$refs.pinchZoom.scale
       };
       return {
         x: (x - viewportTransform.x) / viewportTransform.scale,
@@ -245,11 +245,11 @@ export default {
       };
     },
     updateZoomLevel() {
-      this.zoomLevel = this.$refs.zoom.scale;
+      this.zoomLevel = this.$refs.pinchZoom.scale;
     }
   },
   mounted() {
-    this.$refs.pinch.addEventListener("wheel", this.updateZoomLevel);
+    this.$refs.pinchZoomInner.addEventListener("wheel", this.updateZoomLevel);
   },
   beforeDestroy() {
     this.$refs.workspace.removeEventListener("wheel", this.updateZoomLevel);
