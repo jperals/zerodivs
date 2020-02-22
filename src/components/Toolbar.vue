@@ -5,10 +5,10 @@
       <Button :callback="redo" />
     </section>
     <section>
-      <ShapeButton
-        v-for="(shapeGenerator, index) in buttonShapeGenerators"
+      <ShapeButtonGroup
+        v-for="(shapeGeneratorGroup, index) in buttonShapeGenerators"
         :key="index"
-        :shapeGenerator="shapeGenerator"
+        :shapeGeneratorGroup="shapeGeneratorGroup"
       />
     </section>
     <section>
@@ -20,14 +20,14 @@
 <script>
 import Button from "@/components/ToolbarButton";
 import CurrentColorPicker from "@/components/CurrentColorPicker";
-import ShapeButton from "@/components/ShapeButton";
+import ShapeButtonGroup from "@/components/ShapeButtonGroup";
 import buttonShapeGenerators from "@/components/toolbar-button-shapes";
 import store from "@/store";
 export default {
   components: {
     Button,
     CurrentColorPicker,
-    ShapeButton
+    ShapeButtonGroup
   },
   data() {
     return {
