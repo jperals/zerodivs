@@ -8,7 +8,6 @@
         v-on:mouseup="onMouseUp"
         v-on:pointermove="onDrag"
         v-on:pointerdown="onMouseDown"
-        v-on:pointerup="onMouseUp"
         ref="pinchZoomInner"
       >
         <Canvas />
@@ -147,9 +146,12 @@ export default {
           }
         };
         store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
+      } else {
+        store.dispatch("unselectShape");
       }
     },
-    onMouseUp() {
+    onMouseUp(event) {
+      event.stopPropagation();
       this.initialMousePosition = null;
       this.initialShapeProps = null;
       this.resizeDirection = null;
@@ -164,8 +166,6 @@ export default {
             store.dispatch("selectShape", newShape);
           });
         this.shapeBeingAdded = null;
-      } else {
-        store.dispatch("unselectShape");
       }
     },
     onResizeHandleMouseDown(direction, event) {
