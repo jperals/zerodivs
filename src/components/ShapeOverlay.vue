@@ -5,6 +5,8 @@
     :style="computedStyle"
     v-on:mousedown.stop="$event => onMouseDown(shape, $event)"
     v-on:mouseup.stop="$event => onMouseUp(shape, $event)"
+    v-on:pointerdown.stop="$event => onMouseDown(shape, $event)"
+    v-on:pointerup.stop="$event => onMouseUp(shape, $event)"
   >
     <ShapeResizeHandles v-if="isSelected" :onMouseDown="onResizeHandleMouseDown" />
   </div>

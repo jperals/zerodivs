@@ -6,6 +6,9 @@
         v-on:mousemove="onDrag"
         v-on:mousedown="onMouseDown"
         v-on:mouseup="onMouseUp"
+        v-on:pointermove="onDrag"
+        v-on:pointerdown="onMouseDown"
+        v-on:pointerup="onMouseUp"
         ref="pinch"
       >
         <Canvas />
@@ -90,10 +93,10 @@ export default {
       });
     },
     onDrag(event) {
-      event.stopPropagation();
       if (!this.initialMousePosition) {
         return;
       }
+      event.stopPropagation();
       const { x, y } = this.transformCoords({ x: event.x, y: event.y });
       const diff = {
         left: x - this.initialMousePosition.x,
@@ -108,8 +111,8 @@ export default {
       }
     },
     onMouseDown(event) {
-      event.stopPropagation();
       if (this.addingShape) {
+        event.stopPropagation();
         const rect = this.$refs.workspace.getBoundingClientRect();
         this.workspacePosition = { x: rect.left, y: rect.top };
         this.initialMousePosition = this.transformCoords({
@@ -246,16 +249,10 @@ export default {
     }
   },
   mounted() {
-    this.$refs.pinch.addEventListener("touchstart", this.preventZoom);
-    this.$refs.pinch.addEventListener("touchmove", this.preventZoom);
-    this.$refs.pinch.addEventListener("mousemove", this.preventZoom);
-    this.$refs.pinch.addEventListener("pointerdown", this.preventZoom);
-    this.$refs.pinch.addEventListener("pointermove", this.preventZoom);
-    this.$refs.pinch.addEventListener("mousedown", this.preventZoom);
     this.$refs.pinch.addEventListener("wheel", this.updateZoomLevel);
   },
   beforeDestroy() {
-    this.$refs.workspace.removeEventListener("touchstart", this.touchstart);
+    this.$refs.workspace.removeEventListener("wheel", this.updateZoomLevel);
   },
   computed: {
     addingShape() {
