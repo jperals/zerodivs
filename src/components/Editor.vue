@@ -7,6 +7,7 @@
         <Layers />
         <PropsForm />
       </div>
+      <ProjectOutput v-if="showOutput" />
     </template>
     <div v-else>Couldn't find this div. :-/</div>
   </div>
@@ -18,6 +19,7 @@ import Workspace from "@/components/Workspace";
 import Layers from "@/components/Layers";
 import PropsForm from "@/components/PropsForm";
 import Toolbar from "@/components/Toolbar";
+import ProjectOutput from "@/components/ProjectOutput";
 import reactToKeyboard from "@/react-to-keyboard";
 import store from "@/store";
 export default {
@@ -27,10 +29,11 @@ export default {
     };
   },
   components: {
-    Workspace,
     Layers,
+    ProjectOutput,
     PropsForm,
-    Toolbar
+    Toolbar,
+    Workspace
   },
   created() {
     window.addEventListener("keydown", this.onKeyPress);
@@ -49,6 +52,9 @@ export default {
   computed: {
     project() {
       return store.getters.currentProject;
+    },
+    showOutput() {
+      return store.getters.showOutput;
     }
   },
   methods: {
@@ -85,5 +91,23 @@ export default {
 .canvas,
 .props {
   right: 0;
+}
+.output {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  z-index: 20;
+}
+.output:before {
+  content: "";
+  position: fixed;
+  z-index: -20;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: hsla(0, 0%, 0%, .25);
+  backdrop-filter: blur(10px);
 }
 </style>

@@ -48,7 +48,9 @@ export default {
 <style scoped>
 .toolbar {
   padding: 0.25rem 1rem;
-  border-bottom: 1px solid var(--panel-border-color);
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: var(--panel-border-color);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
