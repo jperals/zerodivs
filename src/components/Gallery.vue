@@ -27,6 +27,7 @@ export default {
   },
   mounted() {
     store.dispatch("loadProjects");
+    store.dispatch("setCurrentProject", null);
   }
 };
 </script>

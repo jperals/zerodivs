@@ -1,7 +1,11 @@
 <template>
   <nav>
-    <router-link to="/">Stretch</router-link>
-    <button v-on:click="toggleOutput">Output</button>
+    <section class="breadcrumbs">
+      <router-link to="/" class="link-to-home">Stretch</router-link>
+      <span v-if="currentProject">/</span>
+      <span v-if="currentProject">{{ currentProject.id }}</span>
+    </section>
+    <button v-if="currentProject" v-on:click="toggleOutput">Output</button>
   </nav>
 </template>
 
@@ -30,8 +34,15 @@ nav {
 nav > * {
   display: inline-block;
 }
-nav > a {
-  padding: 0.25rem 1rem;
+.breadcrumbs > * {
+  display: inline-block;
+  padding: 0.25rem;
+}
+.link-to-home {
+  padding-left: 1rem;
+}
+span {
+  color: var(--gray-700);
 }
 nav > button {
   margin: 0.25rem 1rem;
