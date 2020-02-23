@@ -1,22 +1,26 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
 
+function initialLayersState() {
+  return {
+    main: {
+      active: true,
+      shapes: []
+    },
+    before: {
+      active: false,
+      shapes: []
+    },
+    after: {
+      active: false,
+      shapes: []
+    }
+  };
+}
+
 const shapes = {
   state: {
-    layers: {
-      main: {
-        active: true,
-        shapes: []
-      },
-      before: {
-        active: false,
-        shapes: []
-      },
-      after: {
-        active: false,
-        shapes: []
-      }
-    },
+    layers: initialLayersState(),
     round: true,
     shapeToBeAdded: null
   },
@@ -105,6 +109,9 @@ const shapes = {
         shape[propertyName].value = Math.round(shape[propertyName].value);
       }
     },
+    setShapes(state, shapes) {
+      state.layers = { ...initialLayersState(), ...shapes };
+    },
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
     },
@@ -136,6 +143,7 @@ const shapes = {
     }
   },
   getters: {
+    allLayers: state => state.layers,
     isLayerActive: state => layerName =>
       get(state, `layers[${layerName}].active`, false),
     layerShapes: state => layerName =>
@@ -172,42 +180,58 @@ const shapes = {
     }
   },
   actions: {
-    addNewStop({ commit }, { shape, index }) {
+    addNewStop({ commit, dispatch }, { shape, index }) {
       commit("addNewStop", { shape, index });
+      dispatch("updateProject");
     },
     addShape(
-      { commit, getters },
+      { commit, dispatch, getters },
       { layerName = getters.selectedLayer, shape = getters.shapeToBeAdded }
     ) {
       const shapeWithId = { ...shape, id: uuid() };
       commit("addShape", { layerName, shape: shapeWithId });
       commit("unsetShapeToBeAdded");
+      dispatch("updateProject");
       return shapeWithId;
     },
     moveShape({ commit, dispatch }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });
-      dispatch("roundShapeProperties", { shape, left, top });
+      dispatch("roundShapeProperties", { shape, left, top }).then(() => {
+        dispatch("updateProject");
+      });
     },
     moveShapeBy({ commit, dispatch }, { shape, left, top }) {
       commit("moveShapeBy", { shape, left, top });
-      dispatch("roundShapeProperties", { shape, left, top });
+      dispatch("roundShapeProperties", { shape, left, top }).then(() => {
+        dispatch("updateProject");
+      });
     },
     removeSelectedShape({ dispatch, getters }) {
-      dispatch("removeShape", getters.selectedShape);
-      dispatch("unselectShape");
+      Promise.all([
+        dispatch("removeShape", getters.selectedShape),
+        dispatch("unselectShape")
+      ]).then(() => {
+        dispatch("updateProject");
+      });
     },
-    removeShape({ commit }, shape) {
+    removeShape({ commit, dispatch }, shape) {
       commit("removeShape", shape);
+      dispatch("updateProject");
     },
-    removeStop({ commit }, { shape, index }) {
+    removeStop({ commit, dispatch }, { shape, index }) {
       commit("removeStop", { shape, index });
+      dispatch("updateProject");
     },
     resizeShape(
       { commit, dispatch },
       { diff, direction, initialShapeProps, shape }
     ) {
       commit("resizeShape", { diff, direction, initialShapeProps, shape });
-      dispatch("roundShapeProperties", { shape, ...initialShapeProps });
+      dispatch("roundShapeProperties", { shape, ...initialShapeProps }).then(
+        () => {
+          dispatch("updateProject");
+        }
+      );
     },
     roundShapeProperties({ commit }, { shape, ...properties }) {
       for (const key in properties) {
@@ -216,17 +240,23 @@ const shapes = {
         }
       }
     },
+    setShapes({ commit }, shapes) {
+      commit("setShapes", shapes);
+    },
     setShapeToBeAdded({ commit }, shape) {
       commit("setShapeToBeAdded", shape);
     },
-    toggleLayer({ commit }, layerName) {
+    toggleLayer({ commit, dispatch }, layerName) {
       commit("toggleLayer", layerName);
+      dispatch("updateProject");
     },
-    updateShape({ commit }, { shape, ...newProps }) {
+    updateShape({ commit, dispatch }, { shape, ...newProps }) {
       commit("updateShape", { shape, ...newProps });
+      dispatch("updateProject");
     },
-    updateShapeStop({ commit }, { shape, stop, ...newProps }) {
+    updateShapeStop({ commit, dispatch }, { shape, stop, ...newProps }) {
       commit("updateShapeStop", { shape, stop, ...newProps });
+      dispatch("updateProject");
     }
   }
 };

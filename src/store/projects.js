@@ -1,4 +1,5 @@
 import uuid from "uuid/v1";
+import { get } from "lodash";
 import { warn } from "@/warn";
 import persistence from "@/persistence";
 
@@ -34,6 +35,11 @@ const projects = {
     },
     setProjects(state, projects) {
       state.projects = projects;
+    },
+    updateProject(state, { project, newProps = {} }) {
+      for (const propName in newProps) {
+        project[propName] = newProps[propName];
+      }
     }
   },
   actions: {
@@ -41,10 +47,12 @@ const projects = {
       commit("createNewProject");
       return persistence.set("divs", getters.projects);
     },
-    loadProjectById({ commit, dispatch, getters }, id) {
+    loadProjectById({ dispatch, getters }, id) {
       dispatch("loadProjects").then(() => {
         const project = getters.projectById(id);
-        return commit("setCurrentProject", project);
+        const projectShapes = get(project, "shapes");
+        dispatch("setShapes", projectShapes);
+        return dispatch("setCurrentProject", project);
       });
     },
     loadProjects({ commit }) {
@@ -52,8 +60,10 @@ const projects = {
         .get("divs")
         .then(projects => commit("setProjects", projects || []));
     },
-    modifyProject({ commit, getters }, { project, newProps }) {
-      commit("modifyProject", { project, newProps });
+    updateProject({ commit, getters }, options) {
+      const project = get(options, "project", getters.currentProject);
+      const newProps = get(options, "newProps", { shapes: getters.allLayers });
+      commit("updateProject", { project, newProps });
       return persistence.set("divs", getters.projects);
     },
     removeProject({ commit, getters }, project) {
