@@ -107,7 +107,7 @@ export default [
   [
     function(color) {
       return {
-        name: "Cropped stripe, botom left to top right",
+        name: "Cropped stripe, bottom left to top right",
         type: "linear",
         direction: "to top right",
         stops: [
