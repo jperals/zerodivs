@@ -57,7 +57,4 @@ export default {
   border: 1px solid lightpink;
   z-index: 10;
 }
-.overlay:not(.selected):hover {
-  border: 1px solid hsl(200, 80%, 85%);
-}
 </style>

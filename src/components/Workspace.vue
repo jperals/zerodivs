@@ -326,4 +326,7 @@ pinch-zoom {
   margin: 0 0 0.25rem;
   text-align: left;
 }
+.workspace:not(.adding-shape) .overlay:not(.selected):hover {
+  border: 1px solid hsl(200, 80%, 85%);
+}
 </style>
