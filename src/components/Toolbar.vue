@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      buttonShapeGenerators
+      buttonShapeGenerators: buttonShapeGenerators
     };
   },
   methods: {

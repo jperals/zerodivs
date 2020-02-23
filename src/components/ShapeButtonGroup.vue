@@ -1,34 +1,51 @@
 <template>
   <section>
-    <ShapeButton :shapeGenerator="defaultShapeGenerator" />
+    <ShapeButton :shape="defaultShape" :class="{ selected: wasSelected }" />
     <div class="other-shapes">
       <ShapeButton
-        v-for="(shapeGenerator, index) in otherShapeGenerators"
-        :key="index"
-        :shapeGenerator="shapeGenerator"
+        v-for="shape in otherShapes"
+        :key="shape.name"
+        :onSelect="() => selectShape(shape)"
+        :shape="shape"
       />
     </div>
   </section>
 </template>
 
 <script>
+import { get } from "lodash";
 import ShapeButton from "@/components/ShapeButton";
+import store from "@/store";
 export default {
   props: ["shapeGeneratorGroup"],
   components: {
     ShapeButton
   },
   data() {
-    return { defaultShapeGeneratorIndex: 0 };
+    const firstShape = this.shapeGeneratorGroup[0](store.getters.currentColor)
+    return {
+      defaultShapeName: get(firstShape, "name")
+    };
+  },
+  methods: {
+    selectShape(shape) {
+      this.defaultShapeName = shape.name;
+    }
   },
   computed: {
-    defaultShapeGenerator() {
-      return this.shapeGeneratorGroup[this.defaultShapeGeneratorIndex];
+    defaultShape() {
+      return this.shapes.find(shape => shape.name === this.defaultShapeName);
     },
-    otherShapeGenerators() {
-      return this.shapeGeneratorGroup.filter(
-        shapeGenerator => shapeGenerator !== this.defaultShapeGenerator
+    otherShapes() {
+      return this.shapes.filter(shape => shape.name !== this.defaultShapeName);
+    },
+    shapes() {
+      return this.shapeGeneratorGroup.map(generator =>
+        generator(store.getters.currentColor)
       );
+    },
+    wasSelected() {
+      return get(store.getters.shapeToBeAdded, "name") === this.defaultShapeName;
     }
   }
 };
@@ -50,5 +67,8 @@ section {
 section:not(:hover) .other-shapes {
   opacity: 0;
   pointer-events: none;
+}
+button.selected {
+  box-shadow: 0 0 2px 2px hsl(210, 65%, 55%);
 }
 </style>
