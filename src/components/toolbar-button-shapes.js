@@ -21,7 +21,7 @@ export default [
   [
     function(color) {
       return {
-        name: "Top left triangle",
+        name: "Bottom right triangle",
         type: "linear",
         direction: "to bottom right",
         stops: [
@@ -36,13 +36,12 @@ export default [
             color,
             position: "50%"
           }
-        ],
-        repeat: "no-repeat"
+        ]
       };
     },
     function(color) {
       return {
-        name: "Bottom right triangle",
+        name: "Top left triangle",
         type: "linear",
         direction: "to top left",
         stops: [
@@ -57,13 +56,12 @@ export default [
             color,
             position: "50%"
           }
-        ],
-        repeat: "no-repeat"
+        ]
       };
     },
     function(color) {
       return {
-        name: "Top right triangle",
+        name: "Bottom left triangle",
         type: "linear",
         direction: "to bottom left",
         stops: [
@@ -78,13 +76,12 @@ export default [
             color,
             position: "50%"
           }
-        ],
-        repeat: "no-repeat"
+        ]
       };
     },
     function(color) {
       return {
-        name: "Bottom left triangle",
+        name: "Top right triangle",
         type: "linear",
         direction: "to top right",
         stops: [
@@ -99,8 +96,7 @@ export default [
             color,
             position: "50%"
           }
-        ],
-        repeat: "no-repeat"
+        ]
       };
     }
   ],
