@@ -18,6 +18,8 @@ export default {
   --panel-border-color: hsl(0, 0%, 83%);
   --panel-border-color-strong: hsl(0, 0%, 78%);
   --panel-border-color-stronger: hsl(0, 0%, 70%);
+  --gray-600: #757575;
+  --gray-700: #616161;
   --selected-color: hsl(224, 100%, 67%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

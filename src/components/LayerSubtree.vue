@@ -38,7 +38,7 @@ export default {
       return store.getters.selectedShape === shape;
     },
     shapeLabel(shape) {
-      return shape.type;
+      return shape.name;
     },
     selectLayer() {
       store.dispatch("selectLayer", this.layerName);
@@ -81,7 +81,17 @@ ul {
   padding: 0;
 }
 .shape.list-node {
-  padding-left: 2rem;
+  padding-left: 1rem;
+}
+.shape.list-node label {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shape.list-node:not(.selected) label {
+  color: var(--gray-700);
 }
 .list-node:last-child {
   border-bottom-color: var(--panel-border-color-strong);
