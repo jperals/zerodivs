@@ -69,6 +69,6 @@ section:not(:hover) .other-shapes {
   pointer-events: none;
 }
 button.selected {
-  box-shadow: 0 0 2px 2px hsl(210, 65%, 55%);
+  box-shadow: 0 0 2px 2px var(--selected-color);
 }
 </style>
