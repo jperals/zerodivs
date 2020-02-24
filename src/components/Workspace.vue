@@ -77,7 +77,8 @@ export default {
         width: { value: width },
         height: { value: height },
         top: { value: y },
-        left: { value: x }
+        left: { value: x },
+        round: true
       });
     },
     moveShape(diff) {

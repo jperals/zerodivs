@@ -1,5 +1,6 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
+import warn from "@/warn";
 
 function initialLayersState() {
   return {
@@ -106,7 +107,12 @@ const shapes = {
     },
     roundShapeProperty(state, { shape, propertyName }) {
       if (state.round) {
-        shape[propertyName].value = Math.round(shape[propertyName].value);
+        const propertyObject = get(shape, propertyName);
+        if (propertyObject && isObject(propertyObject)) {
+          propertyObject.value = Math.round(propertyObject.value);
+        } else {
+          warn(`Property ${propertyName} of shape is not an object`);
+        }
       }
     },
     setShapes(state, shapes) {
@@ -227,10 +233,17 @@ const shapes = {
       commit("resizeShape", { diff, direction, initialShapeProps, shape });
       dispatch("roundShapeProperties", { shape, ...initialShapeProps });
     },
-    roundShapeProperties({ commit }, { shape, ...properties }) {
-      for (const key in properties) {
-        if (properties[key] !== undefined) {
-          commit("roundShapeProperty", { shape, propertyName: key });
+    roundShapeProperties({ commit }, { shape, propertyNames, ...properties }) {
+      if (propertyNames instanceof Array) {
+        for (const propertyName of propertyNames) {
+          commit("roundShapeProperty", { shape, propertyName });
+        }
+      }
+      if (properties) {
+        for (const key in properties) {
+          if (properties[key] !== undefined) {
+            commit("roundShapeProperty", { shape, propertyName: key });
+          }
         }
       }
     },
@@ -244,9 +257,16 @@ const shapes = {
       commit("toggleLayer", layerName);
       dispatch("updateProject");
     },
-    updateShape({ commit, dispatch }, { shape, ...newProps }) {
+    updateShape({ commit, dispatch }, { shape, round = true, ...newProps }) {
       commit("updateShape", { shape, ...newProps });
-      dispatch("updateProject");
+      if (round) {
+        dispatch("roundShapeProperties", {
+          shape,
+          propertyNames: ["left", "top"]
+        }).then(() => dispatch("updateProject"));
+      } else {
+        dispatch("updateProject");
+      }
     },
     updateShapeStop({ commit, dispatch }, { shape, stop, ...newProps }) {
       commit("updateShapeStop", { shape, stop, ...newProps });
