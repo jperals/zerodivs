@@ -28,6 +28,7 @@ export default {
   padding-left: 0;
   width: 160px;
   border-right: 1px solid var(--panel-border-color);
+  overflow-y: auto;
 }
 ul {
   list-style: none;
