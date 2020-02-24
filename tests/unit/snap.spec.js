@@ -87,9 +87,11 @@ describe("generateSnapPoints", () => {
       { left: 50, top: 43, width: 34, height: 10 },
       { left: 10, top: -10, width: 100, height: 30 }
     ];
-    const snapPointValues = generateSnapPoints(shapes).map(
-      point => point.value
-    );
+    const snapPoints = generateSnapPoints(shapes);
+    const snapPointValues = {
+      x: snapPoints.x.map(point => point.value),
+      y: snapPoints.y.map(point => point.value)
+    };
     expect(snapPointValues).toEqual({
       x: [10, 50, 84, 110],
       y: [-10, 20, 43, 53]

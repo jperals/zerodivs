@@ -6,6 +6,19 @@ export default {
   getters: {
     snapPoint: state => point =>
       findClosestSnap({ snapPointsSorted: state.snapPoints, point })
+  },
+  mutations: {
+    generateSnapPoints(state, shapes) {
+      state.snapPoints = generateSnapPoints(shapes);
+    }
+  },
+  actions: {
+    generateSnapPoints({ commit, getters }) {
+      commit("generateSnapPoints", getters.shapes);
+    },
+    updateProject({ dispatch }) {
+      dispatch("generateSnapPoints");
+    }
   }
 };
 
@@ -55,5 +68,17 @@ function snapDistance({ snapPoint, number }) {
 }
 
 export function generateSnapPoints(shapes) {
-
+  const snapPoints = {
+    x: [],
+    y: []
+  };
+  for (const shape of shapes) {
+    snapPoints.x.push({shape, value: shape.left.value, property: "left"});
+    snapPoints.x.push({shape, value: shape.left.value + shape.width.value, property: "right"});
+    snapPoints.y.push({shape, value: shape.top.value, property: "top"});
+    snapPoints.y.push({shape, value: shape.top.value + shape.height.value, property: "bottom"});
+  }
+  snapPoints.x.sort((pointA, pointB) => pointA.value - pointB.value);
+  snapPoints.y.sort((pointA, pointB) => pointA.value - pointB.value);
+  return snapPoints;
 }
