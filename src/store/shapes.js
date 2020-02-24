@@ -196,9 +196,7 @@ const shapes = {
     },
     moveShape({ commit, dispatch }, { shape, left, top }) {
       commit("moveShape", { shape, left, top });
-      dispatch("roundShapeProperties", { shape, left, top }).then(() => {
-        dispatch("updateProject");
-      });
+      dispatch("roundShapeProperties", { shape, left, top });
     },
     moveShapeBy({ commit, dispatch }, { shape, left, top }) {
       commit("moveShapeBy", { shape, left, top });
@@ -227,11 +225,7 @@ const shapes = {
       { diff, direction, initialShapeProps, shape }
     ) {
       commit("resizeShape", { diff, direction, initialShapeProps, shape });
-      dispatch("roundShapeProperties", { shape, ...initialShapeProps }).then(
-        () => {
-          dispatch("updateProject");
-        }
-      );
+      dispatch("roundShapeProperties", { shape, ...initialShapeProps });
     },
     roundShapeProperties({ commit }, { shape, ...properties }) {
       for (const key in properties) {

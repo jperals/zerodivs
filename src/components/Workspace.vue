@@ -148,7 +148,7 @@ export default {
         store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
       } else {
         store.dispatch("unselectShape");
-      }
+       }
     },
     onMouseUp(event) {
       event.stopPropagation();
@@ -217,6 +217,7 @@ export default {
       this.initialShapeProps = null;
       this.resizeDirection = null;
       this.shapeBeingMoved = null;
+      store.dispatch("updateProject");
     },
     resetZoom() {
       this.$refs.pinchZoom.setTransform({ scale: 1, x: 0, y: 0 });
