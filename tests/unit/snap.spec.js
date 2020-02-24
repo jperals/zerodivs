@@ -1,4 +1,4 @@
-import { findClosestSnap } from "@/store/snap";
+import { findClosestSnap, generateSnapPoints } from "@/store/snap";
 
 describe("findSnapPoint", () => {
   it("finds closest snap", () => {
@@ -78,5 +78,21 @@ describe("findSnapPoint", () => {
       point
     });
     expect(closestSnap).toEqual({ x: { value: 10 }, y: { value: 34 } });
+  });
+});
+
+describe("generateSnapPoints", () => {
+  it("generates snap points from shapes", () => {
+    const shapes = [
+      { left: 50, top: 43, width: 34, height: 10 },
+      { left: 10, top: -10, width: 100, height: 30 }
+    ];
+    const snapPointValues = generateSnapPoints(shapes).map(
+      point => point.value
+    );
+    expect(snapPointValues).toEqual({
+      x: [10, 50, 84, 110],
+      y: [-10, 20, 43, 53]
+    });
   });
 });

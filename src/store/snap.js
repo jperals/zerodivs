@@ -53,3 +53,7 @@ function findClosestSnapInAxis({
 function snapDistance({ snapPoint, number }) {
   return Math.abs(snapPoint.value - number);
 }
+
+export function generateSnapPoints(shapes) {
+
+}
