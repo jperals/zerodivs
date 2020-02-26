@@ -14,7 +14,7 @@
 
 <script>
 import store from "@/store";
-import ShapeResizeHandles from "@/components/ShapeResizeHandles";
+import ShapeResizeHandles from "./ShapeResizeHandles";
 export default {
   props: {
     onMouseDown: Function,

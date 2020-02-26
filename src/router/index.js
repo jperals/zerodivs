@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Gallery from "@/components/Gallery";
-import Editor from "@/components/Editor";
+import Gallery from "@/gallery/Gallery";
+import Editor from "@/editor/Editor";
 
 Vue.use(VueRouter);
 

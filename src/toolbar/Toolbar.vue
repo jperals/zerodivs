@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import Button from "@/components/ToolbarButton";
+import Button from "./ToolbarButton";
 import CurrentColorPicker from "@/components/CurrentColorPicker";
-import ShapeButtonGroup from "@/components/ShapeButtonGroup";
-import buttonShapeGenerators from "@/components/toolbar-button-shapes";
+import ShapeButtonGroup from "./ShapeButtonGroup";
+import buttonShapeGenerators from "./toolbar-button-shapes";
 import store from "@/store";
 export default {
   components: {

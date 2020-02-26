@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ToolbarButton from "@/components/ToolbarButton";
+import ToolbarButton from "./ToolbarButton";
 import { formatImage } from "@/shapes2css";
 import store from "@/store";
 export default {

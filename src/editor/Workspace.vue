@@ -32,8 +32,8 @@
 
 <script>
 import store from "@/store";
-import Canvas from "@/components/Canvas";
-import ShapeOverlay from "@/components/ShapeOverlay";
+import Canvas from "./Canvas";
+import ShapeOverlay from "./ShapeOverlay";
 import "pinch-zoom-element";
 export default {
   data() {

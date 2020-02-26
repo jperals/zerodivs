@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import LayerPropsFormFields from "@/components/LayerPropsFormFields";
-import ShapePropsFormFields from "@/components/ShapePropsFormFields";
+import LayerPropsFormFields from "./LayerPropsFormFields";
+import ShapePropsFormFields from "./ShapePropsFormFields";
 import store from "@/store";
 export default {
   components: {

@@ -15,10 +15,10 @@
 
 <script>
 import { get } from "lodash";
-import Workspace from "@/components/Workspace";
-import Layers from "@/components/Layers";
-import PropsForm from "@/components/PropsForm";
-import Toolbar from "@/components/Toolbar";
+import Workspace from "./Workspace";
+import Layers from "./Layers";
+import PropsForm from "./PropsForm";
+import Toolbar from "@/toolbar/Toolbar";
 import ProjectOutput from "@/components/ProjectOutput";
 import reactToKeyboard from "@/react-to-keyboard";
 import store from "@/store";

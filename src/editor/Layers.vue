@@ -8,7 +8,7 @@
 
 <script>
 import store from "@/store";
-import LayerSubtree from "@/components/LayerSubtree";
+import LayerSubtree from "./LayerSubtree";
 export default {
   components: {
     LayerSubtree

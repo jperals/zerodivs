@@ -14,7 +14,7 @@
 
 <script>
 import { get } from "lodash";
-import ShapeButton from "@/components/ShapeButton";
+import ShapeButton from "./ShapeButton";
 import store from "@/store";
 export default {
   props: ["shapeGeneratorGroup"],

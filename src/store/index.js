@@ -1,10 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import projects from "./projects";
-import shapes from "./shapes";
-import snap from "./snap";
+import projects from "../gallery/projects-store";
+import shapes from "../editor/shapes-store";
+import snap from "../snap/snap-store";
 import ui from "./ui";
-import undoRedo from "./undo-redo";
+import undoRedo from "../undo-redo/undo-redo";
 
 Vue.use(Vuex);
 

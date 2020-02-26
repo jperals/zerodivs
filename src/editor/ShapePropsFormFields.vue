@@ -56,7 +56,7 @@
 
 <script>
 import store from "@/store";
-import StopsEditor from "@/components/StopsEditor";
+import StopsEditor from "./StopsEditor";
 export default {
   components: {
     StopsEditor
