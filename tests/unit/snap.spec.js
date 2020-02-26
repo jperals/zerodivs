@@ -84,8 +84,18 @@ describe("findSnapPoint", () => {
 describe("generateSnapPoints", () => {
   it("generates snap points from shapes", () => {
     const shapes = [
-      { left: 50, top: 43, width: 34, height: 10 },
-      { left: 10, top: -10, width: 100, height: 30 }
+      {
+        left: { value: 50 },
+        top: { value: 43 },
+        width: { value: 34 },
+        height: { value: 10 }
+      },
+      {
+        left: { value: 10 },
+        top: { value: -10 },
+        width: { value: 100 },
+        height: { value: 30 }
+      }
     ];
     const snapPoints = generateSnapPoints(shapes);
     const snapPointValues = {
