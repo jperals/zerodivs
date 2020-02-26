@@ -1,4 +1,4 @@
-import shapes2css from "@/shapes2css";
+import shapes2css from "@/common/shapes2css";
 
 describe("shapes2css", () => {
   it("Converts shapes to CSS", () => {

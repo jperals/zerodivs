@@ -4,7 +4,7 @@ import projects from "../gallery/projects-store";
 import shapes from "../editor/shapes-store";
 import snap from "../snap/snap-store";
 import ui from "./ui";
-import undoRedo from "../undo-redo/undo-redo";
+import undoRedo from "../undo-redo/undo-redo-store";
 
 Vue.use(Vuex);
 

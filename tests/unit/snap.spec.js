@@ -1,4 +1,4 @@
-import { findClosestSnap, generateSnapPoints } from "@/store/snap";
+import { findClosestSnap, generateSnapPoints } from "@/snap/snap";
 
 describe("findSnapPoint", () => {
   it("finds closest snap", () => {

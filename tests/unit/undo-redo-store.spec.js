@@ -1,4 +1,4 @@
-import undoRedoStore from "@/store/undo-redo";
+import undoRedoStore from "@/undo-redo/undo-redo-store";
 import Vue from "vue";
 import Vuex from "vuex";
 

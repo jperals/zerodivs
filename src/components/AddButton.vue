@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import shapes2css from "@/shapes2css";
+import shapes2css from "@/common/shapes2css";
 export default {
   props: {
     onClick: Function

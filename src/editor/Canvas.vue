@@ -4,7 +4,7 @@
 
 <script>
 import store from "@/store";
-import shapes2css from "@/shapes2css";
+import shapes2css from "@/common/shapes2css";
 export default {
   computed: {
     computedStyle() {

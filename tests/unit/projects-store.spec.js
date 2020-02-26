@@ -1,4 +1,4 @@
-import projectsStore from "@/store/projects";
+import projectsStore from "@/gallery/projects-store";
 import Vue from "vue";
 import Vuex from "vuex";
 

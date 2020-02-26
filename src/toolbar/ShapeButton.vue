@@ -4,7 +4,7 @@
 
 <script>
 import ToolbarButton from "./ToolbarButton";
-import { formatImage } from "@/shapes2css";
+import { formatImage } from "@/common/shapes2css";
 import store from "@/store";
 export default {
   props: {
