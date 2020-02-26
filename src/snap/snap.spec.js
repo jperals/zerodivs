@@ -1,4 +1,4 @@
-import { findClosestSnap, generateSnapPoints } from "@/snap/snap";
+import { findClosestSnap, generateSnapPoints, moveSnap } from "@/snap/snap";
 
 describe("findSnapPoint", () => {
   it("finds closest snap", () => {
@@ -106,5 +106,62 @@ describe("generateSnapPoints", () => {
       x: [10, 50, 84, 110],
       y: [-10, 20, 43, 53]
     });
+  });
+});
+
+describe("moveSnap", () => {
+  const snapPoints = {
+    x: [
+      { value: 10 },
+      { value: 20 },
+      { value: 50 },
+      { value: 70 },
+      { value: 180 }
+    ],
+    y: [
+      { value: 10 },
+      { value: 20 },
+      { value: 70 },
+      { value: 90 },
+      { value: 180 }
+    ]
+  };
+  const shape = {
+    left: {
+      value: 25
+    },
+    top: {
+      value: 40
+    },
+    width: {
+      value: 50
+    },
+    height: {
+      value: 30
+    }
+  };
+  const delta = {
+    left: { value: 15 },
+    top: { value: -17 }
+  };
+it("keeps a shape at the same position when no threshold is met", () => {
+    const newProps = moveSnap({
+      delta, shape, snapPoints, threshold: 2
+    });
+    expect(newProps).toEqual(shape);
+  });
+it("moves a shape vertically when the threshold is met vertically", () => {
+    const newProps = moveSnap({
+      delta, shape, snapPoints, threshold: 5
+    });
+    expect(newProps.left.value).toEqual(shape.left.value);
+    expect(newProps.top.value).toEqual(20);
+  });
+it("moves a shape horizontally and vertically when the threshold is met in both axes", () => {
+    const newProps = moveSnap({
+      delta, shape, snapPoints, threshold: 10
+    });
+    expect(newProps.left.value).toEqual(50);
+    expect(newProps.top.value).toEqual(20);
   });
 });

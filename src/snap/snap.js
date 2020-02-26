@@ -39,10 +39,6 @@ function findClosestSnapInAxis({
   });
 }
 
-function snapDistance({ snapPoint, number }) {
-  return Math.abs(snapPoint.value - number);
-}
-
 export function generateSnapPoints(shapes) {
   const snapPoints = {
     x: [],
@@ -57,4 +53,12 @@ export function generateSnapPoints(shapes) {
   snapPoints.x.sort((pointA, pointB) => pointA.value - pointB.value);
   snapPoints.y.sort((pointA, pointB) => pointA.value - pointB.value);
   return snapPoints;
+}
+
+export function moveSnap({ shape, snapPoints, threshold }) {
+
+}
+
+function snapDistance({ snapPoint, number,  }) {
+  return Math.abs(snapPoint.value - number);
 }
