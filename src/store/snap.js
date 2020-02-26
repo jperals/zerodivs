@@ -1,5 +1,6 @@
 export default {
   state: {
+    closestSnapPoints: {},
     snapPoints: { x: [], y: [] },
     snapThreshold: 5
   },
