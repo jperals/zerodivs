@@ -1,4 +1,4 @@
-import { findClosestSnap, generateSnapPoints, moveSnap } from "@/snap/snap";
+import { findClosestSnap, generateSnapPoints, moveByAndSnap } from "@/snap/snap";
 
 describe("findSnapPoint", () => {
   it("finds closest snap", () => {
@@ -109,7 +109,7 @@ describe("generateSnapPoints", () => {
   });
 });
 
-describe("moveSnap", () => {
+describe("moveAndSnap", () => {
   const snapPoints = {
     x: [
       { value: 10 },
@@ -145,21 +145,21 @@ describe("moveSnap", () => {
     top: { value: -17 }
   };
 it("keeps a shape at the same position when no threshold is met", () => {
-    const newProps = moveSnap({
-      delta, shape, snapPoints, threshold: 2
+    const newProps = moveByAndSnap({
+      shape, snapPoints, threshold: 2, ...delta
     });
     expect(newProps).toEqual(shape);
   });
 it("moves a shape vertically when the threshold is met vertically", () => {
-    const newProps = moveSnap({
-      delta, shape, snapPoints, threshold: 5
+    const newProps = moveByAndSnap({
+      shape, snapPoints, threshold: 5, ...delta
     });
     expect(newProps.left.value).toEqual(shape.left.value);
     expect(newProps.top.value).toEqual(20);
   });
 it("moves a shape horizontally and vertically when the threshold is met in both axes", () => {
-    const newProps = moveSnap({
-      delta, shape, snapPoints, threshold: 10
+    const newProps = moveByAndSnap({
+      shape, snapPoints, threshold: 10, ...delta
     });
     expect(newProps.left.value).toEqual(50);
     expect(newProps.top.value).toEqual(20);

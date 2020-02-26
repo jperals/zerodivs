@@ -1,4 +1,4 @@
-import {findClosestSnap, generateSnapPoints} from "./snap";
+import { findClosestSnap, generateSnapPoints } from "./snap";
 
 export default {
   state: {
@@ -8,7 +8,9 @@ export default {
   },
   getters: {
     snapPoint: state => point =>
-      findClosestSnap({ snapPointsSorted: state.snapPoints, point })
+      findClosestSnap({ snapPointsSorted: state.snapPoints, point }),
+    snapPoints: state => state.snapPoints,
+    snapThreshold: state => state.snapThreshold
   },
   mutations: {
     generateSnapPoints(state, shapes) {
@@ -18,6 +20,9 @@ export default {
   actions: {
     generateSnapPoints({ commit, getters }) {
       commit("generateSnapPoints", getters.shapes);
+    },
+    setCurrentProject({ dispatch }) {
+      dispatch("generateSnapPoints");
     },
     updateProject({ dispatch }) {
       dispatch("generateSnapPoints");

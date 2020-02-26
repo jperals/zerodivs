@@ -1,6 +1,7 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
 import warn from "@/warn";
+import { moveAndSnap } from "@/snap/snap";
 
 function initialLayersState() {
   return {
@@ -38,13 +39,11 @@ const shapes = {
       get(shape, "stops", []).forEach(stop => (stop.id = uuid()));
       state.layers[layerName].shapes.push(shape);
     },
-    moveShape(state, { shape, left, top }) {
-      if (typeof left === "object" && left.units === shape.left.units) {
-        shape.left = left;
-      }
-      if (typeof top === "object" && top.units === shape.top.units) {
-        shape.top = top;
-      }
+    moveShape(state, { shape, left, top, snapPoints, threshold }) {
+      Object.assign(
+        shape,
+        moveAndSnap({ shape, left, top, snapPoints, threshold })
+      );
       state.layers = { ...state.layers };
     },
     moveShapeBy(state, { shape, left, top }) {
@@ -200,9 +199,9 @@ const shapes = {
       dispatch("updateProject");
       return shapeWithId;
     },
-    moveShape({ commit, dispatch }, { shape, left, top }) {
-      commit("moveShape", { shape, left, top });
-      dispatch("roundShapeProperties", { shape, left, top });
+    moveShape({ commit, getters }, { shape, left, top }) {
+      commit("moveShape", { shape, left, top, snapPoints: getters.snapPoints, threshold: getters.snapThreshold });
+      // dispatch("roundShapeProperties", { shape, left, top });
     },
     moveShapeBy({ commit, dispatch }, { shape, left, top }) {
       commit("moveShapeBy", { shape, left, top });
