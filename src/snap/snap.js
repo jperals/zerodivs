@@ -12,7 +12,7 @@ export function findClosestSnap({ snapPointsSorted, point }) {
 }
 
 // Performs binary search
-function findClosestSnapInAxis({
+export function findClosestSnapInAxis({
   snapPointsSorted = [],
   point,
   start = 0,
@@ -31,9 +31,12 @@ function findClosestSnapInAxis({
     return distanceFirst <= distanceSecond ? first : second;
   }
   let indexAtHalf = start + Math.floor((end - start) / 2);
-  const valueAtHalf = snapPointsSorted[indexAtHalf].value;
+  const pointAtLeft = snapPointsSorted[indexAtHalf];
+  const pointAtRight = snapPointsSorted[indexAtHalf + 1];
+  const distanceToLeft = snapDistance({snapPoint: pointAtLeft, number: point});
+  const distanceToRight = snapDistance({snapPoint: pointAtRight, number: point});
   const [newStart, newEnd] =
-    point <= valueAtHalf ? [start, indexAtHalf] : [indexAtHalf + 1, end];
+    distanceToLeft <= distanceToRight ? [start, indexAtHalf] : [indexAtHalf + 1, end];
   return findClosestSnapInAxis({
     snapPointsSorted,
     point,
@@ -163,6 +166,7 @@ function moveSnapY({ shape, snapPoints, threshold }) {
       top: { value: closestToBottom.value - shape.height.value }
     });
   }
+  console.log({moved, threshold, distanceTop, distanceBottom});
   return moved;
 }
 

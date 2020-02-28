@@ -1,6 +1,6 @@
-import { findClosestSnap, generateSnapPoints, moveByAndSnap } from "@/snap/snap";
+import { findClosestSnap, findClosestSnapInAxis, generateSnapPoints, moveByAndSnap } from "@/snap/snap";
 
-describe("findSnapPoint", () => {
+describe("findClosestSnap", () => {
   it("finds closest snap", () => {
     const snapPoints = {
       x: [
@@ -81,6 +81,27 @@ describe("findSnapPoint", () => {
   });
 });
 
+describe("findClosestSnapInAxis", () => {
+  it("Finds closest snap in y axis", () => {
+    const snapPointsSorted = [
+      { value: 10 },
+      { value: 20 },
+      { value: 70 },
+      { value: 90 },
+      { value: 180 }
+    ];
+    const point = 23;
+    const snap = findClosestSnapInAxis({
+      point,
+      snapPointsSorted
+    });
+    expect(snap).toEqual({
+      value: 20
+    });
+  });
+});
+
+
 describe("generateSnapPoints", () => {
   it("generates snap points from shapes", () => {
     const shapes = [
@@ -126,7 +147,13 @@ describe("moveAndSnap", () => {
       { value: 180 }
     ]
   };
-  const shape = {
+  let shape;
+  const delta = {
+    left: { value: 15 },
+    top: { value: -17 }
+  };
+beforeEach(() => {
+  shape = {
     left: {
       value: 25
     },
@@ -140,10 +167,7 @@ describe("moveAndSnap", () => {
       value: 30
     }
   };
-  const delta = {
-    left: { value: 15 },
-    top: { value: -17 }
-  };
+});
 it("keeps a shape at the same position when no threshold is met", () => {
     const newProps = moveByAndSnap({
       shape, snapPoints, threshold: 2, ...delta
