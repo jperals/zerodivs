@@ -30,13 +30,22 @@ export function findClosestSnapInAxis({
     const distanceSecond = snapDistance({ snapPoint: second, number: point });
     return distanceFirst <= distanceSecond ? first : second;
   }
-  let indexAtHalf = start + Math.floor((end - start) / 2);
-  const pointAtLeft = snapPointsSorted[indexAtHalf];
-  const pointAtRight = snapPointsSorted[indexAtHalf + 1];
-  const distanceToLeft = snapDistance({snapPoint: pointAtLeft, number: point});
-  const distanceToRight = snapDistance({snapPoint: pointAtRight, number: point});
+  const indexAtLeftOfHalf = start + Math.floor((end - start) / 2);
+  const indexAtRightOfHalf = indexAtLeftOfHalf + 1;
+  const pointAtLeft = snapPointsSorted[indexAtLeftOfHalf];
+  const pointAtRight = snapPointsSorted[indexAtRightOfHalf];
+  const distanceToLeft = snapDistance({
+    snapPoint: pointAtLeft,
+    number: point
+  });
+  const distanceToRight = snapDistance({
+    snapPoint: pointAtRight,
+    number: point
+  });
   const [newStart, newEnd] =
-    distanceToLeft <= distanceToRight ? [start, indexAtHalf] : [indexAtHalf + 1, end];
+    distanceToLeft <= distanceToRight
+      ? [start, indexAtLeftOfHalf]
+      : [indexAtRightOfHalf, end];
   return findClosestSnapInAxis({
     snapPointsSorted,
     point,
@@ -166,7 +175,7 @@ function moveSnapY({ shape, snapPoints, threshold }) {
       top: { value: closestToBottom.value - shape.height.value }
     });
   }
-  console.log({moved, threshold, distanceTop, distanceBottom});
+  console.log({ moved, threshold, distanceTop, distanceBottom });
   return moved;
 }
 
