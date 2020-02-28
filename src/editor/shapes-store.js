@@ -1,7 +1,7 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
 import warn from "@/warn";
-import { moveAndSnap } from "@/snap/snap";
+import { move, moveSnap } from "@/snap/snap";
 
 function initialLayersState() {
   return {
@@ -38,13 +38,6 @@ const shapes = {
     addShape(state, { layerName, shape }) {
       get(shape, "stops", []).forEach(stop => (stop.id = uuid()));
       state.layers[layerName].shapes.push(shape);
-    },
-    moveShape(state, { shape, left, top, snapPoints, threshold }) {
-      Object.assign(
-        shape,
-        moveAndSnap({ shape, left, top, snapPoints, threshold })
-      );
-      state.layers = { ...state.layers };
     },
     moveShapeBy(state, { shape, left, top }) {
       if (typeof left === "object" && left.units === shape.left.units) {
@@ -199,9 +192,44 @@ const shapes = {
       dispatch("updateProject");
       return shapeWithId;
     },
-    moveShape({ commit, getters }, { shape, left, top }) {
-      commit("moveShape", { shape, left, top, snapPoints: getters.snapPoints, threshold: getters.snapThreshold });
+    moveShape({ commit, getters, dispatch }, { shape, left, top }) {
+      // commit("moveShape", { shape, left, top, snapPoints: getters.snapPoints, threshold: getters.snapThreshold });
       // dispatch("roundShapeProperties", { shape, left, top });
+      const moved = move({ left, shape, top });
+      const snapped = moveSnap({
+        left,
+        shape: moved,
+        snapPoints: getters.snapPoints,
+        threshold: getters.snapThreshold,
+        top
+      });
+      const propertiesToRound = [];
+      if (moved.left.value === snapped.left.value) {
+        // No snap, we can round
+        propertiesToRound.push("left");
+      }
+      if (moved.top.value === snapped.top.value) {
+        // No snap, we can round
+        propertiesToRound.push("top");
+      }
+      if (propertiesToRound.length) {
+        dispatch("roundShapeProperties", {
+          shape: snapped,
+          propertyNames: propertiesToRound
+        }).then(() => {
+          commit("updateShape", {
+            shape,
+            left: snapped.left,
+            top: snapped.top
+          });
+        });
+      } else {
+        commit("updateShape", {
+          shape,
+          left: snapped.left,
+          top: snapped.top
+        });
+      }
     },
     moveShapeBy({ commit, dispatch }, { shape, left, top }) {
       commit("moveShapeBy", { shape, left, top });
