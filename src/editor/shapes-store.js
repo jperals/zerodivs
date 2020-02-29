@@ -1,7 +1,8 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
 import warn from "@/warn";
-import { move, moveSnap } from "@/snap/snap";
+import { move } from "./shapes";
+import { getSnaps, moveToSnaps } from "@/snap/snap";
 
 function initialLayersState() {
   return {
@@ -194,13 +195,12 @@ const shapes = {
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {
       const moved = move({ left, shape, top });
-      const snapped = moveSnap({
-        left,
+      const snaps = getSnaps({
         shape: moved,
         snapPoints: getters.snapPoints,
-        threshold: getters.snapThreshold,
-        top
+        threshold: getters.snapThreshold
       });
+      const snapped = moveToSnaps({ shape: moved, snaps });
       const propertiesToRound = [];
       if (moved.left.value === snapped.left.value) {
         // No snap, we can round

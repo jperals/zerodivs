@@ -1,3 +1,5 @@
+import { move } from "@/editor/shapes";
+
 export function findClosestSnap({ snapPointsSorted, point }) {
   return {
     x: findClosestSnapInAxis({
@@ -81,7 +83,7 @@ export function generateSnapPoints({ shapes, excluded }) {
   return snapPoints;
 }
 
-function getSnaps({ shape, snapPoints, threshold }) {
+export function getSnaps({ shape, snapPoints, threshold }) {
   return {
     x: getSnapX({ shape, snapPoints: snapPoints.x, threshold }),
     y: getSnapY({ shape, snapPoints: snapPoints.y, threshold })
@@ -132,22 +134,6 @@ function getSnapY({ shape, snapPoints, threshold }) {
   }
 }
 
-export function move({ left, shape, top }) {
-  const moved = {
-    left: { ...shape.left },
-    top: { ...shape.top },
-    width: { ...shape.width },
-    height: { ...shape.height }
-  };
-  if (left !== undefined) {
-    moved.left.value = left.value;
-  }
-  if (top !== undefined) {
-    moved.top.value = top.value;
-  }
-  return moved;
-}
-
 export function moveAndSnap({ left, shape, snapPoints, threshold, top }) {
   const moved = move({ left, shape, top });
   return moveSnap({ left, shape: moved, snapPoints, threshold });
@@ -181,9 +167,8 @@ export function moveByAndSnap({ left, shape, snapPoints, threshold, top }) {
 }
 
 export function moveSnap({ shape, snapPoints, threshold }) {
-  const {x, y} = getSnaps({ shape, snapPoints, threshold});
-  const snappedX = moveToSnap({ shape, snap: x});
-  return moveToSnap({ shape: snappedX, snap: y});
+  const snaps = getSnaps({ shape, snapPoints, threshold});
+  return moveToSnaps({shape, snaps});
 }
 
 function moveToSnap({ shape, snap }) {
@@ -206,6 +191,10 @@ function moveToSnap({ shape, snap }) {
   }
   return moved;
 }
+
+export function moveToSnaps({ shape, snaps}) {
+  const snappedX = moveToSnap({ shape, snap: snaps.x});
+  return moveToSnap({ shape: snappedX, snap: snaps.y});}
 
 function snapDistance({ snapPoint, number }) {
   return Math.abs(snapPoint.value - number);
