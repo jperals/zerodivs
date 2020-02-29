@@ -13,13 +13,13 @@ export default {
     snapThreshold: state => state.snapThreshold
   },
   mutations: {
-    generateSnapPoints(state, shapes) {
-      state.snapPoints = generateSnapPoints(shapes);
+    generateSnapPoints(state, {shapes, excluded}) {
+      state.snapPoints = generateSnapPoints({shapes, excluded});
     }
   },
   actions: {
     generateSnapPoints({ commit, getters }) {
-      commit("generateSnapPoints", getters.shapes);
+      commit("generateSnapPoints", {shapes: getters.shapes, excluded: getters.selectedShape});
     },
     setCurrentProject({ dispatch }) {
       dispatch("generateSnapPoints");

@@ -54,12 +54,15 @@ export function findClosestSnapInAxis({
   });
 }
 
-export function generateSnapPoints(shapes) {
+export function generateSnapPoints({ shapes, excluded }) {
   const snapPoints = {
     x: [],
     y: []
   };
   for (const shape of shapes) {
+    if (shape === excluded) {
+      continue;
+    }
     snapPoints.x.push({ shape, value: shape.left.value, property: "left" });
     snapPoints.x.push({
       shape,

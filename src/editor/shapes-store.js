@@ -127,7 +127,7 @@ const shapes = {
           shape[key] = newProps[key];
         }
       }
-      state.layers = { ...state.layers };
+      //state.layers = { ...state.layers };
     },
     updateShapeStop(state, { shape, stop, ...newProps }) {
       for (const key in newProps) {
@@ -192,9 +192,7 @@ const shapes = {
       dispatch("updateProject");
       return shapeWithId;
     },
-    moveShape({ commit, getters, dispatch }, { shape, left, top }) {
-      // commit("moveShape", { shape, left, top, snapPoints: getters.snapPoints, threshold: getters.snapThreshold });
-      // dispatch("roundShapeProperties", { shape, left, top });
+    moveShape({ commit, dispatch, getters }, { shape, left, top }) {
       const moved = move({ left, shape, top });
       const snapped = moveSnap({
         left,
