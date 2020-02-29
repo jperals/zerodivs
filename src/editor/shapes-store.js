@@ -195,38 +195,51 @@ const shapes = {
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {
       const moved = move({ left, shape, top });
-      const snaps = getSnaps({
-        shape: moved,
-        snapPoints: getters.snapPoints,
-        threshold: getters.snapThreshold
-      });
-      dispatch("setCurrentSnaps", snaps);
-      const snapped = moveToSnaps({ shape: moved, snaps });
-      const propertiesToRound = [];
-      if (moved.left.value === snapped.left.value) {
-        // No snap, we can round
-        propertiesToRound.push("left");
-      }
-      if (moved.top.value === snapped.top.value) {
-        // No snap, we can round
-        propertiesToRound.push("top");
-      }
-      if (propertiesToRound.length) {
-        dispatch("roundShapeProperties", {
-          shape: snapped,
-          propertyNames: propertiesToRound
-        }).then(() => {
+      if (getters.snap) {
+        const snaps = getSnaps({
+          shape: moved,
+          snapPoints: getters.snapPoints,
+          threshold: getters.snapThreshold
+        });
+        dispatch("setCurrentSnaps", snaps);
+        const snapped = moveToSnaps({ shape: moved, snaps });
+        const propertiesToRound = [];
+        if (moved.left.value === snapped.left.value) {
+          // No snap, we can round
+          propertiesToRound.push("left");
+        }
+        if (moved.top.value === snapped.top.value) {
+          // No snap, we can round
+          propertiesToRound.push("top");
+        }
+        if (propertiesToRound.length) {
+          dispatch("roundShapeProperties", {
+            shape: snapped,
+            propertyNames: propertiesToRound
+          }).then(() => {
+            commit("updateShape", {
+              shape,
+              left: snapped.left,
+              top: snapped.top
+            });
+          });
+        } else {
           commit("updateShape", {
             shape,
             left: snapped.left,
             top: snapped.top
           });
-        });
+        }
       } else {
-        commit("updateShape", {
-          shape,
-          left: snapped.left,
-          top: snapped.top
+        dispatch("roundShapeProperties", {
+          shape: moved,
+          propertyNames: ["top", "left"]
+        }).then(() => {
+          commit("updateShape", {
+            shape,
+            left: moved.left,
+            top: moved.top
+          });
         });
       }
     },

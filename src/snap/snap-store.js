@@ -3,11 +3,13 @@ import { findClosestSnap, generateSnapPoints } from "./snap";
 export default {
   state: {
     currentSnaps: {},
+    snap: true,
     snapPoints: { x: [], y: [] },
     snapThreshold: 5
   },
   getters: {
     currentSnaps: state => state.currentSnaps,
+    snap: state => state.snap,
     snapPoint: state => point =>
       findClosestSnap({ snapPointsSorted: state.snapPoints, point }),
     snapPoints: state => state.snapPoints,
@@ -19,6 +21,12 @@ export default {
     },
     setCurrentSnaps(state, snaps) {
       state.currentSnaps = snaps;
+    },
+    setSnapThreshold(state, value) {
+      state.snapThreshold = value;
+    },
+    toggleSnap(state, value = !state.snap) {
+      state.snap = value;
     }
   },
   actions: {
@@ -33,6 +41,12 @@ export default {
     },
     setCurrentSnaps({ commit }, snaps) {
       commit("setCurrentSnaps", snaps);
+    },
+    setSnapThreshold({ commit }, value) {
+      commit("setSnapThreshold", value);
+    },
+    toggleSnap({ commit }, value) {
+      commit("toggleSnap", value);
     },
     updateProject({ dispatch }) {
       dispatch("generateSnapPoints");

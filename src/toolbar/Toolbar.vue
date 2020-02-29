@@ -13,21 +13,24 @@
     </section>
     <section>
       <CurrentColorPicker />
+      <ToolbarSnapOptions />
     </section>
   </div>
 </template>
 
 <script>
 import Button from "./ToolbarButton";
+import buttonShapeGenerators from "./toolbar-button-shapes";
 import CurrentColorPicker from "@/components/CurrentColorPicker";
 import ShapeButtonGroup from "./ShapeButtonGroup";
-import buttonShapeGenerators from "./toolbar-button-shapes";
 import store from "@/store";
+import ToolbarSnapOptions from "./ToolbarSnapOptions";
 export default {
   components: {
     Button,
     CurrentColorPicker,
-    ShapeButtonGroup
+    ShapeButtonGroup,
+    ToolbarSnapOptions
   },
   data() {
     return {
@@ -61,5 +64,9 @@ section button:first-child {
 }
 section button:last-child {
   margin-right: 0;
+}
+.toolbar > section {
+  display: flex;
+  flex-direction: row;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form">
     <div class="list-node">
       <div>
         <label class="wrapper">
@@ -159,16 +159,16 @@ export default {
   width: 100%;
   padding: 0.25rem 0;
 }
-.label,
-.units {
+.form .label,
+.form .units {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.label {
+.form .label {
   flex-grow: 1;
 }
-.units {
+.form .units {
   margin-left: 0.5ch;
 }
 </style>
