@@ -1,12 +1,13 @@
 import store from "@/store";
 export default function reactToKeyboard(event) {
-  switch (event.keyCode) {
-    case 8:
+  switch (event.code) {
+    case "Backspace":
+    case "Delete":
       if (isNotWriting(event)) {
         store.dispatch("removeSelectedShape");
       }
       break;
-    case 37:
+    case "ArrowLeft":
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
@@ -14,7 +15,7 @@ export default function reactToKeyboard(event) {
         });
       }
       break;
-    case 38:
+    case "ArrowUp":
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
@@ -22,7 +23,7 @@ export default function reactToKeyboard(event) {
         });
       }
       break;
-    case 39:
+    case "ArrowRight":
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
@@ -30,7 +31,7 @@ export default function reactToKeyboard(event) {
         });
       }
       break;
-    case 40:
+    case "ArrowDown":
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
