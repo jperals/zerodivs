@@ -148,8 +148,10 @@ export default {
         };
         store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
       } else {
-        store.dispatch("unselectShape");
-       }
+        store
+          .dispatch("unselectShape")
+          .then(() => store.dispatch("generateSnapPoints"));
+      }
     },
     onMouseUp(event) {
       event.stopPropagation();
@@ -164,7 +166,9 @@ export default {
             shape: store.getters.shapeToBeAdded
           })
           .then(newShape => {
-            store.dispatch("selectShape", newShape);
+            store
+              .dispatch("selectShape", newShape)
+              .then(() => store.dispatch("generateSnapPoints"));
           });
         this.shapeBeingAdded = null;
       }
@@ -208,7 +212,9 @@ export default {
         width: { ...shape.width },
         height: { ...shape.height }
       };
-      store.dispatch("selectShape", shape);
+      store
+        .dispatch("selectShape", shape)
+        .then(() => store.dispatch("generateSnapPoints"));
     },
     onShapeMouseUp(shape, event) {
       if (this.addingShape) {
