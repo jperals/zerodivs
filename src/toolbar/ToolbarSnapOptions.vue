@@ -7,7 +7,7 @@
     <input
       type="number"
       v-model="threshold"
-      class="w-s"
+      class="w-xs"
       :class="{inactive: !snap}"
       :disabled="!snap"
     />
@@ -40,12 +40,6 @@ export default {
 </script>
 
 <style scoped>
-section {
-  display: flex;
-  height: 100%;
-  flex-direction: row;
-  align-items: center;
-}
 input.inactive {
   pointer-events: none;
   color: lightgray;

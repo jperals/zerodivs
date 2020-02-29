@@ -20,8 +20,11 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .current-color-picker {
-  --side: 2rem;
+  --side: 1.75rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  box-sizing: border-box;
 }
 </style>

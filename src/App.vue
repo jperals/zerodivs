@@ -48,6 +48,10 @@ input[type="number"] {
   padding: .125rem .25rem;
   font-size: 0.75rem;
 }
+input[type="text"].w-xs,
+input[type="number"].w-xs {
+  width: 3ch;
+}
 input[type="text"].w-s,
 input[type="number"].w-s {
   width: 4ch;

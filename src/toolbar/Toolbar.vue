@@ -11,7 +11,7 @@
         :shapeGeneratorGroup="shapeGeneratorGroup"
       />
     </section>
-    <section>
+    <section class="right">
       <CurrentColorPicker />
       <ToolbarSnapOptions />
     </section>
@@ -21,7 +21,7 @@
 <script>
 import Button from "./ToolbarButton";
 import buttonShapeGenerators from "./toolbar-button-shapes";
-import CurrentColorPicker from "@/components/CurrentColorPicker";
+import CurrentColorPicker from "./CurrentColorPicker";
 import ShapeButtonGroup from "./ShapeButtonGroup";
 import store from "@/store";
 import ToolbarSnapOptions from "./ToolbarSnapOptions";
@@ -58,6 +58,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   background-color: var(--panel-bg-color);
+  font-size: 0.75rem;
 }
 section button:first-child {
   margin-left: 0;
@@ -69,4 +70,17 @@ section button:last-child {
   display: flex;
   flex-direction: row;
 }
+.toolbar section.right > * {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+}
+.toolbar section.right section:not(:first-child) {
+  margin-left: .75rem;
+}
+.toolbar section.right section:not(:last-child) {
+  margin-right: 0.75rem;
+}
+
 </style>
