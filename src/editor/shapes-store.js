@@ -193,9 +193,16 @@ const shapes = {
       dispatch("updateProject");
       return shapeWithId;
     },
+    duplicateSelectedShape({ dispatch, getters }) {
+      const selectedShape = getters.selectedShape;
+      const newShape = deepCopy(selectedShape);
+      dispatch("addShape", { shape: newShape }).then(shape =>
+        dispatch("selectShape", shape)
+      );
+    },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {
       const moved = move({ left, shape, top });
-      if (getters.snap && getters.snapPoints && getters.snapPoints.length) {
+      if (getters.snap && getters.snapPoints && getters.snapPoints.x.length) {
         const snaps = getSnaps({
           shape: moved,
           snapPoints: getters.snapPoints,

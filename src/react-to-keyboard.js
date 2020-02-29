@@ -1,6 +1,6 @@
 import store from "@/store";
 export default function reactToKeyboard(event) {
-  switch (event.code) {
+  switch (event.key) {
     case "Backspace":
     case "Delete":
       if (isNotWriting(event)) {
@@ -38,6 +38,9 @@ export default function reactToKeyboard(event) {
           top: { value: 1, units: "px" }
         });
       }
+      break;
+    case "d":
+      store.dispatch("duplicateSelectedShape");
       break;
   }
 }
