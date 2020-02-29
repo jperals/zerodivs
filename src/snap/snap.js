@@ -81,6 +81,57 @@ export function generateSnapPoints({ shapes, excluded }) {
   return snapPoints;
 }
 
+function getSnaps({ shape, snapPoints, threshold }) {
+  return {
+    x: getSnapX({ shape, snapPoints: snapPoints.x, threshold }),
+    y: getSnapY({ shape, snapPoints: snapPoints.y, threshold })
+  };
+}
+
+function getSnapX({ shape, snapPoints, threshold }) {
+  const closestToLeft = findClosestSnapInAxis({
+    snapPointsSorted: snapPoints,
+    point: shape.left.value
+  });
+  const distanceLeft = Math.abs(shape.left.value - closestToLeft.value);
+  const closestToRight = findClosestSnapInAxis({
+    snapPointsSorted: snapPoints,
+    point: shape.left.value + shape.width.value
+  });
+  const distanceRight = Math.abs(
+    shape.left.value + shape.width.value - closestToRight.value
+  );
+  if (distanceLeft <= distanceRight) {
+    if (distanceLeft <= threshold) {
+      return { location: "left", point: closestToLeft };
+    }
+  } else if (distanceRight <= threshold) {
+    return { location: "right", point: closestToRight };
+  }
+}
+
+function getSnapY({ shape, snapPoints, threshold }) {
+  const closestToTop = findClosestSnapInAxis({
+    snapPointsSorted: snapPoints,
+    point: shape.top.value
+  });
+  const distanceTop = Math.abs(shape.top.value - closestToTop.value);
+  const closestToBottom = findClosestSnapInAxis({
+    snapPointsSorted: snapPoints,
+    point: shape.top.value + shape.height.value
+  });
+  const distanceBottom = Math.abs(
+    shape.top.value + shape.height.value - closestToBottom.value
+  );
+  if (distanceTop <= distanceBottom) {
+    if (distanceTop <= threshold) {
+      return { location: "top", point: closestToTop };
+    }
+  } else if (distanceBottom <= threshold) {
+    return { location: "bottom", point: closestToBottom };
+  }
+}
+
 export function move({ left, shape, top }) {
   const moved = {
     left: { ...shape.left },
@@ -130,67 +181,28 @@ export function moveByAndSnap({ left, shape, snapPoints, threshold, top }) {
 }
 
 export function moveSnap({ shape, snapPoints, threshold }) {
-  return moveSnapY({
-    shape: moveSnapX({ shape, snapPoints, threshold }),
-    snapPoints,
-    threshold
-  });
+  const {x, y} = getSnaps({ shape, snapPoints, threshold});
+  const snappedX = moveToSnap({ shape, snap: x});
+  return moveToSnap({ shape: snappedX, snap: y});
 }
 
-function moveSnapX({ shape, snapPoints, threshold }) {
-  const moved = {
-    left: { ...shape.left },
-    top: { ...shape.top },
-    width: { ...shape.width },
-    height: { ...shape.height }
-  };
-  const closestToLeft = findClosestSnapInAxis({
-    snapPointsSorted: snapPoints.x,
-    point: shape.left.value
-  });
-  const distanceLeft = Math.abs(shape.left.value - closestToLeft.value);
-  const closestToRight = findClosestSnapInAxis({
-    snapPointsSorted: snapPoints.x,
-    point: shape.left.value + shape.width.value
-  });
-  const distanceRight = Math.abs(
-    shape.left.value + shape.width.value - closestToRight.value
-  );
-  if (distanceLeft <= distanceRight) {
-    if (distanceLeft <= threshold) {
-      moved.left.value = closestToLeft.value;
+function moveToSnap({ shape, snap }) {
+  const moved = { ...shape };
+  if (snap) {
+    switch (snap.location) {
+      case "top":
+        moved.top.value = snap.point.value
+        break;
+      case "right":
+        moved.left.value = snap.point.value - shape.width.value;
+        break;
+      case "bottom":
+        moved.top.value = snap.point.value - shape.height.value;
+        break;
+      case "left":
+        moved.left.value = snap.point.value;
+        break;
     }
-  } else if (distanceRight <= threshold) {
-    moved.left.value = closestToRight.value - shape.width.value;
-  }
-  return moved;
-}
-
-function moveSnapY({ shape, snapPoints, threshold }) {
-  const moved = {
-    left: { ...shape.left },
-    top: { ...shape.top },
-    width: { ...shape.width },
-    height: { ...shape.height }
-  };
-  const closestToTop = findClosestSnapInAxis({
-    snapPointsSorted: snapPoints.y,
-    point: shape.top.value
-  });
-  const distanceTop = Math.abs(shape.top.value - closestToTop.value);
-  const closestToBottom = findClosestSnapInAxis({
-    snapPointsSorted: snapPoints.y,
-    point: shape.top.value + shape.height.value
-  });
-  const distanceBottom = Math.abs(
-    shape.top.value + shape.height.value - closestToBottom.value
-  );
-  if (distanceTop <= distanceBottom) {
-    if (distanceTop <= threshold) {
-      moved.top.value = closestToTop.value;
-    }
-  } else if (distanceBottom <= threshold) {
-    moved.top.value = closestToBottom.value - shape.height.value;
   }
   return moved;
 }
