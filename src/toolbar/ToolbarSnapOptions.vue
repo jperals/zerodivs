@@ -40,6 +40,9 @@ export default {
 </script>
 
 <style scoped>
+label {
+  margin-right: .25rem;
+}
 input.inactive {
   pointer-events: none;
   color: lightgray;
