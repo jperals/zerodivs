@@ -6,7 +6,6 @@
         v-on:mousemove="onDrag"
         v-on:mousedown="onMouseDown"
         v-on:mouseup="onMouseUp"
-        v-on:pointermove="onDrag"
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
