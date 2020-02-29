@@ -168,6 +168,7 @@ export default {
           });
         this.shapeBeingAdded = null;
       }
+      store.dispatch("setCurrentSnaps");
     },
     onResizeHandleMouseDown(direction, event) {
       event.stopPropagation();
@@ -219,6 +220,7 @@ export default {
       this.resizeDirection = null;
       this.shapeBeingMoved = null;
       store.dispatch("updateProject");
+      store.dispatch("setCurrentSnaps");
     },
     resetZoom() {
       this.$refs.pinchZoom.setTransform({ scale: 1, x: 0, y: 0 });

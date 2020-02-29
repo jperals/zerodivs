@@ -200,6 +200,7 @@ const shapes = {
         snapPoints: getters.snapPoints,
         threshold: getters.snapThreshold
       });
+      dispatch("setCurrentSnaps", snaps);
       const snapped = moveToSnaps({ shape: moved, snaps });
       const propertiesToRound = [];
       if (moved.left.value === snapped.left.value) {
