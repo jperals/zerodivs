@@ -91,6 +91,9 @@ export function getSnaps({ shape, snapPoints, threshold }) {
 }
 
 function getSnapX({ shape, snapPoints, threshold }) {
+  if (!snapPoints || !snapPoints.length) {
+    return;
+  }
   const closestToLeft = findClosestSnapInAxis({
     snapPointsSorted: snapPoints,
     point: shape.left.value
@@ -113,6 +116,9 @@ function getSnapX({ shape, snapPoints, threshold }) {
 }
 
 function getSnapY({ shape, snapPoints, threshold }) {
+  if (!snapPoints || !snapPoints.length) {
+    return;
+  }
   const closestToTop = findClosestSnapInAxis({
     snapPointsSorted: snapPoints,
     point: shape.top.value

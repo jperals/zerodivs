@@ -195,7 +195,7 @@ const shapes = {
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {
       const moved = move({ left, shape, top });
-      if (getters.snap) {
+      if (getters.snap && getters.snapPoints && getters.snapPoints.length) {
         const snaps = getSnaps({
           shape: moved,
           snapPoints: getters.snapPoints,
