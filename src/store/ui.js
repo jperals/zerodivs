@@ -3,7 +3,7 @@ const ui = {
     selectedLayer: "main",
     selectedShape: null,
     showOutput: false,
-    currentColor: "lightgray"
+    currentColor: "turquoise"
   },
   mutations: {
     selectColor(state, color) {
