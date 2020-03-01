@@ -57,6 +57,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   background-color: var(--panel-bg-color);
   font-size: 0.75rem;
 }
@@ -69,6 +70,10 @@ section button:last-child {
 .toolbar > section {
   display: flex;
   flex-direction: row;
+  min-width: 33%;
+}
+.toolbar section.right {
+  justify-content: space-between;
 }
 .toolbar section.right > * {
   display: flex;
