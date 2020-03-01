@@ -36,7 +36,7 @@ nav > * {
 }
 .breadcrumbs > * {
   display: inline-block;
-  padding: 0.25rem;
+  padding: 0.75rem 0.25rem;
 }
 .link-to-home {
   padding-left: 1rem;
