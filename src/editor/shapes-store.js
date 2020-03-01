@@ -1,7 +1,7 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
 import warn from "@/warn";
-import { move } from "./shapes";
+import { move, moveBy } from "./shapes";
 import { getSnaps, moveToSnaps } from "@/snap/snap";
 
 function initialLayersState() {
@@ -187,7 +187,7 @@ const shapes = {
       { commit, dispatch, getters },
       { layerName = getters.selectedLayer, shape = getters.shapeToBeAdded }
     ) {
-      const shapeWithId = { ...shape, id: uuid() };
+      const shapeWithId = newShape(shape);
       commit("addShape", { layerName, shape: shapeWithId });
       commit("unsetShapeToBeAdded");
       dispatch("updateProject");
@@ -195,8 +195,15 @@ const shapes = {
     },
     duplicateSelectedShape({ dispatch, getters }) {
       const selectedShape = getters.selectedShape;
-      const newShape = deepCopy(selectedShape);
-      dispatch("addShape", { shape: newShape }).then(shape =>
+      const duplicatedShape = newShape(deepCopy(selectedShape));
+      const newPosition = moveBy({
+        shape: duplicatedShape,
+        top: { value: 10 },
+        left: { value: 10 }
+      });
+      duplicatedShape.left = newPosition.left;
+      duplicatedShape.top = newPosition.top;
+      dispatch("addShape", { shape: duplicatedShape }).then(shape =>
         dispatch("selectShape", shape)
       );
     },
@@ -323,6 +330,10 @@ const shapes = {
 
 function deepCopy(obj) {
   return JSON.parse(JSON.stringify(obj));
+}
+
+function newShape(shape) {
+  return { ...shape, id: uuid() };
 }
 
 export default shapes;

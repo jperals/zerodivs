@@ -1,4 +1,4 @@
-import { move } from "@/editor/shapes";
+import { move, moveBy } from "@/editor/shapes";
 
 export function findClosestSnap({ snapPointsSorted, point }) {
   return {
@@ -143,28 +143,6 @@ function getSnapY({ shape, snapPoints, threshold }) {
 export function moveAndSnap({ left, shape, snapPoints, threshold, top }) {
   const moved = move({ left, shape, top });
   return moveSnap({ left, shape: moved, snapPoints, threshold });
-}
-
-function moveBy({ left, shape, top }) {
-  const moved = {
-    left: { ...shape.left },
-    top: { ...shape.top },
-    width: { ...shape.width },
-    height: { ...shape.height }
-  };
-  if (
-    typeof left === "object" &&
-    (left.units === moved.left.units || !left.units)
-  ) {
-    moved.left.value += left.value;
-  }
-  if (
-    typeof top === "object" &&
-    (top.units === moved.top.units || !top.units)
-  ) {
-    moved.top.value += top.value;
-  }
-  return moved;
 }
 
 export function moveByAndSnap({ left, shape, snapPoints, threshold, top }) {
