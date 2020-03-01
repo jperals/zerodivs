@@ -23,7 +23,7 @@
       </div>
     </pinch-zoom>
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
-      <p class="zoom-value">Zoom: {{zoomLevel | decimals(2)}}x</p>
+      <p class="zoom-value">Zoom: {{zoomLevel * 100 | decimals(0)}}%</p>
       <button v-on:click="resetZoom">Reset</button>
     </div>
   </div>
