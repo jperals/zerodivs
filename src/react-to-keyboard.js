@@ -40,7 +40,9 @@ export default function reactToKeyboard(event) {
       }
       break;
     case "d":
-      store.dispatch("duplicateSelectedShape");
+      if (isNotWriting(event)) {
+        store.dispatch("duplicateSelectedShape");
+      }
       break;
   }
 }

@@ -8,14 +8,25 @@ function initialLayersState() {
   return {
     main: {
       active: true,
+      extraStyles: "",
       shapes: []
     },
     before: {
       active: false,
+      extraStyles: `
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+display: block;
+content: "";
+`,
       shapes: []
     },
     after: {
       active: false,
+      extraStyles: "",
       shapes: []
     }
   };
@@ -108,6 +119,9 @@ const shapes = {
         }
       }
     },
+    setExtraStyles(state, { layerName, styles }) {
+      state.layers[layerName].extraStyles = styles;
+    },
     setShapes(state, shapes) {
       state.layers = { ...initialLayersState(), ...shapes };
     },
@@ -143,6 +157,7 @@ const shapes = {
   },
   getters: {
     allLayers: state => state.layers,
+    extraStyles: state => layerName => state.layers[layerName].extraStyles || "",
     isLayerActive: state => layerName =>
       get(state, `layers[${layerName}].active`, false),
     layerShapes: state => layerName =>
@@ -299,6 +314,9 @@ const shapes = {
           }
         }
       }
+    },
+    setExtraStyles({ commit }, { layerName, styles }) {
+      commit("setExtraStyles", { layerName, styles });
     },
     setShapes({ commit }, shapes) {
       commit("setShapes", shapes);

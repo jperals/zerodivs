@@ -1,5 +1,17 @@
 <template>
-  <div class="canvas" :style="computedStyle"></div>
+  <div class="canvas">
+    <v-style type="text/css">
+      .canvas {
+        {{ mainStyle }}
+      }
+      .canvas:before {
+        {{ beforeStyle }}
+      }
+      .canvas:after {
+        {{ afterStyle }}
+      }
+    </v-style>
+  </div>
 </template>
 
 <script>
@@ -8,7 +20,7 @@ import store from "@/store";
 import shapes2css from "@/common/shapes2css";
 export default {
   computed: {
-    computedStyle() {
+    mainStyle() {
       const snapShapes = [];
       const snaps = store.getters.currentSnaps;
       const snapX = get(snaps, "x");
@@ -42,8 +54,16 @@ export default {
           stops: [{ color }, { color }]
         });
       }
-      const shapes = snapShapes.concat(store.getters.visibleShapes);
-      return shapes2css(shapes);
+      const shapes = snapShapes.concat(store.getters.layerShapes("main"));
+      return store.getters.extraStyles("main") + shapes2css(shapes);
+    },
+    beforeStyle() {
+      const shapes = store.getters.layerShapes("before");
+      return store.getters.extraStyles("before") + shapes2css(shapes);
+    },
+    afterStyle() {
+      const shapes = store.getters.layerShapes("after");
+      return store.getters.extraStyles("after") + shapes2css(shapes);
     }
   }
 };
