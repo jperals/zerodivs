@@ -9,17 +9,11 @@
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
-        <Canvas />
-        <div class="overlays">
-          <ShapeOverlay
-            v-for="shape in shapes"
-            :shape="shape"
-            :onMouseDown="onShapeMouseDown"
-            :onMouseUp="onShapeMouseUp"
-            :onResizeHandleMouseDown="onResizeHandleMouseDown"
-            :key="shape.id"
-          />
-        </div>
+        <Canvas
+          :onShapeMouseDown="onShapeMouseDown"
+          :onShapeMouseUp="onShapeMouseUp"
+          :onResizeHandleMouseDown="onResizeHandleMouseDown"
+        />
       </div>
     </pinch-zoom>
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
@@ -32,7 +26,6 @@
 <script>
 import store from "@/store";
 import Canvas from "./Canvas";
-import ShapeOverlay from "./ShapeOverlay";
 import "pinch-zoom-element";
 export default {
   data() {
@@ -56,8 +49,7 @@ export default {
     };
   },
   components: {
-    Canvas,
-    ShapeOverlay
+    Canvas
   },
   methods: {
     dragNewShape(diff) {
@@ -303,9 +295,6 @@ pinch-zoom {
 }
 .workspace {
   background-color: var(--panel-border-color);
-}
-.canvas {
-  background-color: white;
 }
 .workspace.adding-shape {
   cursor: crosshair;

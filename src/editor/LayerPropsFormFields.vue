@@ -14,16 +14,23 @@ export default {
         return store.getters.extraStyles(this.layerName);
       },
       set(value) {
-        store.dispatch("setExtraStyles", {layerName: this.layerName, styles: value});
+        store
+          .dispatch("setExtraStyles", {
+            layerName: this.layerName,
+            styles: value
+          })
+          .then(() => store.dispatch("updateProject"));
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
 textarea {
   width: 100%;
+  box-sizing: border-box;
   min-height: 15rem;
+  font-family: "Courier New", Courier, monospace;
 }
 </style>
