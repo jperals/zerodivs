@@ -132,13 +132,34 @@ export default {
       return store.getters.isLayerActive("after");
     },
     shapesMain() {
-      return store.getters.layerShapes("main");
+      const shapes = store.getters.layerShapes("main");
+      if (this.shapeToBeAdded && store.getters.selectedLayer === "main") {
+        return shapes.concat([this.shapeToBeAdded]);
+      }
+      return shapes;
     },
     shapesBefore() {
-      return store.getters.layerShapes("before");
+      const shapes = store.getters.layerShapes("before");
+      if (this.shapeToBeAdded && store.getters.selectedLayer === "before") {
+        return shapes.concat([this.shapeToBeAdded]);
+      }
+      return shapes;
     },
     shapesAfter() {
-      return store.getters.layerShapes("after");
+      const shapes = store.getters.layerShapes("after");
+      if (this.shapeToBeAdded && store.getters.selectedLayer === "after") {
+        return shapes.concat([this.shapeToBeAdded]);
+      }
+      return shapes;
+    },
+    shapeToBeAdded() {
+      return (
+        typeof get(store.getters, "shapeToBeAdded.top.value") === "number" &&
+        typeof get(store.getters, "shapeToBeAdded.left.value") === "number" &&
+        typeof get(store.getters, "shapeToBeAdded.width.value") === "number" &&
+        typeof get(store.getters, "shapeToBeAdded.height.value") === "number" &&
+        store.getters.shapeToBeAdded
+      );
     }
   }
 };
