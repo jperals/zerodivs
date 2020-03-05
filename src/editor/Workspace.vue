@@ -9,14 +9,12 @@
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
-        <div class="canvas-wrapper">
-          <div class="canvas" ref="canvas">
-              <Canvas
-                :onShapeMouseDown="onShapeMouseDown"
-                :onShapeMouseUp="onShapeMouseUp"
-                :onResizeHandleMouseDown="onResizeHandleMouseDown"
-              />
-            </div>
+        <div class="canvas" ref="canvas">
+          <Canvas
+            :onShapeMouseDown="onShapeMouseDown"
+            :onShapeMouseUp="onShapeMouseUp"
+            :onResizeHandleMouseDown="onResizeHandleMouseDown"
+          />
         </div>
       </div>
     </pinch-zoom>
@@ -257,7 +255,10 @@ export default {
     this.$refs.pinchZoomInner.addEventListener("wheel", this.updateZoomLevel);
   },
   beforeDestroy() {
-    this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateZoomLevel);
+    this.$refs.pinchZoomInner.removeEventListener(
+      "wheel",
+      this.updateZoomLevel
+    );
   },
   computed: {
     addingShape() {
@@ -307,7 +308,7 @@ pinch-zoom {
   width: 100%;
   height: 100%;
 }
-.canvas-wrapper {
+.canvas {
   height: 100%;
   width: 100%;
   position: absolute;
