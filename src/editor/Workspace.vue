@@ -9,11 +9,15 @@
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
-        <Canvas
-          :onShapeMouseDown="onShapeMouseDown"
-          :onShapeMouseUp="onShapeMouseUp"
-          :onResizeHandleMouseDown="onResizeHandleMouseDown"
-        />
+        <div class="canvas-wrapper">
+          <div class="canvas" ref="canvas">
+              <Canvas
+                :onShapeMouseDown="onShapeMouseDown"
+                :onShapeMouseUp="onShapeMouseUp"
+                :onResizeHandleMouseDown="onResizeHandleMouseDown"
+              />
+            </div>
+        </div>
       </div>
     </pinch-zoom>
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
@@ -104,7 +108,7 @@ export default {
     onMouseDown(event) {
       if (this.addingShape) {
         event.stopPropagation();
-        const rect = this.$refs.workspace.getBoundingClientRect();
+        const rect = this.$refs.canvas.getBoundingClientRect();
         this.workspacePosition = { x: rect.left, y: rect.top };
         this.initialMousePosition = this.transformCoords({
           x: event.x,
@@ -172,7 +176,7 @@ export default {
         return;
       }
       this.resizeDirection = direction;
-      const rect = this.$refs.workspace.getBoundingClientRect();
+      const rect = this.$refs.canvas.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
       this.initialMousePosition = this.transformCoords({
         x: event.x,
@@ -191,7 +195,7 @@ export default {
       }
       event.stopPropagation();
       this.shapeBeingMoved = shape;
-      const rect = this.$refs.workspace.getBoundingClientRect();
+      const rect = this.$refs.canvas.getBoundingClientRect();
       this.workspacePosition = { x: rect.left, y: rect.top };
       this.initialMousePosition = this.transformCoords({
         x: event.x,
@@ -253,7 +257,7 @@ export default {
     this.$refs.pinchZoomInner.addEventListener("wheel", this.updateZoomLevel);
   },
   beforeDestroy() {
-    this.$refs.workspace.removeEventListener("wheel", this.updateZoomLevel);
+    this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateZoomLevel);
   },
   computed: {
     addingShape() {
@@ -302,6 +306,11 @@ pinch-zoom {
 .pinch-zoom-wrapper {
   width: 100%;
   height: 100%;
+}
+.canvas-wrapper {
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 .overlays {
   position: absolute;

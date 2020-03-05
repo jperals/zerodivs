@@ -1,37 +1,35 @@
 <template>
-  <div class="canvas-wrapper">
-    <div class="canvas">
-      <div class="overlays">
-        <div class="overlays--main">
-          <ShapeOverlay
-            v-for="shape in shapesMain"
-            :shape="shape"
-            :onMouseDown="onShapeMouseDown"
-            :onMouseUp="onShapeMouseUp"
-            :onResizeHandleMouseDown="onResizeHandleMouseDown"
-            :key="shape.id"
-          />
-        </div>
-        <div class="overlays--before">
-          <ShapeOverlay
-            v-for="shape in shapesBefore"
-            :shape="shape"
-            :onMouseDown="onShapeMouseDown"
-            :onMouseUp="onShapeMouseUp"
-            :onResizeHandleMouseDown="onResizeHandleMouseDown"
-            :key="shape.id"
-          />
-        </div>
-        <div class="overlays--after">
-          <ShapeOverlay
-            v-for="shape in shapesAfter"
-            :shape="shape"
-            :onMouseDown="onShapeMouseDown"
-            :onMouseUp="onShapeMouseUp"
-            :onResizeHandleMouseDown="onResizeHandleMouseDown"
-            :key="shape.id"
-          />
-        </div>
+  <div>
+    <div class="overlays">
+      <div class="overlays--main">
+        <ShapeOverlay
+          v-for="shape in shapesMain"
+          :shape="shape"
+          :onMouseDown="onShapeMouseDown"
+          :onMouseUp="onShapeMouseUp"
+          :onResizeHandleMouseDown="onResizeHandleMouseDown"
+          :key="shape.id"
+        />
+      </div>
+      <div class="overlays--before">
+        <ShapeOverlay
+          v-for="shape in shapesBefore"
+          :shape="shape"
+          :onMouseDown="onShapeMouseDown"
+          :onMouseUp="onShapeMouseUp"
+          :onResizeHandleMouseDown="onResizeHandleMouseDown"
+          :key="shape.id"
+        />
+      </div>
+      <div class="overlays--after">
+        <ShapeOverlay
+          v-for="shape in shapesAfter"
+          :shape="shape"
+          :onMouseDown="onShapeMouseDown"
+          :onMouseUp="onShapeMouseUp"
+          :onResizeHandleMouseDown="onResizeHandleMouseDown"
+          :key="shape.id"
+        />
       </div>
     </div>
     <v-style type="text/css">
@@ -166,11 +164,6 @@ export default {
 </script>
 
 <style scoped>
-.canvas-wrapper {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
 .overlays {
   position: absolute;
   top: 0;
