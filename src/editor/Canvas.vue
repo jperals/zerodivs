@@ -153,6 +153,7 @@ export default {
 .overlays {
   position: absolute;
   top: 0;
+  margin: 0;
   background-color: transparent;
 }
 .overlays,
