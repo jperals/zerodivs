@@ -111,7 +111,7 @@ export default {
           stops: [{ color }, { color }]
         });
       }
-      const shapes = snapShapes.concat(this.shapesMain);
+      const shapes = this.shapesMain.concat(snapShapes);
       return shapes2css(shapes);
     },
     beforeStyle() {
