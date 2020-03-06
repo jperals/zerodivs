@@ -10,14 +10,17 @@
         ref="pinchZoomInner"
       >
         <div class="canvas" ref="canvas">
-          <Canvas
-            :onShapeMouseDown="onShapeMouseDown"
-            :onShapeMouseUp="onShapeMouseUp"
-            :onResizeHandleMouseDown="onResizeHandleMouseDown"
-          />
+          <Canvas :onShapeMouseDown="onShapeMouseDown" :onShapeMouseUp="onShapeMouseUp" />
         </div>
       </div>
     </pinch-zoom>
+    <ShapeResizeHandles
+      v-if="selectedShape"
+      :shape="selectedShape"
+      :viewport="viewport"
+      :onMouseDown="onResizeHandleMouseDown"
+      :onMouseUp="onMouseUp"
+    />
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
       <p class="zoom-value">Zoom: {{zoomLevel * 100 | decimals(0)}}%</p>
       <button v-on:click="resetZoom">Reset</button>
@@ -28,6 +31,7 @@
 <script>
 import store from "@/store";
 import Canvas from "./Canvas";
+import ShapeResizeHandles from "./ShapeResizeHandles";
 import "pinch-zoom-element";
 export default {
   data() {
@@ -51,7 +55,8 @@ export default {
     };
   },
   components: {
-    Canvas
+    Canvas,
+    ShapeResizeHandles
   },
   methods: {
     dragNewShape(diff) {
@@ -266,6 +271,9 @@ export default {
   computed: {
     addingShape() {
       return !!store.getters.shapeToBeAdded;
+    },
+    selectedShape() {
+      return store.getters.selectedShape;
     },
     shapes() {
       return store.getters.shapes;

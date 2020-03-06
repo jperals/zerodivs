@@ -7,7 +7,6 @@
           :shape="shape"
           :onMouseDown="onShapeMouseDown"
           :onMouseUp="onShapeMouseUp"
-          :onResizeHandleMouseDown="onResizeHandleMouseDown"
           :key="shape.id"
         />
       </div>
@@ -17,7 +16,6 @@
           :shape="shape"
           :onMouseDown="onShapeMouseDown"
           :onMouseUp="onShapeMouseUp"
-          :onResizeHandleMouseDown="onResizeHandleMouseDown"
           :key="shape.id"
         />
       </div>
@@ -27,7 +25,6 @@
           :shape="shape"
           :onMouseDown="onShapeMouseDown"
           :onMouseUp="onShapeMouseUp"
-          :onResizeHandleMouseDown="onResizeHandleMouseDown"
           :key="shape.id"
         />
       </div>
@@ -67,7 +64,6 @@ export default {
   props: {
     onShapeMouseDown: Function,
     onShapeMouseUp: Function,
-    onResizeHandleMouseDown: Function,
     shapes: Array
   },
   components: {

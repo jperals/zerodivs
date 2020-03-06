@@ -8,22 +8,16 @@
     v-on:pointerdown="$event => onMouseDown(shape, $event)"
     v-on:pointerup="$event => onMouseUp(shape, $event)"
   >
-    <ShapeResizeHandles v-if="isSelected" :onMouseDown="onResizeHandleMouseDown" />
   </div>
 </template>
 
 <script>
 import store from "@/store";
-import ShapeResizeHandles from "./ShapeResizeHandles";
 export default {
   props: {
     onMouseDown: Function,
     onMouseUp: Function,
-    onResizeHandleMouseDown: Function,
     shape: Object
-  },
-  components: {
-    ShapeResizeHandles
   },
   data() {
     return {
@@ -54,7 +48,6 @@ export default {
   position: absolute;
 }
 .overlay.selected {
-  border: 1px solid lightpink;
   z-index: 10;
 }
 </style>
