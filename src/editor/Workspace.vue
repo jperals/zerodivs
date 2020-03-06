@@ -106,15 +106,16 @@ export default {
     onMouseDown(event) {
       if (this.addingShape) {
         event.stopPropagation();
-        const rect = this.$refs.canvas.getBoundingClientRect();
-        this.workspacePosition = { x: rect.left, y: rect.top };
+        const workspaceRect = this.$refs.workspace.getBoundingClientRect();
+        const canvasRect = this.$refs.canvas.getBoundingClientRect();
+        this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
         this.initialMousePosition = this.transformCoords({
           x: event.x,
           y: event.y
         });
         const { x, y } = this.transformCoords({
-          x: event.x - this.workspacePosition.x,
-          y: event.y - this.workspacePosition.y
+          x: event.x - workspaceRect.left,
+          y: event.y - workspaceRect.top
         });
         this.initialNewShapePosition = {
           left: x,
@@ -174,8 +175,8 @@ export default {
         return;
       }
       this.resizeDirection = direction;
-      const rect = this.$refs.canvas.getBoundingClientRect();
-      this.workspacePosition = { x: rect.left, y: rect.top };
+      const canvasRect = this.$refs.canvas.getBoundingClientRect();
+      this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
       this.initialMousePosition = this.transformCoords({
         x: event.x,
         y: event.y
@@ -193,8 +194,8 @@ export default {
       }
       event.stopPropagation();
       this.shapeBeingMoved = shape;
-      const rect = this.$refs.canvas.getBoundingClientRect();
-      this.workspacePosition = { x: rect.left, y: rect.top };
+      const canvasRect = this.$refs.canvas.getBoundingClientRect();
+      this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
       this.initialMousePosition = this.transformCoords({
         x: event.x,
         y: event.y
@@ -307,11 +308,6 @@ pinch-zoom {
 .pinch-zoom-wrapper {
   width: 100%;
   height: 100%;
-}
-.canvas {
-  height: 100%;
-  width: 100%;
-  position: absolute;
 }
 .overlays {
   position: absolute;
