@@ -18,6 +18,9 @@ export default {
   --panel-border-color: hsl(0, 0%, 83%);
   --panel-border-color-strong: hsl(0, 0%, 78%);
   --panel-border-color-stronger: hsl(0, 0%, 70%);
+  /* Grays taken from https://material-ui.com/customization/color/ */
+  --gray-400: #bdbdbd;
+  --gray-500: #9e9e9e;
   --gray-600: #757575;
   --gray-700: #616161;
   --selected-color: hsl(224, 100%, 67%);

@@ -17,7 +17,7 @@
     <ShapeResizeHandles
       v-if="selectedShape"
       :shape="selectedShape"
-      :viewport="viewport"
+      :viewportTransform="viewportTransform"
       :onMouseDown="onResizeHandleMouseDown"
       :onMouseUp="onMouseUp"
     />
@@ -31,6 +31,7 @@
 <script>
 import store from "@/store";
 import Canvas from "./Canvas";
+import { transformCoords } from "@/common/geometry";
 import ShapeResizeHandles from "./ShapeResizeHandles";
 import "pinch-zoom-element";
 export default {
@@ -44,14 +45,11 @@ export default {
       resizeDirection: null,
       shapeBeingAdded: null,
       shapeBeingMoved: null,
-      viewport: {
-        offset: {
-          left: 0,
-          top: 0
-        },
-        zoom: 1
-      },
-      zoomLevel: null
+      viewportTransform: {
+        x: 0,
+        y: 0,
+        scale: 1
+      }
     };
   },
   components: {
@@ -92,6 +90,7 @@ export default {
     },
     onDrag(event) {
       if (!this.initialMousePosition) {
+        this.updateViewport();
         return;
       }
       event.stopPropagation();
@@ -229,7 +228,7 @@ export default {
     },
     resetZoom() {
       this.$refs.pinchZoom.setTransform({ scale: 1, x: 0, y: 0 });
-      this.updateZoomLevel();
+      this.updateViewport();
     },
     resizeShape(diff) {
       store.dispatch("resizeShape", {
@@ -243,30 +242,31 @@ export default {
       event.stopPropagation();
     },
     transformCoords({ x, y }) {
-      const viewportTransform = {
-        x: this.$refs.pinchZoom.x,
-        y: this.$refs.pinchZoom.y,
-        scale: this.$refs.pinchZoom.scale
-      };
-      return {
-        x: (x - viewportTransform.x) / viewportTransform.scale,
-        y: (y - viewportTransform.y) / viewportTransform.scale
-      };
+      return transformCoords({
+        x,
+        y,
+        viewportTransform: this.viewportTransform
+      });
     },
-    updateZoomLevel() {
-      this.zoomLevel = this.$refs.pinchZoom.scale;
+    updateViewport() {
+      // Use setTimeout to let the pinch-zoom web component render first,
+      // so that we can access its updated properties.
+      setTimeout(() => {
+        this.viewportTransform = {
+          x: this.$refs.pinchZoom.x,
+          y: this.$refs.pinchZoom.y,
+          scale: this.$refs.pinchZoom.scale
+        };
+      }, 0);
     }
   },
   mounted() {
-    this.$refs.pinchZoomInner.addEventListener("wheel", this.updateZoomLevel, {
+    this.$refs.pinchZoomInner.addEventListener("wheel", this.updateViewport, {
       passive: true
     });
   },
   beforeDestroy() {
-    this.$refs.pinchZoomInner.removeEventListener(
-      "wheel",
-      this.updateZoomLevel
-    );
+    this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateViewport);
   },
   computed: {
     addingShape() {
@@ -277,6 +277,9 @@ export default {
     },
     shapes() {
       return store.getters.shapes;
+    },
+    zoomLevel() {
+      return this.viewportTransform.scale;
     }
   },
   filters: {

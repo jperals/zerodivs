@@ -1,34 +1,63 @@
 <template>
-  <div class="handles" :style="containerStyle" v-on:mouseup="onMouseUp">
-    <div
-      class="handle top-left"
-      v-on:mousedown="($event) => onMouseDown('top-left', $event)"
-      :style="transformTopLeft"
-    ></div>
-    <div class="handle top" v-on:mousedown="($event) => onMouseDown('top', $event)" :style="transformTop"></div>
-    <div class="handle top-right" v-on:mousedown="($event) => onMouseDown('top-right', $event)" :style="transformTopRight"></div>
-    <div class="handle right" v-on:mousedown="($event) => onMouseDown('right', $event)" :style="transformRight"></div>
-    <div
-      class="handle bottom-right"
-      v-on:mousedown="($event) => onMouseDown('bottom-right', $event)" :style="transformBottomRight"
-    ></div>
-    <div class="handle bottom" v-on:mousedown="($event) => onMouseDown('bottom', $event)" :style="transformBottom"></div>
-    <div class="handle bottom-left" v-on:mousedown="($event) => onMouseDown('bottom-left', $event)" :style="transformBottomLeft"></div>
-    <div class="handle left" v-on:mousedown="($event) => onMouseDown('left', $event)" :style="transformLeft"></div>
+  <div class="shape-handles-wrapper">
+    <div class="shape-handles" :style="containerStyle" v-on:mouseup="onMouseUp">
+      <div
+        class="handle top-left"
+        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
+        :style="transformTopLeft"
+      ></div>
+      <div
+        class="handle top"
+        v-on:mousedown="($event) => onMouseDown('top', $event)"
+        :style="transformTop"
+      ></div>
+      <div
+        class="handle top-right"
+        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
+        :style="transformTopRight"
+      ></div>
+      <div
+        class="handle right"
+        v-on:mousedown="($event) => onMouseDown('right', $event)"
+        :style="transformRight"
+      ></div>
+      <div
+        class="handle bottom-right"
+        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
+        :style="transformBottomRight"
+      ></div>
+      <div
+        class="handle bottom"
+        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
+        :style="transformBottom"
+      ></div>
+      <div
+        class="handle bottom-left"
+        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
+        :style="transformBottomLeft"
+      ></div>
+      <div
+        class="handle left"
+        v-on:mousedown="($event) => onMouseDown('left', $event)"
+        :style="transformLeft"
+      ></div>
+    </div>
   </div>
 </template>
 
 <script>
 import shapes2css from "@/common/shapes2css";
+import store from "@/store";
 export default {
   props: {
     onMouseDown: Function,
     onMouseUp: Function,
+    viewportTransform: Object,
     shape: Object
   },
   computed: {
     containerStyle() {
-      const color = "red";
+      const color = "orange";
       const shapes = [
         {
           height: {
@@ -36,26 +65,27 @@ export default {
             units: "px"
           },
           width: {
-            value: this.shape.width.value,
+            value: this.shape.width.value * this.viewportTransform.scale,
             units: this.shape.width.units
           },
-          top: this.shapeTop,
-          left: this.shapeLeft,
+          ...this.transformCoords({ top: this.shapeTop, left: this.shapeLeft }),
           type: "linear",
           direction: "to bottom",
           stops: [{ color }, { color }]
         },
         {
           height: {
-            value: this.shape.height.value,
+            value: this.shape.height.value * this.viewportTransform.scale,
             units: this.shape.height.units
           },
           width: {
             value: 1,
             units: "px"
           },
-          top: this.shapeTop,
-          left: this.shapeRight,
+          ...this.transformCoords({
+            top: this.shapeTop,
+            left: this.shapeRight
+          }),
           type: "linear",
           direction: "to bottom",
           stops: [{ color }, { color }]
@@ -66,32 +96,36 @@ export default {
             units: "px"
           },
           width: {
-            value: this.shape.width.value,
+            value: this.shape.width.value * this.viewportTransform.scale,
             units: this.shape.width.units
           },
-          top: this.shapeBottom,
-          left: this.shapeLeft,
+          ...this.transformCoords({
+            top: this.shapeBottom,
+            left: this.shapeLeft
+          }),
           type: "linear",
           direction: "to bottom",
           stops: [{ color }, { color }]
         },
         {
           height: {
-            value: this.shape.height.value,
+            value: this.shape.height.value * this.viewportTransform.scale,
             units: this.shape.height.units
           },
           width: {
             value: 1,
             units: "px"
           },
-          top: this.shapeTop,
-          left: this.shapeLeft,
+          ...this.transformCoords({ top: this.shapeTop, left: this.shapeLeft }),
           type: "linear",
           direction: "to bottom",
           stops: [{ color }, { color }]
         }
       ];
-      return shapes2css(shapes);
+      const selectedLayer = store.getters.selectedLayer;
+      const extraStyles = store.getters.extraStyles(selectedLayer) + `
+background: transparent;`;
+      return extraStyles + shapes2css(shapes);
     },
     shapeBottom() {
       return {
@@ -118,33 +152,75 @@ export default {
       };
     },
     transformBottom() {
-      return this.transform({ top: this.shapeBottom, left: {value: (this.shapeLeft.value + this.shapeRight.value)/2, units: this.shapeLeft.units }});
+      return this.cssTransform({
+        top: this.shapeBottom,
+        left: {
+          value: (this.shapeLeft.value + this.shapeRight.value) / 2,
+          units: this.shapeLeft.units
+        }
+      });
     },
     transformBottomLeft() {
-      return this.transform({ top: this.shapeBottom, left: this.shapeLeft});
+      return this.cssTransform({ top: this.shapeBottom, left: this.shapeLeft });
     },
     transformBottomRight() {
-      return this.transform({ top: this.shapeBottom, left: this.shapeRight});
+      return this.cssTransform({
+        top: this.shapeBottom,
+        left: this.shapeRight
+      });
     },
     transformLeft() {
-      return this.transform({ top: {value: (this.shapeTop.value + this.shapeBottom.value)/2, units: this.shapeTop.units}, left: this.shapeLeft })
+      return this.cssTransform({
+        top: {
+          value: (this.shapeTop.value + this.shapeBottom.value) / 2,
+          units: this.shapeTop.units
+        },
+        left: this.shapeLeft
+      });
     },
     transformRight() {
-      return this.transform({ top: {value: (this.shapeTop.value + this.shapeBottom.value)/2, units: this.shapeTop.units}, left: this.shapeRight })
+      return this.cssTransform({
+        top: {
+          value: (this.shapeTop.value + this.shapeBottom.value) / 2,
+          units: this.shapeTop.units
+        },
+        left: this.shapeRight
+      });
     },
     transformTop() {
-      return this.transform({ top: this.shapeTop, left: {value: (this.shapeLeft.value + this.shapeRight.value)/2, units: this.shapeLeft.units }});
+      return this.cssTransform({
+        top: this.shapeTop,
+        left: {
+          value: (this.shapeLeft.value + this.shapeRight.value) / 2,
+          units: this.shapeLeft.units
+        }
+      });
     },
     transformTopLeft() {
-      return this.transform({ top: this.shapeTop, left: this.shapeLeft });
+      return this.cssTransform({ top: this.shapeTop, left: this.shapeLeft });
     },
     transformTopRight() {
-      return this.transform({ top: this.shapeTop, left: this.shapeRight });
+      return this.cssTransform({ top: this.shapeTop, left: this.shapeRight });
     }
   },
   methods: {
-    transform({ top, left }) {
-      return `transform: translate(${left.value}${left.units}, ${top.value}${top.units})`;
+    cssTransform({ top, left }) {
+      const transformed = this.transformCoords({ top, left });
+      return `transform: translate(${transformed.left.value}${left.units}, ${transformed.top.value}${top.units})`;
+    },
+    transformCoords({ top, left }) {
+      return {
+        top: {
+          ...top,
+          value:
+            top.value * this.viewportTransform.scale + this.viewportTransform.y
+        },
+        left: {
+          ...left,
+          value:
+            left.value * this.viewportTransform.scale + this.viewportTransform.x
+        }
+      };
     }
   }
 };
@@ -152,17 +228,18 @@ export default {
 
 <style scoped lang="scss">
 $handle-width: 8px;
-.handles {
+.shape-handles-wrapper {
   position: absolute;
-  left: -2px;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 .handle {
   background-color: white;
-  border: 1px solid lightgray;
+  border: 1px solid var(--gray-400);
   position: absolute;
   width: $handle-width;
   height: $handle-width;
