@@ -253,7 +253,9 @@ export default {
     }
   },
   mounted() {
-    this.$refs.pinchZoomInner.addEventListener("wheel", this.updateZoomLevel);
+    this.$refs.pinchZoomInner.addEventListener("wheel", this.updateZoomLevel, {
+      passive: true
+    });
   },
   beforeDestroy() {
     this.$refs.pinchZoomInner.removeEventListener(
