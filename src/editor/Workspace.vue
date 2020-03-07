@@ -112,19 +112,14 @@ export default {
     onMouseDown(event) {
       if (this.addingShape) {
         event.stopPropagation();
-        const workspaceRect = this.$refs.workspace.getBoundingClientRect();
         this.updateCanvasPosition();
         this.initialMousePosition = this.transformCoords({
           x: event.x,
           y: event.y
         });
-        const { x, y } = this.transformCoords({
-          x: event.x - workspaceRect.left,
-          y: event.y - workspaceRect.top
-        });
         this.initialNewShapePosition = {
-          left: x,
-          top: y
+          left: (event.x - this.canvasPosition.x) / this.viewportTransform.scale,
+          top: (event.y - this.canvasPosition.y) / this.viewportTransform.scale
         };
         this.shapeBeingAdded = {
           ...store.getters.shapeToBeAdded,
