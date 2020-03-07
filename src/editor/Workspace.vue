@@ -267,6 +267,7 @@ export default {
   },
   beforeDestroy() {
     this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateViewport);
+    store.dispatch("unselectShape");
   },
   computed: {
     addingShape() {
