@@ -1,55 +1,57 @@
 <template>
   <div class="shape-handles-wrapper">
-    <div class="shape-handles" :style="containerStyle" v-on:mouseup="onMouseUp">
-      <div
-        class="handle top-left"
-        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
-        :style="transformTopLeft"
-      ></div>
-      <div
-        class="handle top"
-        v-on:mousedown="($event) => onMouseDown('top', $event)"
-        :style="transformTop"
-      ></div>
-      <div
-        class="handle top-right"
-        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
-        :style="transformTopRight"
-      ></div>
-      <div
-        class="handle right"
-        v-on:mousedown="($event) => onMouseDown('right', $event)"
-        :style="transformRight"
-      ></div>
-      <div
-        class="handle bottom-right"
-        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
-        :style="transformBottomRight"
-      ></div>
-      <div
-        class="handle bottom"
-        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
-        :style="transformBottom"
-      ></div>
-      <div
-        class="handle bottom-left"
-        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
-        :style="transformBottomLeft"
-      ></div>
-      <div
-        class="handle left"
-        v-on:mousedown="($event) => onMouseDown('left', $event)"
-        :style="transformLeft"
-      ></div>
+    <div class="shape-handles-offset" :style="wrapperStyle">
+      <div class="shape-overlay" :style="containerStyle" v-on:mouseup="onMouseUp">
+        <div
+          class="handle top-left"
+          v-on:mousedown="($event) => onMouseDown('top-left', $event)"
+          :style="transformTopLeft"
+        ></div>
+        <div
+          class="handle top"
+          v-on:mousedown="($event) => onMouseDown('top', $event)"
+          :style="transformTop"
+        ></div>
+        <div
+          class="handle top-right"
+          v-on:mousedown="($event) => onMouseDown('top-right', $event)"
+          :style="transformTopRight"
+        ></div>
+        <div
+          class="handle right"
+          v-on:mousedown="($event) => onMouseDown('right', $event)"
+          :style="transformRight"
+        ></div>
+        <div
+          class="handle bottom-right"
+          v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
+          :style="transformBottomRight"
+        ></div>
+        <div
+          class="handle bottom"
+          v-on:mousedown="($event) => onMouseDown('bottom', $event)"
+          :style="transformBottom"
+        ></div>
+        <div
+          class="handle bottom-left"
+          v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
+          :style="transformBottomLeft"
+        ></div>
+        <div
+          class="handle left"
+          v-on:mousedown="($event) => onMouseDown('left', $event)"
+          :style="transformLeft"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import shapes2css from "@/common/shapes2css";
-import store from "@/store";
 export default {
   props: {
+    canvasPosition: Object,
     onMouseDown: Function,
     onMouseUp: Function,
     viewportTransform: Object,
@@ -122,10 +124,7 @@ export default {
           stops: [{ color }, { color }]
         }
       ];
-      const selectedLayer = store.getters.selectedLayer;
-      const extraStyles = store.getters.extraStyles(selectedLayer) + `
-background: transparent;`;
-      return extraStyles + shapes2css(shapes);
+      return shapes2css(shapes);
     },
     shapeBottom() {
       return {
@@ -201,6 +200,11 @@ background: transparent;`;
     },
     transformTopRight() {
       return this.cssTransform({ top: this.shapeTop, left: this.shapeRight });
+    },
+    wrapperStyle() {
+      return {
+        transform: `translate(${this.canvasPosition.x}px, ${this.canvasPosition.y}px)`
+      };
     }
   },
   methods: {
@@ -213,12 +217,12 @@ background: transparent;`;
         top: {
           ...top,
           value:
-            top.value * this.viewportTransform.scale + this.viewportTransform.y
+            top.value * this.viewportTransform.scale
         },
         left: {
           ...left,
           value:
-            left.value * this.viewportTransform.scale + this.viewportTransform.x
+            left.value * this.viewportTransform.scale
         }
       };
     }
@@ -229,6 +233,24 @@ background: transparent;`;
 <style scoped lang="scss">
 $handle-width: 8px;
 .shape-handles-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.shape-handles-offset {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.shape-overlay {
   position: absolute;
   left: 0;
   top: 0;

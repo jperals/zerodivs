@@ -16,6 +16,7 @@
     </pinch-zoom>
     <ShapeResizeHandles
       v-if="selectedShape"
+      :canvasPosition="canvasPosition"
       :shape="selectedShape"
       :viewportTransform="viewportTransform"
       :onMouseDown="onResizeHandleMouseDown"
@@ -37,6 +38,7 @@ import "pinch-zoom-element";
 export default {
   data() {
     return {
+      canvasPosition: null,
       currentAction: null,
       initialNewShapePosition: null,
       initialShapeProps: null,
@@ -111,8 +113,7 @@ export default {
       if (this.addingShape) {
         event.stopPropagation();
         const workspaceRect = this.$refs.workspace.getBoundingClientRect();
-        const canvasRect = this.$refs.canvas.getBoundingClientRect();
-        this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
+        this.updateCanvasPosition();
         this.initialMousePosition = this.transformCoords({
           x: event.x,
           y: event.y
@@ -179,8 +180,7 @@ export default {
         return;
       }
       this.resizeDirection = direction;
-      const canvasRect = this.$refs.canvas.getBoundingClientRect();
-      this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
+      this.updateCanvasPosition();
       this.initialMousePosition = this.transformCoords({
         x: event.x,
         y: event.y
@@ -198,8 +198,7 @@ export default {
       }
       event.stopPropagation();
       this.shapeBeingMoved = shape;
-      const canvasRect = this.$refs.canvas.getBoundingClientRect();
-      this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
+      this.updateCanvasPosition();
       this.initialMousePosition = this.transformCoords({
         x: event.x,
         y: event.y
@@ -248,10 +247,15 @@ export default {
         viewportTransform: this.viewportTransform
       });
     },
+    updateCanvasPosition() {
+      const canvasRect = this.$refs.canvas.getBoundingClientRect();
+      this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
+    },
     updateViewport() {
       // Use setTimeout to let the pinch-zoom web component render first,
       // so that we can access its updated properties.
       setTimeout(() => {
+        this.updateCanvasPosition();
         this.viewportTransform = {
           x: this.$refs.pinchZoom.x,
           y: this.$refs.pinchZoom.y,
@@ -264,6 +268,7 @@ export default {
     this.$refs.pinchZoomInner.addEventListener("wheel", this.updateViewport, {
       passive: true
     });
+    this.updateCanvasPosition();
   },
   beforeDestroy() {
     this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateViewport);
