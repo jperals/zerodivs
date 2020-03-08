@@ -9,7 +9,7 @@
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
-        <div class="canvas" :class="'canvas-' + projectId" ref="canvas">
+        <div class="canvas-wrapper" :class="'canvas-wrapper-' + projectId" ref="canvas">
           <Canvas
             :projectId="projectId"
             :shapesLayers="shapesLayers"

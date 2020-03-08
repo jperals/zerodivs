@@ -1,7 +1,7 @@
 <template>
-  <div class="overlays-wrapper">
+  <div class="canvas" :class="'canvas-' + projectId">
     <v-style type="text/css">
-      .canvas-{{projectId}} {
+      .canvas-wrapper-{{projectId}} {
       {{ mainCustomStyle }}
       }
     </v-style>
@@ -132,3 +132,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.canvas {
+  width: 100%;
+  height: 100%;
+}
+</style>

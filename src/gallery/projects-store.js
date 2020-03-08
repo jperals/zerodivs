@@ -12,7 +12,8 @@ const projects = {
     currentProject: state => state.currentProject,
     projectById: state => id =>
       state.projects.find(project => project.id === id),
-    projects: state => state.projects
+    projects: state => state.projects,
+    shapesLayersByProjectId: (state, getters) => id => get(getters.projectById(id), "shapes")
   },
   mutations: {
     createNewProject(state) {
