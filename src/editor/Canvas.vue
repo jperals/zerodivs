@@ -1,37 +1,7 @@
 <template>
   <div class="overlays-wrapper">
-    <div class="overlays" :class="'overlays-' + projectId">
-      <div class="overlays--main">
-        <ShapeOverlay
-          v-for="shape in shapesMain"
-          :shape="shape"
-          :onMouseDown="onShapeMouseDown"
-          :onMouseUp="onShapeMouseUp"
-          :key="shape.id"
-        />
-      </div>
-      <div class="overlays--before">
-        <ShapeOverlay
-          v-for="shape in shapesBefore"
-          :shape="shape"
-          :onMouseDown="onShapeMouseDown"
-          :onMouseUp="onShapeMouseUp"
-          :key="shape.id"
-        />
-      </div>
-      <div class="overlays--after">
-        <ShapeOverlay
-          v-for="shape in shapesAfter"
-          :shape="shape"
-          :onMouseDown="onShapeMouseDown"
-          :onMouseUp="onShapeMouseUp"
-          :key="shape.id"
-        />
-      </div>
-    </div>
     <v-style type="text/css">
-      .canvas-{{projectId}},
-      .canvas-{{projectId}} .overlays {
+      .canvas-{{projectId}} {
       {{ mainCustomStyle }}
       }
     </v-style>
@@ -41,14 +11,12 @@
       }
     </v-style>
     <v-style type="text/css" v-if="isBeforeActive">
-      .canvas-{{projectId}}:before,
-      .canvas-{{projectId}} .overlays--before {
+      .canvas-{{projectId}}:before {
       {{ beforeStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isAfterActive">
-      .canvas-{{projectId}}:after,
-      .canvas-{{projectId}} .overlays--after {
+      .canvas-{{projectId}} {
       {{ afterStyle }}
       }
     </v-style>
@@ -58,17 +26,11 @@
 <script>
 import { get } from "lodash";
 import store from "@/store";
-import ShapeOverlay from "./ShapeOverlay";
 import shapes2css from "@/common/shapes2css";
 export default {
   props: {
-    onShapeMouseDown: Function,
-    onShapeMouseUp: Function,
     projectId: String,
     shapesLayers: Object
-  },
-  components: {
-    ShapeOverlay
   },
   computed: {
     mainCustomStyle() {
@@ -170,29 +132,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.overlays-wrapper {
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-}
-.overlays {
-  position: absolute;
-  top: 0;
-  margin: 0;
-  background-color: transparent !important;
-}
-.overlays,
-.overlays--main,
-.overlays--before,
-.overlays--after {
-  pointer-events: none;
-}
-.overlay {
-  pointer-events: all;
-}
-</style>

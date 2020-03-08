@@ -11,6 +11,10 @@
       >
         <div class="canvas" :class="'canvas-' + projectId" ref="canvas">
           <Canvas
+            :projectId="projectId"
+            :shapesLayers="shapesLayers"
+          />
+          <ShapeOverlays
             :onShapeMouseDown="onShapeMouseDown"
             :onShapeMouseUp="onShapeMouseUp"
             :projectId="projectId"
@@ -38,6 +42,7 @@
 import store from "@/store";
 import Canvas from "./Canvas";
 import { transformCoords } from "@/common/geometry";
+import ShapeOverlays from "./ShapeOverlays";
 import ShapeResizeHandles from "./ShapeResizeHandles";
 import "pinch-zoom-element";
 export default {
@@ -61,6 +66,7 @@ export default {
   },
   components: {
     Canvas,
+    ShapeOverlays,
     ShapeResizeHandles
   },
   methods: {
