@@ -9,8 +9,13 @@
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
-        <div class="canvas" ref="canvas">
-          <Canvas :onShapeMouseDown="onShapeMouseDown" :onShapeMouseUp="onShapeMouseUp" />
+        <div class="canvas" :class="'canvas-' + projectId" ref="canvas">
+          <Canvas
+            :onShapeMouseDown="onShapeMouseDown"
+            :onShapeMouseUp="onShapeMouseUp"
+            :projectId="projectId"
+            :shapesLayers="shapesLayers"
+          />
         </div>
       </div>
     </pinch-zoom>
@@ -118,7 +123,8 @@ export default {
           y: event.y
         });
         this.initialNewShapePosition = {
-          left: (event.x - this.canvasPosition.x) / this.viewportTransform.scale,
+          left:
+            (event.x - this.canvasPosition.x) / this.viewportTransform.scale,
           top: (event.y - this.canvasPosition.y) / this.viewportTransform.scale
         };
         this.shapeBeingAdded = {
@@ -273,11 +279,17 @@ export default {
     addingShape() {
       return !!store.getters.shapeToBeAdded;
     },
+    projectId() {
+      return store.getters.currentProject.id;
+    },
     selectedShape() {
       return store.getters.selectedShape;
     },
     shapes() {
       return store.getters.shapes;
+    },
+    shapesLayers() {
+      return store.getters.allLayers;
     },
     zoomLevel() {
       return this.viewportTransform.scale;

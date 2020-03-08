@@ -8,8 +8,8 @@ function initialLayersState() {
   return {
     main: {
       active: true,
-      extraStyles: `
-width: 100%;
+      extraStyles:
+`width: 100%;
 height: 100%;
 position: relative;
 margin: 0 auto;
@@ -19,8 +19,8 @@ background-color: white;
     },
     before: {
       active: false,
-      extraStyles: `
-position: absolute;
+      extraStyles:
+`position: absolute;
 top: 0;
 left: 0;
 right: 0;
@@ -156,7 +156,6 @@ const shapes = {
           shape[key] = newProps[key];
         }
       }
-      //state.layers = { ...state.layers };
     },
     updateShapeStop(state, { shape, stop, ...newProps }) {
       for (const key in newProps) {

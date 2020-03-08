@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="overlays">
+  <div class="overlays-wrapper">
+    <div class="overlays" :class="'overlays-' + projectId">
       <div class="overlays--main">
         <ShapeOverlay
           v-for="shape in shapesMain"
@@ -30,25 +30,25 @@
       </div>
     </div>
     <v-style type="text/css">
-      .canvas,
-      .overlays {
+      .canvas-{{projectId}},
+      .canvas-{{projectId}} .overlays {
       {{ mainCustomStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isMainActive">
-      .canvas {
+      .canvas-{{projectId}} {
       {{ mainStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isBeforeActive">
-      .canvas:before,
-      .overlays--before {
+      .canvas-{{projectId}}:before,
+      .canvas-{{projectId}} .overlays--before {
       {{ beforeStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isAfterActive">
-      .canvas:after,
-      .overlays--after {
+      .canvas-{{projectId}}:after,
+      .canvas-{{projectId}} .overlays--after {
       {{ afterStyle }}
       }
     </v-style>
@@ -64,14 +64,15 @@ export default {
   props: {
     onShapeMouseDown: Function,
     onShapeMouseUp: Function,
-    shapes: Array
+    projectId: String,
+    shapesLayers: Object
   },
   components: {
     ShapeOverlay
   },
   computed: {
     mainCustomStyle() {
-      return store.getters.extraStyles("main");
+      return this.shapesLayers.main.extraStyles;
     },
     mainStyle() {
       const snapShapes = [];
@@ -110,37 +111,37 @@ export default {
     },
     beforeStyle() {
       const shapes = this.shapesBefore;
-      return store.getters.extraStyles("before") + shapes2css(shapes);
+      return this.layerExtraStyles("before") + shapes2css(shapes);
     },
     afterStyle() {
       const shapes = this.shapesAfter;
-      return store.getters.extraStyles("after") + shapes2css(shapes);
+      return this.layerExtraStyles("after") + shapes2css(shapes);
     },
     isMainActive() {
-      return store.getters.isLayerActive("main");
+      return this.isLayerActive("main");
     },
     isBeforeActive() {
-      return store.getters.isLayerActive("before");
+      return this.isLayerActive("before");
     },
     isAfterActive() {
-      return store.getters.isLayerActive("after");
+      return this.isLayerActive("after");
     },
     shapesMain() {
-      const shapes = store.getters.layerShapes("main");
+      const shapes = this.getLayerShapes("main");
       if (this.shapeToBeAdded && store.getters.selectedLayer === "main") {
         return shapes.concat([this.shapeToBeAdded]);
       }
       return shapes;
     },
     shapesBefore() {
-      const shapes = store.getters.layerShapes("before");
+      const shapes = this.getLayerShapes("before");
       if (this.shapeToBeAdded && store.getters.selectedLayer === "before") {
         return shapes.concat([this.shapeToBeAdded]);
       }
       return shapes;
     },
     shapesAfter() {
-      const shapes = store.getters.layerShapes("after");
+      const shapes = this.getLayerShapes("after");
       if (this.shapeToBeAdded && store.getters.selectedLayer === "after") {
         return shapes.concat([this.shapeToBeAdded]);
       }
@@ -155,16 +156,35 @@ export default {
         store.getters.shapeToBeAdded
       );
     }
+  },
+  methods: {
+    getLayerShapes(layerName) {
+      return this.shapesLayers[layerName].shapes;
+    },
+    isLayerActive(layerName) {
+      return this.shapesLayers[layerName].active;
+    },
+    layerExtraStyles(layerName) {
+      return this.shapesLayers[layerName].extraStyles;
+    }
   }
 };
 </script>
 
 <style scoped>
+.overlays-wrapper {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
 .overlays {
   position: absolute;
   top: 0;
   margin: 0;
-  background-color: transparent;
+  background-color: transparent !important;
 }
 .overlays,
 .overlays--main,
