@@ -4,13 +4,18 @@
     <div class="tabs">
       <router-link :to="{name: 'json-result'}">JSON</router-link>
       <router-link :to="{name: 'css-result'}">CSS</router-link>
+      <ExportToCodePenButton />
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
+import ExportToCodePenButton from "./ExportToCodePenButton";
 export default {
+  components: {
+    ExportToCodePenButton
+  },
   methods: {
     close() {
       this.$router.push({name: "editor"});
