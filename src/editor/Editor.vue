@@ -91,11 +91,13 @@ export default {
   right: 0;
 }
 .output {
-  position: absolute;
-  top: 50px;
+  top: 30px;
   left: 50px;
   right: 50px;
   z-index: 20;
+  max-height: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
 }
 .output:before {
   content: "";
