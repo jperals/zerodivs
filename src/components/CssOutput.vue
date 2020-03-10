@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import store from "@/store";
 import layers2css from "@/common/layers2css";
+import store from "@/store";
 export default {
   computed: {
     css() {

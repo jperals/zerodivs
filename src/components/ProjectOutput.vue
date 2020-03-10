@@ -1,9 +1,11 @@
 <template>
   <div class="output">
     <button class="close-button" v-on:click="close">Close</button>
-    <div class="tabs">
-      <router-link :to="{name: 'json-result'}">JSON</router-link>
-      <router-link :to="{name: 'css-result'}">CSS</router-link>
+    <div class="actions">
+      <div class="tabs">
+        <router-link :to="{name: 'json-result'}">JSON</router-link>
+        <router-link :to="{name: 'css-result'}">CSS</router-link>
+      </div>
       <ExportToCodePenButton />
     </div>
     <router-view />
@@ -33,9 +35,12 @@ export default {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.output .tabs {
+.actions {
+  display: flex;
+  flex-direction: row;
   background: white;
   border-bottom: 1px solid var(--panel-border-color);
+  align-items: center;
 }
 .output .tabs a {
   color: var(--gray-700);
