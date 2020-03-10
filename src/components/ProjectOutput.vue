@@ -68,7 +68,7 @@ export default {
       );
     },
     close() {
-      store.dispatch("toggleOutput", false);
+      this.$router.push({name: "editor"});
     }
   }
 };

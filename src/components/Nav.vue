@@ -5,7 +5,7 @@
       <span v-if="currentProject">/</span>
       <span v-if="currentProject">{{ currentProject.id }}</span>
     </section>
-    <button v-if="currentProject" v-on:click="toggleOutput">Output</button>
+    <button v-if="currentProject" v-on:click="toggleOutput">Result</button>
   </nav>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     toggleOutput() {
-      store.dispatch("toggleOutput");
+      this.$router.push({ name: "result" });
     }
   }
 };
@@ -45,6 +45,11 @@ span {
   color: var(--gray-700);
 }
 nav > button {
-  margin: 0.25rem 1rem;
+  margin: 0.45rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+nav > button:hover {
+  text-decoration: underline;
 }
 </style>

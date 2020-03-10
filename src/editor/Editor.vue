@@ -7,7 +7,7 @@
         <Layers />
         <PropsForm />
       </div>
-      <ProjectOutput v-if="showOutput" />
+      <router-view />
     </template>
     <div v-else>Couldn't find this div. :-/</div>
   </div>
@@ -19,7 +19,6 @@ import Workspace from "./Workspace";
 import Layers from "./Layers";
 import PropsForm from "./PropsForm";
 import Toolbar from "@/toolbar/Toolbar";
-import ProjectOutput from "@/components/ProjectOutput";
 import reactToKeyboard from "@/react-to-keyboard";
 import store from "@/store";
 export default {
@@ -30,7 +29,6 @@ export default {
   },
   components: {
     Layers,
-    ProjectOutput,
     PropsForm,
     Toolbar,
     Workspace
