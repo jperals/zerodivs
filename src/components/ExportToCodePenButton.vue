@@ -12,9 +12,11 @@ export default {
   computed: {
     value() {
       return JSON.stringify({
-        title: "New Pen!",
+        css: layers2css({ layers: this.shapesLayers }),
+        editors: "110",
+        layout: "left",
         html: "<div></div>",
-        css: layers2css({ layers: this.shapesLayers })
+        title: "New Pen!"
       });
     },
     shapesLayers() {
