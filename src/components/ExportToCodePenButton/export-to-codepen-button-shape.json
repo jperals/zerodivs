@@ -1,0 +1,522 @@
+[
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top left",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "12baa591-6709-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "12baa592-6709-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "12baa593-6709-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "12baa594-6709-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "12baa595-6709-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 0
+    },
+    "id": "12baa590-6709-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Rectangle",
+    "type": "linear",
+    "direction": "to bottom",
+    "stops": [
+      {
+        "color": "white",
+        "position": "0%",
+        "id": "b1446e80-6709-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "100%",
+        "id": "b1446e81-6709-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 2
+    },
+    "height": {
+      "units": "px",
+      "value": 5
+    },
+    "left": {
+      "units": "px",
+      "value": 11
+    },
+    "top": {
+      "units": "px",
+      "value": 2
+    },
+    "id": "b1444770-6709-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top right",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "dc7a06e1-670a-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "dc7a06e2-670a-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "dc7a06e3-670a-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "dc7a06e4-670a-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "dc7a06e5-670a-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 11
+    },
+    "top": {
+      "units": "px",
+      "value": 0
+    },
+    "id": "dc7a06e0-670a-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Rectangle",
+    "type": "linear",
+    "direction": "to bottom",
+    "stops": [
+      {
+        "color": "white",
+        "position": "0%",
+        "id": "0d5ea8b0-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "100%",
+        "id": "0d5ea8b1-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 2
+    },
+    "height": {
+      "units": "px",
+      "value": 7
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 8
+    },
+    "id": "0d5e81a1-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Rectangle",
+    "type": "linear",
+    "direction": "to bottom",
+    "stops": [
+      {
+        "color": "white",
+        "position": "0%",
+        "id": "138e8572-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "100%",
+        "id": "138e8573-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 2
+    },
+    "height": {
+      "units": "px",
+      "value": 6
+    },
+    "left": {
+      "units": "px",
+      "value": 22
+    },
+    "top": {
+      "units": "px",
+      "value": 8
+    },
+    "id": "138e8571-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top right",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "2d684211-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "2d684212-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "2d684213-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "2d684214-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "2d684215-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 11
+    },
+    "top": {
+      "units": "px",
+      "value": 7
+    },
+    "id": "2d684210-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top left",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "2ff1ac12-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "2ff1ac13-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "2ff1ac14-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "2ff1ac15-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "2ff1ac16-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 7
+    },
+    "id": "2ff1ac11-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top right",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "4447d182-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "4447d183-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "4447d184-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "4447d185-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "4447d186-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 7
+    },
+    "id": "4447d181-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top left",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "6a1406e2-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "6a1406e3-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "6a1406e4-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "6a1406e5-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "6a1406e6-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 11
+    },
+    "top": {
+      "units": "px",
+      "value": 7
+    },
+    "id": "6a1406e1-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top left",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "6d2c4361-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "6d2c4362-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "6d2c4363-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "6d2c4364-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "6d2c4365-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 11
+    },
+    "top": {
+      "units": "px",
+      "value": 15
+    },
+    "id": "6d2c4360-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Cropped stripe, bottom right to top left",
+    "type": "linear",
+    "direction": "to top right",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "705ee5b2-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "43%",
+        "id": "705ee5b3-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "43%",
+        "id": "705ee5b4-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "57%",
+        "id": "705ee5b5-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "transparent",
+        "position": "57%",
+        "id": "705ee5b6-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 13
+    },
+    "height": {
+      "units": "px",
+      "value": 8
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 15
+    },
+    "id": "705ee5b1-670b-11ea-9f06-cd94d7526e2a"
+  },
+  {
+    "name": "Rectangle",
+    "type": "linear",
+    "direction": "to bottom",
+    "stops": [
+      {
+        "color": "white",
+        "position": "0%",
+        "id": "7719eb71-670b-11ea-9f06-cd94d7526e2a"
+      },
+      {
+        "color": "white",
+        "position": "100%",
+        "id": "7719eb72-670b-11ea-9f06-cd94d7526e2a"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 2
+    },
+    "height": {
+      "units": "px",
+      "value": 6
+    },
+    "left": {
+      "units": "px",
+      "value": 11
+    },
+    "top": {
+      "units": "px",
+      "value": 15
+    },
+    "id": "7719eb70-670b-11ea-9f06-cd94d7526e2a"
+  }
+]

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import ExportToCodePenButton from "./ExportToCodePenButton";
+import ExportToCodePenButton from "./ExportToCodePenButton/ExportToCodePenButton";
 export default {
   components: {
     ExportToCodePenButton
