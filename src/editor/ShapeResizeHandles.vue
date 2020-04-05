@@ -1,48 +1,46 @@
 <template>
   <div class="shape-handles-wrapper">
-    <div class="shape-handles-offset" :style="wrapperStyle">
-      <div class="shape-overlay" :style="containerStyle" v-on:mouseup="onMouseUp">
-        <div
-          class="handle top-left"
-          v-on:mousedown="($event) => onMouseDown('top-left', $event)"
-          :style="transformTopLeft"
-        ></div>
-        <div
-          class="handle top"
-          v-on:mousedown="($event) => onMouseDown('top', $event)"
-          :style="transformTop"
-        ></div>
-        <div
-          class="handle top-right"
-          v-on:mousedown="($event) => onMouseDown('top-right', $event)"
-          :style="transformTopRight"
-        ></div>
-        <div
-          class="handle right"
-          v-on:mousedown="($event) => onMouseDown('right', $event)"
-          :style="transformRight"
-        ></div>
-        <div
-          class="handle bottom-right"
-          v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
-          :style="transformBottomRight"
-        ></div>
-        <div
-          class="handle bottom"
-          v-on:mousedown="($event) => onMouseDown('bottom', $event)"
-          :style="transformBottom"
-        ></div>
-        <div
-          class="handle bottom-left"
-          v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
-          :style="transformBottomLeft"
-        ></div>
-        <div
-          class="handle left"
-          v-on:mousedown="($event) => onMouseDown('left', $event)"
-          :style="transformLeft"
-        ></div>
-      </div>
+    <div class="shape-overlay" :style="containerStyle" v-on:mouseup="onMouseUp">
+      <div
+        class="handle top-left"
+        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
+        :style="transformTopLeft"
+      ></div>
+      <div
+        class="handle top"
+        v-on:mousedown="($event) => onMouseDown('top', $event)"
+        :style="transformTop"
+      ></div>
+      <div
+        class="handle top-right"
+        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
+        :style="transformTopRight"
+      ></div>
+      <div
+        class="handle right"
+        v-on:mousedown="($event) => onMouseDown('right', $event)"
+        :style="transformRight"
+      ></div>
+      <div
+        class="handle bottom-right"
+        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
+        :style="transformBottomRight"
+      ></div>
+      <div
+        class="handle bottom"
+        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
+        :style="transformBottom"
+      ></div>
+      <div
+        class="handle bottom-left"
+        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
+        :style="transformBottomLeft"
+      ></div>
+      <div
+        class="handle left"
+        v-on:mousedown="($event) => onMouseDown('left', $event)"
+        :style="transformLeft"
+      ></div>
     </div>
   </div>
 </template>
@@ -200,11 +198,6 @@ export default {
     },
     transformTopRight() {
       return this.cssTransform({ top: this.shapeTop, left: this.shapeRight });
-    },
-    wrapperStyle() {
-      return {
-        transform: `translate(${this.canvasPosition.x}px, ${this.canvasPosition.y}px)`
-      };
     }
   },
   methods: {
@@ -212,17 +205,21 @@ export default {
       const transformed = this.transformCoords({ top, left });
       return `transform: translate(${transformed.left.value}${left.units}, ${transformed.top.value}${top.units})`;
     },
-    transformCoords({ top, left }) {
+    transformCoords({ top, left, offset = { top: 0, left: 0 } }) {
       return {
         top: {
           ...top,
           value:
-            top.value * this.viewportTransform.scale
+            top.value * this.viewportTransform.scale +
+            offset.top +
+            this.canvasPosition.y
         },
         left: {
           ...left,
           value:
-            left.value * this.viewportTransform.scale
+            left.value * this.viewportTransform.scale +
+            offset.left +
+            this.canvasPosition.x
         }
       };
     }
@@ -241,15 +238,6 @@ $handle-width: 8px;
   pointer-events: none;
   overflow: hidden;
 }
-.shape-handles-offset {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
 .shape-overlay {
   position: absolute;
   left: 0;
@@ -257,7 +245,6 @@ $handle-width: 8px;
   right: 0;
   bottom: 0;
   pointer-events: none;
-  overflow: hidden;
 }
 .handle {
   background-color: white;
