@@ -9,11 +9,12 @@
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
       >
-        <div class="canvas-wrapper" :class="'canvas-wrapper-' + projectId" ref="canvas">
-          <Canvas
-            :projectId="projectId"
-            :shapesLayers="shapesLayers"
-          />
+        <div class="full-wrapper">
+          <div class="canvas-wrapper" :class="'canvas-wrapper-' + projectId" ref="canvas">
+            <Canvas :projectId="projectId" :shapesLayers="shapesLayers" />
+          </div>
+        </div>
+        <div class="full-wrapper">
           <ShapeOverlays
             :onShapeMouseDown="onShapeMouseDown"
             :onShapeMouseUp="onShapeMouseUp"
@@ -340,6 +341,13 @@ pinch-zoom {
 .pinch-zoom-wrapper {
   width: 100%;
   height: 100%;
+}
+.full-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .overlays {
   position: absolute;
