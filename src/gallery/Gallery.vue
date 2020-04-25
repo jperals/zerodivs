@@ -46,8 +46,9 @@ export default {
     confirmDeleteDiv(project) {
       this.projectToBeDeleted = project;
     },
-    createNewDiv() {
-      return store.dispatch("createNewProject");
+    async createNewDiv() {
+      const newProjectId = await store.dispatch("createNewProject");
+      this.$router.push(this.link(newProjectId));
     },
     link(id) {
       return `/div/${id}`;

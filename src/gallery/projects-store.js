@@ -16,10 +16,10 @@ const projects = {
     shapesLayersByProjectId: (state, getters) => id => get(getters.projectById(id), "shapes")
   },
   mutations: {
-    createNewProject(state) {
+    createNewProject(state, id) {
       state.projects = state.projects.concat([
         {
-          id: uuid()
+          id
         }
       ]);
     },
@@ -44,9 +44,11 @@ const projects = {
     }
   },
   actions: {
-    createNewProject({ commit, getters }) {
-      commit("createNewProject");
-      return persistence.set("divs", getters.projects);
+    async createNewProject({ commit, getters }) {
+      const id = uuid();
+      commit("createNewProject", id);
+      await persistence.set("divs", getters.projects);
+      return id;
     },
     loadProjectById({ dispatch, getters }, id) {
       dispatch("loadProjects").then(() => {
