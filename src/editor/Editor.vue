@@ -90,24 +90,4 @@ export default {
 .props {
   right: 0;
 }
-.output {
-  top: 30px;
-  left: 50px;
-  right: 50px;
-  z-index: 20;
-  max-height: calc(100% - 30px);
-  display: flex;
-  flex-direction: column;
-}
-.output:before {
-  content: "";
-  position: fixed;
-  z-index: -20;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: hsla(0, 0%, 0%, .25);
-  backdrop-filter: blur(10px);
-}
 </style>
