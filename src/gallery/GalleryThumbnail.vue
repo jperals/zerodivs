@@ -1,5 +1,5 @@
 <template>
-  <div class="thumbnail-wrapper" :class="'thumbnail-wrapper-' + projectId">
+  <div class="thumbnail-wrapper" :class="'thumbnail-wrapper-' + projectId" v-if="shapesLayers">
     <div class="thumbnail" :class="'thumbnail-' + projectId"></div>
     <v-style type="text/css">
       .thumbnail-wrapper-{{projectId}} {
