@@ -51,11 +51,11 @@ const projects = {
       return id;
     },
     loadProjectById({ dispatch, getters }, id) {
-      dispatch("loadProjects").then(() => {
+      return dispatch("loadProjects").then(() => {
         const project = getters.projectById(id);
         const projectShapes = get(project, "shapes");
-        dispatch("setShapes", projectShapes);
-        return dispatch("setCurrentProject", project);
+        dispatch("setCurrentProject", project);
+        return dispatch("setShapes", projectShapes);
       });
     },
     loadProjects({ commit }) {

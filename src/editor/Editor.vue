@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="editor" v-on:mouseup="unselect">
     <template v-if="project">
       <Toolbar />
       <div>
@@ -41,10 +41,13 @@ export default {
   },
   mounted() {
     const projectId = get(this, "$route.params.id");
+    store.dispatch("resetSnapshots");
     if (projectId === undefined) {
       this.$router.history.push("/");
     } else {
-      store.dispatch("loadProjectById", projectId);
+      store.dispatch("loadProjectById", projectId).then(() => {
+        store.dispatch("addSnapshot");
+      });
     }
   },
   computed: {
@@ -58,6 +61,9 @@ export default {
   methods: {
     onKeyPress(event) {
       reactToKeyboard(event);
+    },
+    unselect() {
+      store.dispatch("unselectShape");
     }
   }
 };

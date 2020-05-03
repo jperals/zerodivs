@@ -51,6 +51,7 @@ export default {
     return {
       canvasPosition: null,
       currentAction: null,
+      dragging: false,
       initialNewShapePosition: null,
       initialShapeProps: null,
       initialMousePosition: null,
@@ -102,12 +103,18 @@ export default {
         top: { value: newPosition.top, units: "px" }
       });
     },
+    onChange() {
+      store.dispatch("updateProject");
+      store.dispatch("setCurrentSnaps");
+      store.dispatch("addSnapshot");
+    },
     onDrag(event) {
       if (!this.initialMousePosition) {
         this.updateViewport();
         return;
       }
       event.stopPropagation();
+      this.dragging = true;
       const { x, y } = this.transformCoords({ x: event.x, y: event.y });
       const diff = {
         left: x - this.initialMousePosition.x,
@@ -155,9 +162,7 @@ export default {
         };
         store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
       } else {
-        store
-          .dispatch("unselectShape")
-          .then(() => store.dispatch("generateSnapPoints"));
+        store.dispatch("unselectShape");
       }
     },
     onMouseUp(event) {
@@ -179,7 +184,6 @@ export default {
           });
         this.shapeBeingAdded = null;
       }
-      store.dispatch("setCurrentSnaps");
     },
     onResizeHandleMouseDown(direction, event) {
       event.stopPropagation();
@@ -230,8 +234,10 @@ export default {
       this.initialShapeProps = null;
       this.resizeDirection = null;
       this.shapeBeingMoved = null;
-      store.dispatch("updateProject");
-      store.dispatch("setCurrentSnaps");
+      if (this.dragging) {
+        this.onChange();
+        this.dragging = false;
+      }
     },
     resetZoom() {
       this.$refs.pinchZoom.setTransform({ scale: 1, x: 0, y: 0 });

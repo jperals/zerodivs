@@ -136,6 +136,9 @@ const shapes = {
     setExtraStyles(state, { layerName, styles }) {
       state.layers[layerName].extraStyles = styles;
     },
+    setLayers(state, layers) {
+      state.layers = layers;
+    },
     setShapes(state, shapes) {
       state.layers = { ...initialLayersState(), ...shapes };
     },
@@ -289,6 +292,8 @@ const shapes = {
       commit("moveShapeBy", { shape, left, top });
       dispatch("roundShapeProperties", { shape, left, top }).then(() => {
         dispatch("updateProject");
+        dispatch("setCurrentSnaps");
+        dispatch("addSnapshot");
       });
     },
     removeSelectedShape({ dispatch, getters }) {
@@ -330,6 +335,9 @@ const shapes = {
     },
     setExtraStyles({ commit }, { layerName, styles }) {
       commit("setExtraStyles", { layerName, styles });
+    },
+    setLayers({commit}, layers) {
+      commit('setLayers', layers);
     },
     setShapes({ commit }, shapes) {
       commit("setShapes", shapes);
