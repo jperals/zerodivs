@@ -1,8 +1,8 @@
 <template>
   <div class="toolbar">
     <section>
-      <Button :callback="undo" />
-      <Button :callback="redo" />
+      <UndoButton />
+      <RedoButton />
     </section>
     <section>
       <ShapeButtonGroup
@@ -19,18 +19,20 @@
 </template>
 
 <script>
-import Button from "./ToolbarButton";
 import buttonShapeGenerators from "./toolbar-button-shapes";
 import CurrentColorPicker from "./CurrentColorPicker";
+import RedoButton from "@/undo-redo/RedoButton";
 import ShapeButtonGroup from "./ShapeButtonGroup";
 import store from "@/store";
 import ToolbarSnapOptions from "./ToolbarSnapOptions";
+import UndoButton from "@/undo-redo/UndoButton";
 export default {
   components: {
-    Button,
     CurrentColorPicker,
+    RedoButton,
     ShapeButtonGroup,
-    ToolbarSnapOptions
+    ToolbarSnapOptions,
+    UndoButton
   },
   data() {
     return {
@@ -38,9 +40,6 @@ export default {
     };
   },
   methods: {
-    undo() {
-      store.dispatch("undo");
-    },
     redo() {
       store.dispatch("redo");
     }

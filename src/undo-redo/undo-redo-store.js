@@ -1,3 +1,5 @@
+import {deepCopy} from "@/common/utils";
+
 export default {
   state: {
     snapshots: [],
@@ -37,12 +39,14 @@ export default {
     undo({commit, dispatch, getters}) {
       if (getters.canUndo) {
         dispatch('setLayers', getters.previousSnapshot);
+        dispatch('updateProject');
         commit('undo');
       }
     },
     redo({commit, dispatch, getters}) {
       if(getters.canRedo) {
         dispatch('setLayers', getters.nextSnapshot);
+        dispatch('updateProject');
         commit('redo');
       }
     },
@@ -51,7 +55,3 @@ export default {
     }
   }
 };
-
-function deepCopy(object) {
-  return JSON.parse(JSON.stringify(object));
-}

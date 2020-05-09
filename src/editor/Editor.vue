@@ -1,5 +1,5 @@
 <template>
-  <div class="editor" v-on:mouseup="unselect">
+  <div class="editor">
     <template v-if="project">
       <Toolbar />
       <div>
@@ -61,9 +61,6 @@ export default {
   methods: {
     onKeyPress(event) {
       reactToKeyboard(event);
-    },
-    unselect() {
-      store.dispatch("unselectShape");
     }
   }
 };

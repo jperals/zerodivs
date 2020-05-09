@@ -2,7 +2,7 @@ import undoRedo from "@/undo-redo/undo-redo-store";
 import shapes from "../editor/shapes-store";
 import Vue from "vue";
 import Vuex from "vuex";
-import {objectCopy} from "@/common/utils";
+import {deepCopy} from "@/common/utils";
 
 Vue.use(Vuex);
 
@@ -29,10 +29,10 @@ describe("Undo / redo store", () => {
     expect(store.getters.currentSnapshot).toBeDefined();
   });
   it("undo and redo", () => {
-    const layersBefore = objectCopy(store.getters.allLayers);
+    const layersBefore = deepCopy(store.getters.allLayers);
     store.dispatch("addSnapshot");
     store.dispatch("setLayers", {...layersBefore, dummyObject: Date.now()});
-    const layersAfter = objectCopy(store.getters.allLayers);
+    const layersAfter = deepCopy(store.getters.allLayers);
     store.dispatch("addSnapshot");
     store.dispatch("undo");
     expect(store.getters.allLayers).toEqual(layersBefore);

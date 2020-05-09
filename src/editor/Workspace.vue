@@ -184,6 +184,10 @@ export default {
           });
         this.shapeBeingAdded = null;
       }
+      if (this.dragging) {
+        this.onChange();
+        this.dragging = false;
+      }
     },
     onResizeHandleMouseDown(direction, event) {
       event.stopPropagation();

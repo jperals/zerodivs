@@ -1,0 +1,212 @@
+[
+  {
+    "name": "Bottom right triangle",
+    "type": "linear",
+    "direction": "to bottom left",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "28319d22-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "transparent",
+        "position": "50%",
+        "id": "28319d23-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "50%",
+        "id": "28319d24-624f-11ea-8b9e-fd8e6004a4d6"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 7
+    },
+    "height": {
+      "units": "px",
+      "value": 7
+    },
+    "left": {
+      "units": "px",
+      "value": 10
+    },
+    "top": {
+      "units": "px",
+      "value": 0
+    },
+    "id": "28319d21-624f-11ea-8b9e-fd8e6004a4d6"
+  },
+  {
+    "name": "Top right triangle",
+    "type": "linear",
+    "direction": "to top left",
+    "stops": [
+      {
+        "color": "transparent",
+        "id": "374a0e02-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "transparent",
+        "position": "50%",
+        "id": "374a0e03-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "50%",
+        "id": "374a0e04-624f-11ea-8b9e-fd8e6004a4d6"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 7
+    },
+    "height": {
+      "units": "px",
+      "value": 7
+    },
+    "left": {
+      "units": "px",
+      "value": 10
+    },
+    "top": {
+      "units": "px",
+      "value": 7
+    },
+    "id": "374a0e01-624f-11ea-8b9e-fd8e6004a4d6"
+  },
+  {
+    "name": "Top right arc",
+    "type": "radial",
+    "direction": "at bottom right",
+    "stops": [
+      {
+        "color": "transparent",
+        "position": "45%",
+        "id": "3ea80a82-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "45%",
+        "id": "3ea80a83-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "71%",
+        "id": "3ea80a84-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "transparent",
+        "position": "71%",
+        "id": "3ea80a85-624f-11ea-8b9e-fd8e6004a4d6"
+      }
+    ],
+    "repeat": "no-repeat",
+    "width": {
+      "units": "px",
+      "value": 10
+    },
+    "height": {
+      "units": "px",
+      "value": 10
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 4
+    },
+    "id": "3ea80a81-624f-11ea-8b9e-fd8e6004a4d6"
+  },
+  {
+    "name": "Bottom right arc",
+    "type": "radial",
+    "direction": "at top left",
+    "stops": [
+      {
+        "color": "transparent",
+        "position": "45%",
+        "id": "44c8a502-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "45%",
+        "id": "44c8a503-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "71%",
+        "id": "44c8a504-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "transparent",
+        "position": "71%",
+        "id": "44c8a505-624f-11ea-8b9e-fd8e6004a4d6"
+      }
+    ],
+    "width": {
+      "units": "px",
+      "value": 10
+    },
+    "height": {
+      "units": "px",
+      "value": 10
+    },
+    "left": {
+      "units": "px",
+      "value": 10
+    },
+    "top": {
+      "units": "px",
+      "value": 14
+    },
+    "id": "44c8a501-624f-11ea-8b9e-fd8e6004a4d6"
+  },
+  {
+    "name": "Bottom left arc",
+    "type": "radial",
+    "direction": "at top right",
+    "stops": [
+      {
+        "color": "transparent",
+        "position": "45%",
+        "id": "49ff0692-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "45%",
+        "id": "49ff0693-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "gray",
+        "position": "71%",
+        "id": "49ff0694-624f-11ea-8b9e-fd8e6004a4d6"
+      },
+      {
+        "color": "transparent",
+        "position": "71%",
+        "id": "49ff0695-624f-11ea-8b9e-fd8e6004a4d6"
+      }
+    ],
+    "repeat": "no-repeat",
+    "width": {
+      "units": "px",
+      "value": 10
+    },
+    "height": {
+      "units": "px",
+      "value": 10
+    },
+    "left": {
+      "units": "px",
+      "value": 0
+    },
+    "top": {
+      "units": "px",
+      "value": 14
+    },
+    "id": "49ff0691-624f-11ea-8b9e-fd8e6004a4d6"
+  }
+]
