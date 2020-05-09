@@ -1,11 +1,18 @@
 <template>
   <div class="div-gallery">
     <ul>
-      <li v-for="div in divs" :key="div.id" class="div-thumbnail">
-        <router-link :to="link(div.id)">
-          <GalleryThumbnail :projectId="div.id" />
+      <li v-for="project in divs" :key="project.id" class="div-thumbnail">
+        <router-link :to="link(project.id)">
+          <GalleryThumbnail :projectId="project.id" />
         </router-link>
-        <button v-on:click="confirmDeleteDiv(div)" class="remove-button">Delete</button>
+        <ul class="actions">
+          <li>
+            <button v-on:click="duplicate(project)" class="action-button">Duplicate</button>
+          </li>
+          <li>
+            <button v-on:click="confirmDeleteDiv(project)" class="action-button">Delete</button>
+          </li>
+        </ul>
       </li>
       <li class="div-thumbnail">
         <button v-on:click="createNewDiv" class="new-div-button">Create New</button>
@@ -50,6 +57,9 @@ export default {
       const newProjectId = await store.dispatch("createNewProject");
       this.$router.push(this.link(newProjectId));
     },
+    duplicate(project) {
+      store.dispatch("duplicateProject", project);
+    },
     link(id) {
       return `/div/${id}`;
     },
@@ -78,7 +88,7 @@ export default {
   padding: 0;
   margin: 0;
 }
-.div-gallery ul {
+.div-gallery > ul {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -123,21 +133,34 @@ export default {
   bottom: 0;
   background-color: hsla(0, 0%, 0%, 0.25);
 }
-.remove-button {
+.div-thumbnail .actions {
+  list-style: none;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+  z-index: 20;
+}
+.div-thumbnail .actions > li {
+  display: block;
+  text-align: right;
+}
+.div-thumbnail:not(:hover) .actions {
+  opacity: 0;
+}
+.div-thumbnail .action-button {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid white;
   color: white;
   border-radius: 0.25rem;
   cursor: pointer;
-  opacity: 0;
+  margin-bottom: 0.25rem;
+  text-align: right;
+  right: 0;
 }
-.div-thumbnail:hover .remove-button:not(:hover) {
+.div-thumbnail:hover .action-button:not(:hover) {
   opacity: 0.75;
 }
-.div-thumbnail:hover .remove-button:hover {
+.div-thumbnail:hover .action-button:hover {
   opacity: 1;
 }
 

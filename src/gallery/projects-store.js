@@ -6,25 +6,26 @@ import persistence from "@/persistence";
 const projects = {
   state: {
     currentProject: null,
-    projects: []
+    projects: [],
   },
   getters: {
-    currentProject: state => state.currentProject,
-    projectById: state => id =>
-      state.projects.find(project => project.id === id),
-    projects: state => state.projects,
-    shapesLayersByProjectId: (state, getters) => id => get(getters.projectById(id), "shapes")
+    currentProject: (state) => state.currentProject,
+    projectById: (state) => (id) =>
+      state.projects.find((project) => project.id === id),
+    projects: (state) => state.projects,
+    shapesLayersByProjectId: (state, getters) => (id) =>
+      get(getters.projectById(id), "shapes"),
   },
   mutations: {
     createNewProject(state, id) {
       state.projects = state.projects.concat([
         {
-          id
-        }
+          id,
+        },
       ]);
     },
     removeProject(state, project) {
-      const index = state.projects.findIndex(item => item.id === project.id);
+      const index = state.projects.findIndex((item) => item.id === project.id);
       if (-1 < index) {
         state.projects.splice(index, 1);
       } else {
@@ -41,7 +42,7 @@ const projects = {
       for (const propName in newProps) {
         project[propName] = newProps[propName];
       }
-    }
+    },
   },
   actions: {
     async createNewProject({ commit, getters }) {
@@ -49,6 +50,16 @@ const projects = {
       commit("createNewProject", id);
       await persistence.set("divs", getters.projects);
       return id;
+    },
+    async duplicateProject({ commit, dispatch, getters }, project) {
+      const newId = await dispatch("createNewProject");
+      const newProject = getters.projectById(newId);
+      const layers = getters.shapesLayersByProjectId(project.id);
+      commit("updateProject", {
+        project: newProject,
+        newProps: { shapes: layers },
+      });
+      return persistence.set("divs", getters.projects);
     },
     loadProjectById({ dispatch, getters }, id) {
       return dispatch("loadProjects").then(() => {
@@ -61,7 +72,7 @@ const projects = {
     loadProjects({ commit }) {
       return persistence
         .get("divs")
-        .then(projects => commit("setProjects", projects || []));
+        .then((projects) => commit("setProjects", projects || []));
     },
     updateProject({ commit, getters }, options) {
       const project = get(options, "project", getters.currentProject);
@@ -75,8 +86,8 @@ const projects = {
     },
     setCurrentProject({ commit }, project) {
       return commit("setCurrentProject", project);
-    }
-  }
+    },
+  },
 };
 
 export default projects;
