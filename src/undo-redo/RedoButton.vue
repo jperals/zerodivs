@@ -13,6 +13,7 @@ export default {
     undo() {
       store.dispatch("redo");
       store.dispatch("unselectShape");
+      store.dispatch("updateProject");
     }
   },
   data() {
