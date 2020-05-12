@@ -19,17 +19,12 @@ export default {
     onMouseUp: Function,
     shape: Object
   },
-  data() {
-    return {
-      borderWidth: 1
-    };
-  },
   computed: {
     computedStyle() {
       const left =
-        this.shape.left.value - this.borderWidth + this.shape.left.units;
+        this.shape.left.value + this.shape.left.units;
       const top =
-        this.shape.top.value - this.borderWidth + this.shape.left.units;
+        this.shape.top.value + this.shape.left.units;
       return {
         transform: `translate(${left}, ${top})`,
         width: this.shape.width.value + this.shape.width.units,
