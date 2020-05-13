@@ -143,6 +143,14 @@ const shapes = {
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
     },
+    swapLayerShapes(state, {layerName, sourceIndex, targetIndex}) {
+      const shapes = state.layers[layerName].shapes;
+      const sourceShape = shapes[sourceIndex];
+      const targetShape = shapes[targetIndex];
+      shapes[sourceIndex] = targetShape;
+      shapes[targetIndex] = sourceShape;
+      state.layers[layerName].shapes = [...shapes];
+    },
     toggleLayer(state, layerName) {
       state.layers[layerName].active = !state.layers[layerName].active;
     },
@@ -341,6 +349,9 @@ const shapes = {
     },
     setShapeToBeAdded({ commit }, shape) {
       commit("setShapeToBeAdded", shape);
+    },
+    swapLayerShapes({commit}, {layerName, sourceIndex, targetIndex}) {
+      commit("swapLayerShapes", {layerName, sourceIndex, targetIndex});
     },
     toggleLayer({ commit, dispatch }, layerName) {
       commit("toggleLayer", layerName);

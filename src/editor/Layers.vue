@@ -7,16 +7,10 @@
 </template>
 
 <script>
-import store from "@/store";
 import LayerSubtree from "./LayerSubtree";
 export default {
   components: {
     LayerSubtree
-  },
-  computed: {
-    shapes() {
-      return store.getters.shapes;
-    }
   }
 };
 </script>
