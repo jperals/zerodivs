@@ -9,7 +9,7 @@
     <ul class="shapes">
       <li
         class="shape list-node"
-        :class="{ selected: isShapeSelected(shape) }"
+        :class="{ selected: isShapeSelected(shape), 'moved-down': isShapeMovedDown(index), 'moved-up': isShapeMovedUp(index) }"
         :style="style(shape)"
         v-for="(shape, index) in shapesFromLayer"
         :key="shape.id"
@@ -35,10 +35,18 @@ export default {
       elementIndex: null,
       initialMousePosition: null,
       offset: null,
-      shapeBeingDragged: null
+      shapeBeingDragged: null,
+      shapeMovedDown: null,
+      shapeMovedUp: null
     };
   },
   methods: {
+    isShapeMovedDown(index) {
+      return this.shapeMovedDown === index;
+    },
+    isShapeMovedUp(index) {
+      return this.shapeMovedUp === index;
+    },
     isShapeSelected(shape) {
       return store.getters.selectedShape === shape;
     },
@@ -56,7 +64,7 @@ export default {
       if (this.shapeBeingDragged) {
         event.preventDefault();
         this.offset = event.y - this.initialMousePosition;
-        if (this.elementHeight < this.offset) {
+        if (this.elementHeight/2 < this.offset) {
           store
             .dispatch("swapLayerShapes", {
               layerName: this.layerName,
@@ -66,9 +74,11 @@ export default {
             .then(() => {
               this.initialMousePosition += this.elementHeight;
               this.offset -= this.elementHeight;
+              this.shapeMovedDown = null;
+              this.shapeMovedUp = this.elementIndex;
               this.elementIndex += 1;
             });
-        } else if (this.offset < -this.elementHeight) {
+        } else if (this.offset < -this.elementHeight/2) {
           store
             .dispatch("swapLayerShapes", {
               layerName: this.layerName,
@@ -78,6 +88,8 @@ export default {
             .then(() => {
               this.initialMousePosition -= this.elementHeight;
               this.offset += this.elementHeight;
+              this.shapeMovedUp = null;
+              this.shapeMovedDown = this.elementIndex;
               this.elementIndex -= 1;
             });
         }
@@ -182,5 +194,21 @@ li li {
 .layer.selected .root-node {
   background-color: var(--selected-color);
   color: white;
+}
+.shape.moved-down {
+  animation: moveDown 150ms;
+}
+.shape.moved-up {
+  animation: moveUp 150ms;
+}
+@keyframes moveDown {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@keyframes moveUp {
+  from {
+    transform: translateY(100%);
+  }
 }
 </style>
