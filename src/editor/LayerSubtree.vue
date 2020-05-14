@@ -9,7 +9,7 @@
     <ul class="shapes">
       <li
         class="shape list-node"
-        :class="{ selected: isShapeSelected(shape), 'moved-down': isShapeMovedDown(index), 'moved-up': isShapeMovedUp(index) }"
+        :class="{ selected: isShapeSelected(shape), 'moved-down': isShapeMovedDown(index), 'moved-up': isShapeMovedUp(index), dragging: shape === shapeBeingDragged }"
         :style="style(shape)"
         v-for="(shape, index) in shapesFromLayer"
         :key="shape.id"
@@ -163,6 +163,9 @@ ul {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.shape.list-node:not(.dragging) {
+  transition: transform 100ms;
 }
 .shape.list-node:not(.selected) label {
   color: var(--gray-700);
