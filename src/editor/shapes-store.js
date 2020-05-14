@@ -151,6 +151,14 @@ const shapes = {
       shapes[targetIndex] = sourceShape;
       state.layers[layerName].shapes = [...shapes];
     },
+    swapStops(state, {shape, sourceIndex, targetIndex}) {
+      const {stops} = shape;
+      const sourceStop = stops[sourceIndex];
+      const targetStop = stops[targetIndex];
+      stops[sourceIndex] = targetStop;
+      stops[targetIndex] = sourceStop;
+      state.layers = {...state.layers};
+    },
     toggleLayer(state, layerName) {
       state.layers[layerName].active = !state.layers[layerName].active;
     },
@@ -352,6 +360,9 @@ const shapes = {
     },
     swapLayerShapes({commit}, {layerName, sourceIndex, targetIndex}) {
       commit("swapLayerShapes", {layerName, sourceIndex, targetIndex});
+    },
+    swapStops({commit}, {shape, sourceIndex, targetIndex}) {
+      commit("swapStops", {shape, sourceIndex, targetIndex});
     },
     toggleLayer({ commit, dispatch }, layerName) {
       commit("toggleLayer", layerName);

@@ -46,7 +46,7 @@ body {
   backdrop-filter: blur(4px);
 }
 .list-node {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   border-bottom: 1px solid var(--panel-border-color);
   font-size: 0.75rem;
 }
@@ -132,5 +132,9 @@ button,
 .main-action {
   background-color: var(--selected-color);
   color: white;
+}
+.p-h-m {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 </style>

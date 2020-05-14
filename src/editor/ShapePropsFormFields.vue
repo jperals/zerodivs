@@ -1,14 +1,14 @@
 <template>
-  <div class="form">
+  <div class="form shape-props-form">
     <div class="list-node">
-      <div>
+      <div class="row">
         <label class="wrapper">
           <span class="label">Top</span>
           <input type="number" v-model="top" class="w-m" />
           <span class="units">{{shape.top.units}}</span>
         </label>
       </div>
-      <div>
+      <div class="row">
         <label class="wrapper">
           <span class="label">Left</span>
           <input type="number" v-model="left" class="w-m" />
@@ -17,14 +17,14 @@
       </div>
     </div>
     <div class="list-node">
-      <div>
+      <div class="row">
         <label class="wrapper">
           <span class="label">Width</span>
           <input type="number" v-model="width" class="w-m" />
           <span class="units">{{shape.width.units}}</span>
         </label>
       </div>
-      <div>
+      <div class="row">
         <label class="wrapper">
           <span class="label">Height</span>
           <input type="number" v-model="height" class="w-m" />
@@ -33,20 +33,20 @@
       </div>
     </div>
     <div class="list-node">
-      <label class="wrapper">
+      <label class="row wrapper">
         <span class="label">Type</span>
         <input type="text" v-model="type" class="w-l" />
       </label>
     </div>
     <div class="list-node">
-      <label class="wrapper">
+      <label class="row wrapper">
         <span class="label">Direction</span>
         <input type="text" v-model="direction" class="w-l" />
       </label>
     </div>
     <StopsEditor :shape="shape" />
     <div class="list-node">
-      <label class="wrapper">
+      <label class="row wrapper">
         <div class="label">Repeat</div>
         <input type="text" v-model="backgroundRepeat" class="w-l" />
       </label>
@@ -158,6 +158,10 @@ export default {
   justify-content: space-between;
   width: 100%;
   padding: 0.25rem 0;
+}
+.shape-props-form .list-node .row {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .form .label,
 .form .units {

@@ -153,9 +153,11 @@ ul {
   list-style: none;
   padding: 0;
 }
+.list-node {
+  padding-left: 1rem;
+}
 .shape.list-node {
   background-color: var(--panel-bg-color);
-  padding-left: 1rem;
 }
 .shape.list-node label {
   width: 100%;

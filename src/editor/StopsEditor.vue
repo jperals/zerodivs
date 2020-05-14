@@ -1,9 +1,18 @@
 <template>
   <div class="list-node">
-    <label class="wrapper">Stops</label>
+    <label class="row wrapper">Stops</label>
     <ul class="stops">
-      <li v-for="(stop, index) in shape.stops" :key="stop.id" class="stop">
-        <div class="wrapper">
+      <li
+        v-for="(stop, index) in shape.stops"
+        :key="stop.id"
+        class="stop draggable"
+        :class="{ 'moved-down': isItemMovedDown(index), 'moved-up': isItemMovedUp(index), dragging: stop === itemBeingDragged }"
+        :style="listItemStyle(stop)"
+        v-on:mousedown="onItemMouseDown(index, $event)"
+        v-on:mousemove="onItemMouseMove"
+        v-on:mouseup="onItemMouseUp"
+      >
+        <div class="row wrapper">
           <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
           <input
             type="text"
@@ -15,7 +24,7 @@
         </div>
       </li>
     </ul>
-    <div>
+    <div class="row">
       <button class="add-new-stop" v-on:click="() => addNewStop()" title="Add new stop">Add</button>
     </div>
   </div>
@@ -24,6 +33,7 @@
 <script>
 import CloseButton from "@/components/CloseButton";
 import ColorPicker from "@/components/ColorPicker";
+import DraggableListMixin from "@/components/DraggableListMixin";
 import store from "@/store";
 export default {
   components: {
@@ -33,6 +43,7 @@ export default {
   props: {
     shape: Object
   },
+  mixins: [DraggableListMixin],
   methods: {
     addNewStop(index) {
       store.dispatch("addNewStop", { shape: this.shape, index });
@@ -43,12 +54,21 @@ export default {
     removeStop(index) {
       store.dispatch("removeStop", { shape: this.shape, index });
     },
+    swapItems(sourceIndex, targetIndex) {
+      console.log(sourceIndex, targetIndex);
+      return store.dispatch("swapStops", {shape: this.shape, sourceIndex, targetIndex});
+    },
     updateStop(stop, newProps) {
       store.dispatch("updateShapeStop", {
         shape: this.shape,
         stop,
         ...newProps
       });
+    }
+  },
+  computed: {
+    items() {
+      return this.shape.stops;
     }
   }
 };
@@ -63,7 +83,7 @@ export default {
 .stop .color-picker {
   flex-grow: 1;
 }
-.add-new-stop{
+.add-new-stop {
   margin: 0.25rem 0;
 }
 .remove-stop {
@@ -86,5 +106,31 @@ export default {
 <style>
 .color-picker input[type="text"] {
   width: 10ch;
+}
+</style>
+
+<style scoped>
+li.dragging,
+li.dragging * {
+  cursor: grabbing;
+}
+li:not(.dragging) {
+  transition: transform 100ms;
+}
+li.moved-down {
+  animation: moveDown 150ms;
+}
+li.moved-up {
+  animation: moveUp 150ms;
+}
+@keyframes moveDown {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@keyframes moveUp {
+  from {
+    transform: translateY(100%);
+  }
 }
 </style>
