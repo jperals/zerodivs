@@ -164,6 +164,10 @@ ul {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.shape.list-node.dragging,
+.shape.list-node.dragging label {
+  cursor: grabbing;
+}
 .shape.list-node:not(.dragging) {
   transition: transform 100ms;
 }
