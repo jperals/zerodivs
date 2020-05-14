@@ -60,38 +60,36 @@ export default {
       );
       this.elementIndex = index;
     },
-    onMouseMove(event) {
+    async onMouseMove(event) {
       if (this.shapeBeingDragged) {
         event.preventDefault();
         this.offset = event.y - this.initialMousePosition;
-        if (this.elementHeight/2 < this.offset && this.elementIndex < this.shapesFromLayer.length - 1) {
-          store
-            .dispatch("swapLayerShapes", {
-              layerName: this.layerName,
-              sourceIndex: this.elementIndex,
-              targetIndex: this.elementIndex + 1
-            })
-            .then(() => {
-              this.initialMousePosition += this.elementHeight;
-              this.offset -= this.elementHeight;
-              this.shapeMovedDown = null;
-              this.shapeMovedUp = this.elementIndex;
-              this.elementIndex += 1;
-            });
-        } else if (this.offset < -this.elementHeight/2 && 0 < this.elementIndex) {
-          store
-            .dispatch("swapLayerShapes", {
-              layerName: this.layerName,
-              sourceIndex: this.elementIndex,
-              targetIndex: this.elementIndex - 1
-            })
-            .then(() => {
-              this.initialMousePosition -= this.elementHeight;
-              this.offset += this.elementHeight;
-              this.shapeMovedUp = null;
-              this.shapeMovedDown = this.elementIndex;
-              this.elementIndex -= 1;
-            });
+        while (
+          this.elementHeight / 2 < this.offset &&
+          this.elementIndex < this.shapesFromLayer.length - 1
+        ) {
+          await store.dispatch("swapLayerShapes", {
+            layerName: this.layerName,
+            sourceIndex: this.elementIndex,
+            targetIndex: this.elementIndex + 1
+          });
+          this.initialMousePosition += this.elementHeight;
+          this.offset -= this.elementHeight;
+          this.shapeMovedDown = null;
+          this.shapeMovedUp = this.elementIndex;
+          this.elementIndex += 1;
+        }
+        while (this.offset < -this.elementHeight / 2 && 0 < this.elementIndex) {
+          await store.dispatch("swapLayerShapes", {
+            layerName: this.layerName,
+            sourceIndex: this.elementIndex,
+            targetIndex: this.elementIndex - 1
+          });
+          this.initialMousePosition -= this.elementHeight;
+          this.offset += this.elementHeight;
+          this.shapeMovedUp = null;
+          this.shapeMovedDown = this.elementIndex;
+          this.elementIndex -= 1;
         }
       }
     },
