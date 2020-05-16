@@ -2,12 +2,14 @@
   <div class="color-picker">
     <input type="text" v-model="selectedColor" />
     <span class="sample" :style="{ backgroundColor: selectedColor }">
-      <input type="color" v-on:change="selectColor" :style="{ backgroundColor: selectedColor }" />
+      <input type="color" v-model="selectedColorHex" :style="{ backgroundColor: selectedColor }" />
     </span>
   </div>
 </template>
 
 <script>
+import convertCssColorNameToHex from 'convert-css-color-name-to-hex';
+import validateColor from 'validate-color';
 export default {
   props: {
     value: String,
@@ -19,16 +21,22 @@ export default {
         return this.value;
       },
       set(value) {
-        if (typeof this.onPick === "function") {
-          this.onPick(value);
-        }
+        this.selectColor(value);
+      }
+    },
+    selectedColorHex: {
+      get() {
+        return convertCssColorNameToHex(this.value);
+      },
+      set(value) {
+        this.selectColor(value);
       }
     }
   },
   methods: {
-    selectColor(event) {
-        if (typeof this.onPick === "function") {
-          this.onPick(event.target.value);
+    selectColor(value) {
+        if (typeof this.onPick === "function" && validateColor(value)) {
+          this.onPick(value);
         }
     }
   }
