@@ -3,7 +3,9 @@
     <section class="breadcrumbs">
       <router-link to="/" class="link-to-home">Stretch</router-link>
       <span v-if="currentProject">/</span>
-      <span v-if="currentProject">{{ currentProject.id }}</span>
+      <span v-if="currentProject">
+        <input v-model="projectName" placeholder="Project name" />
+      </span>
     </section>
     <button v-if="currentProject" v-on:click="toggleOutput">Result</button>
   </nav>
@@ -15,6 +17,17 @@ export default {
   computed: {
     currentProject() {
       return store.getters.currentProject;
+    },
+    projectName: {
+      get() {
+        return this.currentProject.name || "";
+      },
+      set(value) {
+        store.dispatch("updateProject", {
+          project: this.currentProject,
+          newProps: { name: value }
+        });
+      }
     }
   },
   methods: {
@@ -51,5 +64,16 @@ nav > button {
 }
 nav > button:hover {
   text-decoration: underline;
+}
+input {
+  color: var(--gray-900);
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: var(--panel-border-color);
+  width: 30ch;
+}
+input:not(:hover) {
+  border-color: transparent;
 }
 </style>

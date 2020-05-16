@@ -4,6 +4,7 @@
       <li v-for="project in divs" :key="project.id" class="div-thumbnail">
         <router-link :to="link(project.id)">
           <GalleryThumbnail :projectId="project.id" />
+          <div v-if="project.name" class="project-name">{{project.name}}</div>
         </router-link>
         <ul class="actions">
           <li>
@@ -173,5 +174,14 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 300px;
+}
+.project-name {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 40%);
+  color: white;
 }
 </style>

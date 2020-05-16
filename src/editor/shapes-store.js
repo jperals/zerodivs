@@ -305,6 +305,9 @@ const shapes = {
       }
     },
     moveShapeBy({ commit, dispatch }, { shape, left, top }) {
+      if (!shape) {
+        return;
+      }
       commit("moveShapeBy", { shape, left, top });
       dispatch("roundShapeProperties", { shape, left, top }).then(() => {
         dispatch("updateProject");
