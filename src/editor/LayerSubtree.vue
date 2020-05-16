@@ -8,7 +8,7 @@
     </div>
     <ul class="shapes">
       <li
-        class="shape list-node"
+        class="shape list-node draggable"
         :class="{ selected: isShapeSelected(shape), 'moved-down': isShapeMovedDown(index), 'moved-up': isShapeMovedUp(index), dragging: shape === shapeBeingDragged }"
         :style="style(shape)"
         v-for="(shape, index) in shapesFromLayer"
@@ -157,7 +157,8 @@ ul {
   padding-left: 1rem;
 }
 .shape.list-node {
-  background-color: var(--panel-bg-color);
+  background-color: var(--panel-child-bg-color);
+  border-color: var(--panel-child-border-color);
 }
 .shape.list-node label {
   width: 100%;
@@ -193,9 +194,6 @@ li li {
 .root-node .checkbox {
   flex-grow: 1;
   text-align: right;
-}
-.shapes {
-  background-color: var(--panel-border-color);
 }
 .shapes > .selected,
 .layer.selected .root-node {

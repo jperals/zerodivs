@@ -14,8 +14,21 @@ export default {
 
 <style>
 #app {
-  --panel-bg-color: hsla(0, 0%, 93%, 0.75);
-  --panel-border-color: hsl(0, 0%, 83%);
+  --brightness-300: 36%;
+  --brightness-400: 43%;
+  --brightness-500: 59%;
+  --brightness-600: 70%;
+  --brightness-650: 76%;
+  --brightness-700: 82%;
+  --brightness-750: 85%;
+  --brightness-800: 88%;
+  --brightness-850: 93%;
+  --brightness-900: 96%;
+  --brightness-950: 98%;
+  --panel-bg-color: hsla(0, 0%, calc(var(--brightness-900)), 0.75);
+  --panel-child-bg-color: hsla(0, 0%, calc(var(--brightness-750)), 1);
+  --panel-border-color: hsl(0, 0%, calc(var(--brightness-650)));
+  --panel-child-border-color: hsla(0, 0%, calc(var(--brightness-600)), 0.75);
   --panel-border-color-strong: hsl(0, 0%, 78%);
   --panel-border-color-stronger: hsl(0, 0%, 70%);
   /* Grays taken from https://material-ui.com/customization/color/ */
@@ -69,7 +82,7 @@ input[type="number"].w-m {
 }
 input[type="text"].w-l,
 input[type="number"].w-l {
-  width: 14ch;
+  width: 12ch;
 }
 .modal-container {
   position: fixed;
@@ -133,8 +146,23 @@ button,
   background-color: var(--selected-color);
   color: white;
 }
+.m-l-s {
+  margin-left: 0.5rem;
+}
 .p-h-m {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+.p-t-s {
+  padding-top: 0.5rem;
+}
+button {
+  font-size: 0.75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--gray-500) var(--gray-500) var(--gray-600);
+}
+button:hover {
+  background-color: var(--gray-200);
 }
 </style>

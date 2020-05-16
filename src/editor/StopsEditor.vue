@@ -12,19 +12,25 @@
         v-on:mousemove="onItemMouseMove"
         v-on:mouseup="onItemMouseUp"
       >
-        <div class="row wrapper">
-          <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
-          <input
-            type="text"
-            class="w-s"
-            v-model="stop.position"
-            v-on:change="(event) => updateStop(stop, {position: event.target.value})"
-          />
-          <CloseButton class="remove-stop" :on-click="() => removeStop(index)" title="Remove stop" />
+        <div class="row">
+          <div class="wrapper">
+            <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
+            <input
+              type="text"
+              class="w-s m-l-s"
+              v-model="stop.position"
+              v-on:change="(event) => updateStop(stop, {position: event.target.value})"
+            />
+            <CloseButton
+              class="remove-stop"
+              :on-click="() => removeStop(index)"
+              title="Remove stop"
+            />
+          </div>
         </div>
       </li>
     </ul>
-    <div class="row">
+    <div class="row add-new">
       <button class="add-new-stop" v-on:click="() => addNewStop()" title="Add new stop">Add</button>
     </div>
   </div>
@@ -56,7 +62,11 @@ export default {
     },
     swapItems(sourceIndex, targetIndex) {
       console.log(sourceIndex, targetIndex);
-      return store.dispatch("swapStops", {shape: this.shape, sourceIndex, targetIndex});
+      return store.dispatch("swapStops", {
+        shape: this.shape,
+        sourceIndex,
+        targetIndex
+      });
     },
     updateStop(stop, newProps) {
       store.dispatch("updateShapeStop", {
@@ -75,6 +85,9 @@ export default {
 </script>
 
 <style scoped>
+.list-node {
+  padding-bottom: 0;
+}
 .stops {
   list-style: none;
   margin: 0.25rem 0 0;
@@ -82,9 +95,6 @@ export default {
 }
 .stop .color-picker {
   flex-grow: 1;
-}
-.add-new-stop {
-  margin: 0.25rem 0;
 }
 .remove-stop {
   box-sizing: border-box;
@@ -94,6 +104,19 @@ export default {
   border-radius: 50%;
   margin-left: 0.5rem;
   opacity: 0;
+  min-height: 0;
+}
+.stop,
+.add-new {
+  background-color: var(--panel-child-bg-color);
+}
+.stop {
+  border-color: var(--panel-child-border-color);
+  border-style: solid;
+  border-width: 0 0 1px 0;
+}
+.stop:first-child {
+  border-top-width: 1px;
 }
 .stop .wrapper {
   align-items: center;
@@ -101,11 +124,14 @@ export default {
 .stop .wrapper:hover .remove-stop {
   opacity: 1;
 }
+.add-new {
+  padding: 0.5rem 0;
+}
 </style>
 
 <style>
 .color-picker input[type="text"] {
-  width: 10ch;
+  width: 9ch;
 }
 </style>
 

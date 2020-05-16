@@ -41,7 +41,7 @@
     <div class="list-node">
       <label class="row wrapper">
         <span class="label">Direction</span>
-        <input type="text" v-model="direction" class="w-l" />
+        <input type="text" v-model="direction" class="m-l-s w-l" />
       </label>
     </div>
     <StopsEditor :shape="shape" />
@@ -158,6 +158,7 @@ export default {
   justify-content: space-between;
   width: 100%;
   padding: 0.25rem 0;
+  box-sizing: border-box;
 }
 .shape-props-form .list-node .row {
   padding-left: 1rem;
