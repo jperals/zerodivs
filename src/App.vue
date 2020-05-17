@@ -26,9 +26,9 @@ export default {
   --brightness-900: 96%;
   --brightness-950: 98%;
   --panel-bg-color: hsla(0, 0%, calc(var(--brightness-900)), 0.75);
-  --panel-child-bg-color: hsla(0, 0%, calc(var(--brightness-750)), 1);
-  --panel-border-color: hsl(0, 0%, calc(var(--brightness-650)));
-  --panel-child-border-color: hsla(0, 0%, calc(var(--brightness-600)), 0.75);
+  --panel-child-bg-color: hsla(0, 0%, calc(var(--brightness-800)), 1);
+  --panel-border-color: hsl(0, 0%, calc(var(--brightness-800)));
+  --panel-child-border-color: hsla(0, 0%, calc(var(--brightness-650)), 0.75);
   --panel-border-color-strong: hsl(0, 0%, 78%);
   --panel-border-color-stronger: hsl(0, 0%, 70%);
   /* Grays taken from https://material-ui.com/customization/color/ */

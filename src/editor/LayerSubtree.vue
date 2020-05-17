@@ -157,8 +157,8 @@ ul {
   padding-left: 1rem;
 }
 .shape.list-node {
-  background-color: var(--panel-child-bg-color);
-  border-color: var(--panel-child-border-color);
+  background-color: var(--panel-bg-color);
+  border-color: var(--panel-border-color);
 }
 .shape.list-node label {
   width: 100%;

@@ -1,3 +1,4 @@
+import { isNotWriting } from "@/common/ui";
 export default {
   data() {
     return {
@@ -18,17 +19,17 @@ export default {
       return this.indexMovedUp === index;
     },
     onItemMouseDown(index, event) {
-      const listItem = event.target.closest("li.draggable");
-      if (listItem) {
-        this.elementHeight = parseInt(
-          listItem.getBoundingClientRect().height
-        );
-        const item = this.items[index];
-        this.itemBeingDragged = item;
-        this.initialMousePosition = event.y;
-        this.elementIndex = index;
-        if (this.mouseDown) {
-          this.mouseDown();
+      if (isNotWriting(event)) {
+        const listItem = event.target.closest("li.draggable");
+        if (listItem) {
+          this.elementHeight = parseInt(listItem.getBoundingClientRect().height);
+          const item = this.items[index];
+          this.itemBeingDragged = item;
+          this.initialMousePosition = event.y;
+          this.elementIndex = index;
+          if (this.mouseDown) {
+            this.mouseDown();
+          }
         }
       }
     },

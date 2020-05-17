@@ -18,7 +18,7 @@ button {
   border-color: var(--panel-border-color-strong);
   border-radius: 2px;
 }
-button:hover {
+button:not(.disabled):hover {
   border-color: var(--panel-border-color-stronger);
   background-color: hsl(0, 0%, 97%);
 }

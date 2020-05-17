@@ -1,3 +1,4 @@
+import { isNotWriting } from "@/common/ui";
 import store from "@/store";
 export default function reactToKeyboard(event) {
   switch (event.key) {
@@ -11,7 +12,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
-          left: { value: -1, units: "px" }
+          left: { value: -1, units: "px" },
         });
       }
       break;
@@ -19,7 +20,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
-          top: { value: -1, units: "px" }
+          top: { value: -1, units: "px" },
         });
       }
       break;
@@ -27,7 +28,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
-          left: { value: 1, units: "px" }
+          left: { value: 1, units: "px" },
         });
       }
       break;
@@ -35,7 +36,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapeBy", {
           shape: store.getters.selectedShape,
-          top: { value: 1, units: "px" }
+          top: { value: 1, units: "px" },
         });
       }
       break;
@@ -45,10 +46,4 @@ export default function reactToKeyboard(event) {
       }
       break;
   }
-}
-
-function isNotWriting(event) {
-  return (
-    event.target.tagName !== "INPUT" && event.target.tagName !== "TEXTAREA"
-  );
 }

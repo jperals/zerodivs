@@ -49,10 +49,13 @@ nav > * {
 }
 .breadcrumbs > * {
   display: inline-block;
-  padding: 0.75rem 0.25rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 .link-to-home {
   padding-left: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 span {
   color: var(--gray-700);
@@ -70,8 +73,10 @@ input {
   font-size: 1rem;
   border-radius: 0.25rem;
   border-width: 1px;
-  border-color: var(--panel-border-color);
-  width: 30ch;
+  border-color: var(--gray-400);
+  border-style: solid;
+  width: 20ch;
+  padding: 0.25rem;
 }
 input:not(:hover) {
   border-color: transparent;

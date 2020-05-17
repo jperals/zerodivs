@@ -31,7 +31,7 @@
       </li>
     </ul>
     <div class="row add-new">
-      <button class="add-new-stop" v-on:click="() => addNewStop()" title="Add new stop">Add</button>
+      <button class="add-new-stop" v-on:click="() => addNewStop()" title="Add new stop">Add stop</button>
     </div>
   </div>
 </template>
@@ -61,7 +61,6 @@ export default {
       store.dispatch("removeStop", { shape: this.shape, index });
     },
     swapItems(sourceIndex, targetIndex) {
-      console.log(sourceIndex, targetIndex);
       return store.dispatch("swapStops", {
         shape: this.shape,
         sourceIndex,
@@ -85,6 +84,12 @@ export default {
 </script>
 
 <style scoped>
+.stop {
+  border-color: var(--panel-border-color);
+  border-style: solid;
+  border-width: 1px 0;
+  margin-top: -1px;
+}
 .list-node {
   padding-bottom: 0;
 }
@@ -108,15 +113,7 @@ export default {
 }
 .stop,
 .add-new {
-  background-color: var(--panel-child-bg-color);
-}
-.stop {
-  border-color: var(--panel-child-border-color);
-  border-style: solid;
-  border-width: 0 0 1px 0;
-}
-.stop:first-child {
-  border-top-width: 1px;
+  background-color: var(--panel-bg-color);
 }
 .stop .wrapper {
   align-items: center;
@@ -127,15 +124,6 @@ export default {
 .add-new {
   padding: 0.5rem 0;
 }
-</style>
-
-<style>
-.color-picker input[type="text"] {
-  width: 9ch;
-}
-</style>
-
-<style scoped>
 li.dragging,
 li.dragging * {
   cursor: grabbing;
@@ -158,5 +146,11 @@ li.moved-up {
   from {
     transform: translateY(100%);
   }
+}
+</style>
+
+<style>
+.color-picker input[type="text"] {
+  width: 9ch;
 }
 </style>
