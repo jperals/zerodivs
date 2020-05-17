@@ -11,6 +11,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {},
   mutations: {},
-  actions: {},
+  actions: {
+    commitChange({dispatch}) {
+      dispatch("addSnapshot");
+      return dispatch("updateProject");
+    }
+  },
   modules: { projects, shapes, snap, ui, undoRedo }
 });

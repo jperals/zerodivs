@@ -1,4 +1,5 @@
 import { isNotWriting } from "@/common/ui";
+import store from "@/store";
 export default {
   data() {
     return {
@@ -62,9 +63,7 @@ export default {
       this.itemBeingDragged = null;
       this.initialMousePosition = null;
       this.offset = null;
-      if (this.mouseUp) {
-        this.mouseUp();
-      }
+      store.dispatch("commitChange");
     },
     listItemStyle(item) {
       if (item === this.itemBeingDragged && this.offset !== null) {

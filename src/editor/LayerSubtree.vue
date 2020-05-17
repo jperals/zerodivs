@@ -68,11 +68,7 @@ export default {
           this.elementHeight / 2 < this.offset &&
           this.elementIndex < this.shapesFromLayer.length - 1
         ) {
-          await store.dispatch("swapLayerShapes", {
-            layerName: this.layerName,
-            sourceIndex: this.elementIndex,
-            targetIndex: this.elementIndex + 1
-          });
+          await this.swap({sourceIndex: this.elementIndex, targetIndex: this.elementIndex + 1});
           this.initialMousePosition += this.elementHeight;
           this.offset -= this.elementHeight;
           this.shapeMovedDown = null;
@@ -80,11 +76,7 @@ export default {
           this.elementIndex += 1;
         }
         while (this.offset < -this.elementHeight / 2 && 0 < this.elementIndex) {
-          await store.dispatch("swapLayerShapes", {
-            layerName: this.layerName,
-            sourceIndex: this.elementIndex,
-            targetIndex: this.elementIndex - 1
-          });
+          await this.swap({sourceIndex: this.elementIndex, targetIndex: this.elementIndex - 1});
           this.initialMousePosition -= this.elementHeight;
           this.offset += this.elementHeight;
           this.shapeMovedUp = null;
@@ -97,7 +89,7 @@ export default {
       this.shapeBeingDragged = null;
       this.initialMousePosition = null;
       this.offset = null;
-      store.dispatch("addSnapshot");
+      store.dispatch("commitChange");
     },
     selectLayer() {
       store.dispatch("selectLayer", this.layerName);
@@ -119,6 +111,13 @@ export default {
       } else {
         return {};
       }
+    },
+    async swap({sourceIndex, targetIndex}) {
+      await store.dispatch("swapLayerShapes", {
+          layerName: this.layerName,
+          sourceIndex,
+          targetIndex
+      });
     },
     toggleLayer() {
       store.dispatch("toggleLayer", this.layerName);
