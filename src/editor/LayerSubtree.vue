@@ -187,7 +187,8 @@ ul {
   white-space: nowrap;
 }
 .shape.list-node.dragging,
-.shape.list-node.dragging label {
+.shape.list-node.dragging label,
+.shape.list-node.dragging .drag-indicator {
   cursor: grabbing;
 }
 .shape.list-node:not(.dragging) {
@@ -221,12 +222,20 @@ li li {
 }
 .drag-indicator {
   display: inline-block;
-  width: 0.5rem;
-  height: 0.25rem;
-  margin-right: 0.5rem;
+  width: 1rem;
+  height: 0.75rem;
+  margin-left: -0.25rem;
+  margin-right: 0.25rem;
+  cursor: grab;
+}
+.drag-indicator:after {
+  display: block;
+  content: "";
   border-top: 1px solid var(--gray-400);
   border-bottom: 1px solid var(--gray-400);
-  cursor: grab;
+  margin: 0.25rem;
+  height: 0.25rem;
+  width: 0.5rem;
 }
 .shape.selected .drag-indicator {
   border-top-color: white;
