@@ -1,5 +1,5 @@
 <template>
-  <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape }">
+  <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape, 'ready-to-drag': readyToDrag }">
     <pinch-zoom ref="pinchZoom">
       <div
         class="pinch-zoom-wrapper"
@@ -56,6 +56,8 @@ export default {
       initialShapeProps: null,
       initialMousePosition: null,
       initialPointerPosition: null,
+      pressedKeys: new Set(),
+      readyToDrag: false,
       resizeDirection: null,
       shapeBeingAdded: null,
       shapeBeingMoved: null,
@@ -70,6 +72,14 @@ export default {
     Canvas,
     ShapeOverlays,
     ShapeResizeHandles
+  },
+  created() {
+    window.addEventListener("keydown", this.onKeyDown);
+    window.addEventListener("keyup", this.onKeyUp);
+  },
+  destroyed() {
+    window.removeEventListener("keydown", this.onKeyDown);
+    window.removeEventListener("keyup", this.onKeyUp);
   },
   methods: {
     dragNewShape(diff) {
@@ -127,6 +137,14 @@ export default {
       } else if (this.shapeBeingMoved) {
         this.moveShape(diff);
       }
+    },
+    onKeyDown(event) {
+      this.readyToDrag = this.readyToDrag || event.key === " ";
+      this.pressedKeys.add(event.key);
+    },
+    onKeyUp(event) {
+      this.readyToDrag = this.readyToDrag && event.key !== " ";
+      this.pressedKeys.delete(event.key);
     },
     onMouseDown(event) {
       if (this.addingShape) {
@@ -255,6 +273,11 @@ export default {
         shape: store.getters.selectedShape
       });
     },
+    dragCanvas(event) {
+      if (!(this.pressedKeys.has(' '))) {
+        event.stopPropagation();
+      }
+    },
     preventZoom(event) {
       event.stopPropagation();
     },
@@ -286,15 +309,20 @@ export default {
     this.$refs.pinchZoomInner.addEventListener("wheel", this.updateViewport, {
       passive: true
     });
+    this.$refs.pinchZoomInner.addEventListener("pointerdown", this.dragCanvas);
     this.updateCanvasPosition();
   },
   beforeDestroy() {
     this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateViewport);
+    this.$refs.pinchZoomInner.removeEventListener("pointerdown", this.dragCanvas);
     store.dispatch("unselectShape");
   },
   computed: {
     addingShape() {
       return !!store.getters.shapeToBeAdded;
+    },
+    canDragCanvas() {
+      return this.pressedKeys.has(' ');
     },
     projectId() {
       return store.getters.currentProject.id;
@@ -344,6 +372,13 @@ pinch-zoom {
 }
 .workspace {
   background-color: var(--panel-border-color);
+}
+.pinch-zoom-wrapper {
+  cursor: default;
+}
+.workspace,
+.workspace.ready-to-drag .pinch-zoom-wrapper {
+  cursor: grab;
 }
 .workspace.adding-shape {
   cursor: crosshair;

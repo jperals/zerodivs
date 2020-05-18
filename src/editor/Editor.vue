@@ -15,12 +15,12 @@
 
 <script>
 import { get } from "lodash";
-import Workspace from "./Workspace";
 import Layers from "./Layers";
 import PropsForm from "./PropsForm";
-import Toolbar from "@/toolbar/Toolbar";
-import reactToKeyboard from "@/react-to-keyboard";
+import reactToKeyboard from "./react-to-keyboard";
 import store from "@/store";
+import Toolbar from "@/toolbar/Toolbar";
+import Workspace from "./Workspace";
 export default {
   data() {
     return {
@@ -34,10 +34,10 @@ export default {
     Workspace
   },
   created() {
-    window.addEventListener("keydown", this.onKeyPress);
+    window.addEventListener("keydown", this.onKeyDown);
   },
   destroyed() {
-    window.removeEventListener("keydown", this.onKeyPress);
+    window.removeEventListener("keydown", this.onKeyDown);
   },
   mounted() {
     const projectId = get(this, "$route.params.id");
@@ -59,7 +59,7 @@ export default {
     }
   },
   methods: {
-    onKeyPress(event) {
+    onKeyDown(event) {
       reactToKeyboard(event);
     }
   }
