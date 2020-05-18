@@ -9,13 +9,13 @@
     <ul class="shapes">
       <li
         class="shape list-node draggable"
-        :class="{ selected: isShapeSelected(shape), 'moved-down': isShapeMovedDown(index), 'moved-up': isShapeMovedUp(index), dragging: shape === shapeBeingDragged }"
-        :style="style(shape)"
-        v-for="(shape, index) in shapesFromLayer"
+        :class="{ selected: isShapeSelected(shape), 'moved-down': isItemMovedDown(index), 'moved-up': isItemMovedUp(index), dragging: shape === itemBeingDragged }"
+        :style="listItemStyle(shape)"
+        v-for="(shape, index) in items"
         :key="shape.id"
-        v-on:mousemove="onMouseMove"
-        v-on:mousedown="onMouseDown(index, $event)"
-        v-on:mouseup="onMouseUp"
+        v-on:mousemove="onItemMouseMove"
+        v-on:mousedown="onShapeMouseDown(index, $event)"
+        v-on:mouseup="onItemMouseUp"
       >
         <span class="draggable-indicator" />
         <ShapeNameInput :shape="shape" :selected="isShapeSelected(shape)" />
@@ -25,12 +25,14 @@
 </template>
 
 <script>
+import DraggableListMixin from "@/components/DraggableListMixin";
 import ShapeNameInput from "@/editor/ShapeNameInput";
 import store from "@/store";
 export default {
   props: {
     layerName: String
   },
+  mixins: [DraggableListMixin],
   data() {
     return {
       elementHeight: null,
@@ -46,61 +48,13 @@ export default {
     ShapeNameInput
   },
   methods: {
-    isShapeMovedDown(index) {
-      return this.shapeMovedDown === index;
-    },
-    isShapeMovedUp(index) {
-      return this.shapeMovedUp === index;
-    },
     isShapeSelected(shape) {
       return store.getters.selectedShape === shape;
     },
-    onMouseDown(index, event) {
-      const shape = this.shapesFromLayer[index];
+    onShapeMouseDown(index, event) {
+      const shape = this.items[index];
       this.selectShape(shape);
-      this.shapeBeingDragged = shape;
-      this.initialMousePosition = event.y;
-      this.elementHeight = parseInt(
-        event.target.closest(".shape.list-node").getBoundingClientRect().height
-      );
-      this.elementIndex = index;
-    },
-    async onMouseMove(event) {
-      if (this.shapeBeingDragged) {
-        event.preventDefault();
-        this.offset = event.y - this.initialMousePosition;
-        while (
-          this.elementHeight / 2 < this.offset &&
-          this.elementIndex < this.shapesFromLayer.length - 1
-        ) {
-          await this.swap({
-            sourceIndex: this.elementIndex,
-            targetIndex: this.elementIndex + 1
-          });
-          this.initialMousePosition += this.elementHeight;
-          this.offset -= this.elementHeight;
-          this.shapeMovedDown = null;
-          this.shapeMovedUp = this.elementIndex;
-          this.elementIndex += 1;
-        }
-        while (this.offset < -this.elementHeight / 2 && 0 < this.elementIndex) {
-          await this.swap({
-            sourceIndex: this.elementIndex,
-            targetIndex: this.elementIndex - 1
-          });
-          this.initialMousePosition -= this.elementHeight;
-          this.offset += this.elementHeight;
-          this.shapeMovedUp = null;
-          this.shapeMovedDown = this.elementIndex;
-          this.elementIndex -= 1;
-        }
-      }
-    },
-    onMouseUp() {
-      this.shapeBeingDragged = null;
-      this.initialMousePosition = null;
-      this.offset = null;
-      store.dispatch("commitChange");
+      this.onItemMouseDown(index, event);
     },
     selectLayer() {
       store.dispatch("selectLayer", this.layerName);
@@ -112,18 +66,7 @@ export default {
     shapeLabel(shape) {
       return shape.name;
     },
-    style(shape) {
-      if (shape === this.shapeBeingDragged && this.offset !== null) {
-        return {
-          position: "relative",
-          transform: `translateY(${this.offset}px)`,
-          zIndex: 10
-        };
-      } else {
-        return {};
-      }
-    },
-    async swap({ sourceIndex, targetIndex }) {
+    async swapItems(sourceIndex, targetIndex) {
       await store.dispatch("swapLayerShapes", {
         layerName: this.layerName,
         sourceIndex,
@@ -151,7 +94,7 @@ export default {
         return this.layerName;
       }
     },
-    shapesFromLayer() {
+    items() {
       return store.getters.layerShapes(this.layerName);
     }
   }
