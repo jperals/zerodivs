@@ -36,12 +36,17 @@ export default {
   --gray-100: #f5f5f5;
   --gray-200: #eeeeee;
   --gray-300: #e0e0e0;
+  --gray-350: rgb(241, 241, 241);
   --gray-400: #bdbdbd;
   --gray-500: #9e9e9e;
   --gray-600: #757575;
   --gray-700: #616161;
   --selected-color: hsl(224, 100%, 67%);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#app,
+input,
+textarea {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 html,
 body {
@@ -65,7 +70,7 @@ body {
 }
 input[type="text"],
 input[type="number"] {
-  padding: .125rem .25rem;
+  padding: 0.125rem 0.25rem;
   font-size: 0.75rem;
 }
 input[type="text"].w-xs,
@@ -92,12 +97,12 @@ input[type="number"].w-l {
   top: 0;
 }
 .modal .actions > * {
-  margin-left: .5rem;
-  margin-right: .5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 .modal .main {
   background-color: white;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 .modal-overlay {
   content: "";
@@ -107,7 +112,7 @@ input[type="number"].w-l {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: hsla(0, 0%, 0%, .25);
+  background-color: hsla(0, 0%, 0%, 0.25);
   backdrop-filter: blur(10px);
 }
 .modal .actions {
@@ -116,8 +121,8 @@ input[type="number"].w-l {
   background: white;
   border-bottom: 1px solid var(--panel-border-color);
   align-items: center;
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 .modal .actions-bottom {
   border-top: 1px solid var(--gray-200);
@@ -129,7 +134,7 @@ input[type="number"].w-l {
 .modal .header {
   background: white;
   font-size: 1rem;
-  padding: 1rem .5rem 0 .5rem;
+  padding: 1rem 0.5rem 0 0.5rem;
   margin: 0;
   font-weight: normal;
 }
@@ -139,7 +144,7 @@ input[type="number"].w-l {
 button,
 .button {
   min-height: 27px;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   cursor: pointer;
 }
 .main-action {

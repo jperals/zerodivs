@@ -28,9 +28,6 @@ export default {
           this.itemBeingDragged = item;
           this.initialMousePosition = event.y;
           this.elementIndex = index;
-          if (this.mouseDown) {
-            this.mouseDown();
-          }
         }
       }
     },

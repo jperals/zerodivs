@@ -17,13 +17,15 @@
         v-on:mousedown="onMouseDown(index, $event)"
         v-on:mouseup="onMouseUp"
       >
-        <label>{{ shapeLabel(shape) }}</label>
+        <span class="drag-indicator" />
+        <ShapeNameInput :shape="shape" :selected="isShapeSelected(shape)" />
       </li>
     </ul>
   </li>
 </template>
 
 <script>
+import ShapeNameInput from "@/editor/ShapeNameInput";
 import store from "@/store";
 export default {
   props: {
@@ -39,6 +41,9 @@ export default {
       shapeMovedDown: null,
       shapeMovedUp: null
     };
+  },
+  components: {
+    ShapeNameInput
   },
   methods: {
     isShapeMovedDown(index) {
@@ -68,7 +73,10 @@ export default {
           this.elementHeight / 2 < this.offset &&
           this.elementIndex < this.shapesFromLayer.length - 1
         ) {
-          await this.swap({sourceIndex: this.elementIndex, targetIndex: this.elementIndex + 1});
+          await this.swap({
+            sourceIndex: this.elementIndex,
+            targetIndex: this.elementIndex + 1
+          });
           this.initialMousePosition += this.elementHeight;
           this.offset -= this.elementHeight;
           this.shapeMovedDown = null;
@@ -76,7 +84,10 @@ export default {
           this.elementIndex += 1;
         }
         while (this.offset < -this.elementHeight / 2 && 0 < this.elementIndex) {
-          await this.swap({sourceIndex: this.elementIndex, targetIndex: this.elementIndex - 1});
+          await this.swap({
+            sourceIndex: this.elementIndex,
+            targetIndex: this.elementIndex - 1
+          });
           this.initialMousePosition -= this.elementHeight;
           this.offset += this.elementHeight;
           this.shapeMovedUp = null;
@@ -112,11 +123,11 @@ export default {
         return {};
       }
     },
-    async swap({sourceIndex, targetIndex}) {
+    async swap({ sourceIndex, targetIndex }) {
       await store.dispatch("swapLayerShapes", {
-          layerName: this.layerName,
-          sourceIndex,
-          targetIndex
+        layerName: this.layerName,
+        sourceIndex,
+        targetIndex
       });
     },
     toggleLayer() {
@@ -153,11 +164,20 @@ ul {
   padding: 0;
 }
 .list-node {
-  padding-left: 1rem;
+  padding-left: 0.5rem;
 }
 .shape.list-node {
   background-color: var(--panel-bg-color);
   border-color: var(--panel-border-color);
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-right: 0.25rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  color: var(--gray-700);
 }
 .shape.list-node label {
   width: 100%;
@@ -199,6 +219,22 @@ li li {
   background-color: var(--selected-color);
   color: white;
 }
+.drag-indicator {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.25rem;
+  margin-right: 0.5rem;
+  border-top: 1px solid var(--gray-400);
+  border-bottom: 1px solid var(--gray-400);
+  cursor: grab;
+}
+.shape.selected .drag-indicator {
+  border-top-color: white;
+  border-bottom-color: white;
+}
+.shape-name {
+  width: 7.5rem;
+}
 .shape.moved-down {
   animation: moveDown 150ms;
 }
@@ -214,5 +250,14 @@ li li {
   from {
     transform: translateY(100%);
   }
+}
+</style>
+
+<style>
+.shape.selected input.shape-name:not(:hover):not(:focus) {
+  color: white;
+}
+.shape-name {
+  width: 6.5rem;
 }
 </style>
