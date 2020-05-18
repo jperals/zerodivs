@@ -17,7 +17,7 @@
         v-on:mousedown="onMouseDown(index, $event)"
         v-on:mouseup="onMouseUp"
       >
-        <span class="drag-indicator" />
+        <span class="draggable-indicator" />
         <ShapeNameInput :shape="shape" :selected="isShapeSelected(shape)" />
       </li>
     </ul>
@@ -159,6 +159,7 @@ export default {
 </script>
 
 <style scoped>
+@import "../components/draggable-indicator.css";
 ul {
   list-style: none;
   padding: 0;
@@ -188,7 +189,7 @@ ul {
 }
 .shape.list-node.dragging,
 .shape.list-node.dragging label,
-.shape.list-node.dragging .drag-indicator {
+.shape.list-node.dragging .draggable-indicator {
   cursor: grabbing;
 }
 .shape.list-node:not(.dragging) {
@@ -219,27 +220,6 @@ li li {
 .layer.selected .root-node {
   background-color: var(--selected-color);
   color: white;
-}
-.drag-indicator {
-  display: inline-block;
-  width: 1rem;
-  height: 0.75rem;
-  margin-left: -0.25rem;
-  margin-right: 0.25rem;
-  cursor: grab;
-}
-.drag-indicator:after {
-  display: block;
-  content: "";
-  border-top: 1px solid var(--gray-400);
-  border-bottom: 1px solid var(--gray-400);
-  margin: 0.25rem;
-  height: 0.25rem;
-  width: 0.5rem;
-}
-.shape.selected .drag-indicator {
-  border-top-color: white;
-  border-bottom-color: white;
 }
 .shape-name {
   width: 7.5rem;

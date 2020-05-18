@@ -12,22 +12,15 @@
         v-on:mousemove="onItemMouseMove"
         v-on:mouseup="onItemMouseUp"
       >
-        <div class="row">
-          <div class="wrapper">
-            <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
-            <input
-              type="text"
-              class="w-s m-l-s"
-              v-model="stop.position"
-              v-on:change="(event) => updateStop(stop, {position: event.target.value})"
-            />
-            <CloseButton
-              class="remove-stop"
-              :on-click="() => removeStop(index)"
-              title="Remove stop"
-            />
-          </div>
-        </div>
+        <span class="draggable-indicator" />
+        <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
+        <input
+          type="text"
+          class="w-s m-l-s"
+          v-model="stop.position"
+          v-on:change="(event) => updateStop(stop, {position: event.target.value})"
+        />
+        <CloseButton class="remove-stop" :on-click="() => removeStop(index)" title="Remove stop" />
       </li>
     </ul>
     <div class="row add-new">
@@ -115,10 +108,13 @@ export default {
 .add-new {
   background-color: var(--panel-bg-color);
 }
-.stop .wrapper {
+.stop {
   align-items: center;
+  padding: 0.375rem 0.5rem;
+  display: flex;
+  flex-direction: row;
 }
-.stop .wrapper:hover .remove-stop {
+.stop:hover .remove-stop {
   opacity: 1;
 }
 .add-new {
@@ -150,7 +146,7 @@ li.moved-up {
 </style>
 
 <style>
-.color-picker input[type="text"] {
-  width: 9ch;
+.stop .color-picker input[type="text"] {
+  width: 10ch;
 }
 </style>

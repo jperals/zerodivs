@@ -1,0 +1,21 @@
+.draggable-indicator {
+  display: inline-block;
+  width: 1rem;
+  height: 0.75rem;
+  margin-left: -0.25rem;
+  margin-right: 0.25rem;
+  cursor: grab;
+}
+.draggable-indicator:after {
+  display: block;
+  content: "";
+  border-top: 1px solid var(--gray-400);
+  border-bottom: 1px solid var(--gray-400);
+  margin: 0.25rem;
+  height: 0.25rem;
+  width: 0.5rem;
+}
+.list-node.selected .draggable-indicator:after {
+  border-top-color: white;
+  border-bottom-color: white;
+}
