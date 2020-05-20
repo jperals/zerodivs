@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="colorMode">
     <Nav />
     <router-view />
   </div>
@@ -8,7 +8,12 @@
 <script>
 import Nav from "@/components/Nav";
 export default {
-  components: { Nav }
+  components: { Nav },
+  computed: {
+    colorMode() {
+      return this.$route.name === "gallery" ? 'dark' : 'white'
+    }
+  }
 };
 </script>
 
@@ -41,7 +46,10 @@ export default {
   --gray-500: #9e9e9e;
   --gray-600: #757575;
   --gray-700: #616161;
+  --gray-800: #424242;
+  --gray-900: #212121;
   --selected-color: hsl(224, 100%, 67%);
+  --selected-color-strong: hsl(224, 100%, 60%);
 }
 #app,
 input,
@@ -59,6 +67,17 @@ body {
 }
 #app .editor {
   flex-grow: 1;
+}
+#app.dark > nav {
+  background-color: var(--gray-900);
+  color: white;
+}
+#app.dark > nav a,
+#app.dark > nav a:link,
+#app.dark > nav a:hover,
+#app.dark > nav a:visited {
+  color: white;
+  text-decoration: none;
 }
 .panel {
   backdrop-filter: blur(4px);
@@ -150,6 +169,9 @@ button,
 .main-action {
   background-color: var(--selected-color);
   color: white;
+}
+.main-action:hover {
+  background-color: var(--selected-color-strong);
 }
 .m-l-s {
   margin-left: 0.5rem;
