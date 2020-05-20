@@ -149,7 +149,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 20;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.25),
@@ -164,7 +164,7 @@ export default {
   position: absolute;
   top: 3rem;
   right: 0.5rem;
-  z-index: 20;
+  z-index: 30;
   animation: from-top 300ms;
 }
 .div-thumbnail.options-open:before {
@@ -174,7 +174,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 30;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.65),
@@ -230,7 +230,7 @@ export default {
   background:rgba(0, 0, 0, 0.25);
   border-radius: 0.25rem;
   padding: 0.25rem;
-  z-index: 20;
+  z-index: 30;
 }
 @keyframes from-top {
   from {
