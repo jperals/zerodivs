@@ -1,5 +1,5 @@
 <template>
-  <div class="thumbnail-wrapper" :class="'thumbnail-wrapper-' + projectId" v-if="shapesLayers">
+  <div class="thumbnail-wrapper" :class="'thumbnail-wrapper-' + projectId" v-if="shapesLayers" :style="offsetStyle">
     <div class="thumbnail" :class="'thumbnail-' + projectId"></div>
     <v-style type="text/css">
       .thumbnail-wrapper-{{projectId}} {
@@ -54,6 +54,29 @@ export default {
     },
     isAfterActive() {
       return this.isLayerActive("after");
+    },
+    offset() {
+      const allShapes = this.shapesMain.concat(this.shapesBefore).concat(this.shapesAfter);
+      if (!allShapes.length) {
+        return {x: 0, y: 0};
+      }
+      let minLeft = Infinity;
+      let minTop = Infinity;
+      for(const shape of allShapes) {
+        minLeft = Math.min(minLeft, shape.left.value);
+        minTop = Math.min(minTop, shape.top.value);
+      }
+      return {x: minLeft, y: minTop};
+    },
+    offsetStyle() {
+      return {
+        minHeight: `calc(100% + ${this.offset.y}px)`,
+        left: '0',
+        margin: '0',
+        top: '0',
+        transform: `translate(${-this.offset.x}px, ${-this.offset.y}px)`,
+        minWidth: `calc(100% + ${this.offset.x}px)`
+      };
     },
     shapesLayers() {
       return store.getters.shapesLayersByProjectId(this.projectId);
