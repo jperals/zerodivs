@@ -344,6 +344,8 @@ pinch-zoom {
 }
 .workspace {
   background-color: var(--panel-border-color);
+  margin-left: var(--layers-width);
+  margin-right: var(--shape-form-width);
 }
 .workspace.adding-shape {
   cursor: crosshair;

@@ -30,7 +30,7 @@ form {
   background-color: var(--panel-bg-color);
   margin: 0;
   padding-right: 0;
-  width: 200px;
+  width: var(--shape-form-width);
   height: 100%;
   border-left: 1px solid var(--panel-border-color);
   overflow: auto;

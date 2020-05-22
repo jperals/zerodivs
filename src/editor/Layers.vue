@@ -20,7 +20,7 @@ export default {
   background-color: var(--panel-bg-color);
   margin: 0;
   padding-left: 0;
-  width: 160px;
+  width: var(--layers-width);
   border-right: 1px solid var(--panel-border-color);
   overflow-y: auto;
 }

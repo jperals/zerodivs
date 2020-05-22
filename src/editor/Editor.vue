@@ -70,6 +70,8 @@ export default {
 .editor {
   display: flex;
   flex-direction: column;
+  --layers-width: 160px;
+  --shape-form-width: 200px;
 }
 .toolbar {
   z-index: 10;
