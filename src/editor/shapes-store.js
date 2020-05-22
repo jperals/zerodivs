@@ -30,8 +30,7 @@ content: "";
     },
     after: {
       active: false,
-      extraStyles: `
-position: absolute;
+      extraStyles: `position: absolute;
 top: 0;
 left: 0;
 right: 0;
