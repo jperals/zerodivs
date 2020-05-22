@@ -23,11 +23,13 @@ export default {
     value() {
       return JSON.stringify({
         css: layers2css({ layers: this.shapesLayers }),
-        editors: "110",
+        editors: "010",
         layout: "left",
-        html: "<div></div>",
-        title: "New Pen!"
+        title: this.projectName
       });
+    },
+    projectName() {
+      return store.getters.currentProject.name;
     },
     shapesLayers() {
       return store.getters.allLayers;

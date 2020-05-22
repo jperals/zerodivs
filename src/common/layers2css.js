@@ -1,7 +1,11 @@
 import shapes2css from "@/common/shapes2css";
 
-export default function layers2css({layers, selector = "div"}) {
-  let cssStr = ``;
+export default function layers2css({layers, selector = "body"}) {
+  let cssStr = `html {
+  height: 100%;
+  width: 100%;
+}
+`;
   for (const layerName of ["main", "before", "after"]) {
     if (isLayerActive({layerName, layers})) {
       cssStr += layerName === "main" ? selector : selector + ":" + layerName;
