@@ -16,7 +16,7 @@
       }
     </v-style>
     <v-style type="text/css" v-if="isAfterActive">
-      .canvas-{{projectId}} {
+      .canvas-{{projectId}}:after {
       {{ afterStyle }}
       }
     </v-style>

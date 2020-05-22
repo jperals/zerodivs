@@ -17,7 +17,7 @@
       }
     </v-style>
     <v-style type="text/css" v-if="isAfterActive">
-      .thumbnail-{{projectId}} {
+      .thumbnail-{{projectId}}:after {
       {{ afterStyle }}
       }
     </v-style>
