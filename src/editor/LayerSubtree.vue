@@ -186,9 +186,6 @@ li li {
 </style>
 
 <style>
-.shape.selected input.shape-name:not(:hover):not(:focus) {
-  color: white;
-}
 .shape-name {
   width: 6.5rem;
 }
