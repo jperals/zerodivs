@@ -26,10 +26,9 @@ function formatImages(shapes) {
 }
 
 export function formatImage(shape) {
-  return `${formatType(shape.type)}(${[
-    shape.direction,
-    formatStops(shape.stops)
-  ].join(", ")})`;
+  const formattedStops = formatStops(shape.stops);
+  const items = shape.direction ? [shape.direction, formattedStops] : [formattedStops];
+  return `${formatType(shape.type)}(${items.join(", ")})`;
 }
 
 function formatType(type) {
