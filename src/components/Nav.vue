@@ -43,6 +43,7 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  transition: background-color 300ms;
 }
 nav > * {
   display: inline-block;
