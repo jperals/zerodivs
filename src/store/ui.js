@@ -9,8 +9,8 @@ const ui = {
     selectColor(state, color) {
       state.currentColor = color;
     },
-    selectLayer(state, layerName) {
-      state.selectedLayer = layerName;
+    selectLayer(state, layerId) {
+      state.selectedLayer = layerId;
     },
     selectShape(state, shape) {
       state.selectedShape = shape;
@@ -29,11 +29,13 @@ const ui = {
     selectColor({ commit }, color) {
       commit("selectColor", color);
     },
-    selectLayer({ commit }, layerName) {
-      commit("selectLayer", layerName);
+    selectLayer({ commit }, layerId) {
+      commit("selectLayer", layerId);
     },
-    selectShape({ commit }, shape) {
+    selectShape({ commit, getters, dispatch }, shape) {
       commit("selectShape", shape);
+      const layerId = getters.layerIdFromShape(shape);
+      return dispatch("selectLayer", layerId);
     },
     toggleOutput({ commit }, value) {
       commit("toggleOutput", value);

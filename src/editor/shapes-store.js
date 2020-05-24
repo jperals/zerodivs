@@ -191,6 +191,7 @@ const shapes = {
       state.layers[layerName].extraStyles || "",
     isLayerActive: (state) => (layerName) =>
       get(state, `layers[${layerName}].active`, false),
+    layerIdFromShape: (state) => (shape) => Object.keys(state.layers).find(key => state.layers[key].shapes.includes(shape)),
     layerShapes: (state) => (layerName) =>
       get(state, `layers[${layerName}].shapes`, []),
     shapes: (state, getters) => {
