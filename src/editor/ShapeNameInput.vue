@@ -67,6 +67,7 @@ span.shape-name {
   text-overflow: ellipsis;
   display: inline-block;
   overflow: hidden;
+  cursor: default;
 }
 input {
   border-radius: 0.25rem;
