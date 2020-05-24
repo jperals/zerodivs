@@ -1,22 +1,35 @@
 <template>
-  <pre>
-{{ jsonResult }}
-  </pre>
+  <codemirror v-model="jsonResult" :options="codeMirrorOptions" class="code-editor" />
 </template>
 
 <script>
 import store from "@/store";
+import { codemirror } from "vue-codemirror-lite";
+require("codemirror/mode/javascript/javascript");
 export default {
+  components: {
+    codemirror
+  },
   computed: {
     jsonResult() {
-      return store.getters.allLayers;
+      return JSON.stringify(store.getters.allLayers, null, 2);
+    },
+    codeMirrorOptions() {
+      return {
+        height: "auto",
+        mode: { name: "javascript", json: true },
+        readOnly: true
+      };
     }
   }
 };
 </script>
 
 <style scoped>
-pre {
-  white-space: pre-wrap;
+.code-editor {
+  font-size: 0.75rem;
+}
+.code-editor .CodeMirror {
+  height: auto;
 }
 </style>
