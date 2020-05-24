@@ -224,6 +224,7 @@ export default {
   z-index: 20;
 }
 .options-toggle {
+  cursor: pointer;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;  
