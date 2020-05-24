@@ -1,7 +1,7 @@
 <template>
   <nav>
     <section class="breadcrumbs">
-      <router-link to="/" class="link-to-home">ZeroDivs</router-link>
+      <router-link to="/" class="link-to-home">Mirage</router-link>
       <span v-if="currentProject">/</span>
       <span v-if="currentProject">
         <input v-model="projectName" placeholder="Project name" />
