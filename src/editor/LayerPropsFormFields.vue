@@ -1,5 +1,5 @@
 <template>
-  <codemirror v-model="style" :options="codeMirrorOptions" class="code-editor" ref="codeEditor" />
+  <codemirror v-model="style" :options="codeMirrorOptions" class="code-editor code-editor-extra-styles" ref="codeEditor" />
 </template>
 
 <script>
@@ -56,7 +56,10 @@ export default {
   height: 100%;
   font-size: 0.75rem;
 }
-.code-editor .CodeMirror {
+</style>
+
+<style>
+.code-editor-extra-styles .CodeMirror {
   height: auto;
 }
 </style>
