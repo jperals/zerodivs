@@ -45,5 +45,14 @@ export default function reactToKeyboard(event) {
         store.dispatch("duplicateSelectedShape");
       }
       break;
+    case "z":
+      if (event.metaKey) {
+        if (event.shiftKey) {
+          store.dispatch("redo");
+        } else {
+          store.dispatch("undo");
+        }
+      }
+      break;
   }
 }
