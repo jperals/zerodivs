@@ -45,8 +45,13 @@ export default function reactToKeyboard(event) {
         store.dispatch("duplicateSelectedShape");
       }
       break;
+    case "Escape":
+      if (isNotWriting(event)) {
+        store.dispatch("setShapeToBeAdded", null);
+      }
+      break;
     case "z":
-      if (event.metaKey) {
+      if (isNotWriting(event) && event.metaKey) {
         if (event.shiftKey) {
           store.dispatch("redo");
         } else {
