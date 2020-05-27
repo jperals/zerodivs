@@ -4,7 +4,6 @@
       <div
         class="pinch-zoom-wrapper"
         v-on:mousemove="onDrag"
-        v-on:mousedown="onMouseDown"
         v-on:mouseup="onMouseUp"
         v-on:pointerdown="onMouseDown"
         ref="pinchZoomInner"
@@ -25,12 +24,13 @@
       </div>
     </pinch-zoom>
     <ShapeResizeHandles
-      v-if="selectedShape"
+      v-for="shape in selectedShapes"
       :canvasPosition="canvasPosition"
-      :shape="selectedShape"
-      :viewportTransform="viewportTransform"
+      :key="shape.id"
       :onMouseDown="onResizeHandleMouseDown"
       :onMouseUp="onMouseUp"
+      :shape="shape"
+      :viewportTransform="viewportTransform"
     />
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
       <p class="zoom-value">Zoom: {{zoomLevel * 100 | decimals(0)}}%</p>
@@ -179,7 +179,7 @@ export default {
           })
           .then(newShape => {
             store
-              .dispatch("selectShape", newShape)
+              .dispatch("selectShape", {shape: newShape})
               .then(() => store.dispatch("generateSnapPoints"));
           });
         this.shapeBeingAdded = null;
@@ -226,7 +226,7 @@ export default {
         height: { ...shape.height }
       };
       store
-        .dispatch("selectShape", shape)
+        .dispatch("selectShape", {shape, keepSelection: store.getters.isKeyPressed("Shift")})
         .then(() => store.dispatch("generateSnapPoints"));
     },
     onShapeMouseUp(shape, event) {
@@ -301,6 +301,9 @@ export default {
     },
     selectedShape() {
       return store.getters.selectedShape;
+    },
+    selectedShapes() {
+      return store.getters.selectedShapes;
     },
     shapes() {
       return store.getters.shapes;

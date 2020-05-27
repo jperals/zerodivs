@@ -3,8 +3,6 @@
     class="overlay"
     :class="{ selected: isSelected }"
     :style="computedStyle"
-    v-on:mousedown="$event => onMouseDown(shape, $event)"
-    v-on:mouseup="$event => onMouseUp(shape, $event)"
     v-on:pointerdown="$event => onMouseDown(shape, $event)"
     v-on:pointerup="$event => onMouseUp(shape, $event)"
   >

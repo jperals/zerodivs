@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     isShapeSelected(shape) {
-      return store.getters.selectedShape === shape;
+      return store.getters.isShapeSelected(shape);
     },
     onShapeMouseDown(index, event) {
       const shape = this.items[index];
@@ -61,7 +61,7 @@ export default {
       store.dispatch("unselectShape");
     },
     selectShape(shape) {
-      store.dispatch("selectShape", shape);
+      store.dispatch("selectShape", {shape, keepSelection: store.getters.isKeyPressed("Shift")});
     },
     shapeLabel(shape) {
       return shape.name;

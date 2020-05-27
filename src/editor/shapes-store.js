@@ -251,7 +251,7 @@ const shapes = {
       duplicatedShape.left = newPosition.left;
       duplicatedShape.top = newPosition.top;
       dispatch("addShape", { shape: duplicatedShape }).then((shape) =>
-        dispatch("selectShape", shape)
+        dispatch("selectShape", {shape})
       );
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {

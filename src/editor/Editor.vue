@@ -24,6 +24,7 @@ import store from "@/store";
 export default {
   data() {
     return {
+      pressedKeys: new Set(),
       shapes: null
     };
   },
@@ -34,10 +35,12 @@ export default {
     Workspace
   },
   created() {
-    window.addEventListener("keydown", this.onKeyPress);
+    window.addEventListener("keydown", this.onKeyDown);
+    window.addEventListener("keyup", this.onKeyUp);
   },
   destroyed() {
-    window.removeEventListener("keydown", this.onKeyPress);
+    window.removeEventListener("keydown", this.onKeyDown);
+    window.removeEventListener("keyup", this.onKeyUp);
   },
   mounted() {
     const projectId = get(this, "$route.params.id");
@@ -59,8 +62,12 @@ export default {
     }
   },
   methods: {
-    onKeyPress(event) {
+    onKeyDown(event) {
+      store.dispatch("addPressedKey", event.key);
       reactToKeyboard(event);
+    },
+    onKeyUp(event) {
+      store.dispatch("removePressedKey", event.key);
     }
   }
 };
