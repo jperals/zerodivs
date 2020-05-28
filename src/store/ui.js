@@ -47,7 +47,7 @@ const ui = {
     isKeyPressed: (state) => (key) => state.pressedKeys.has(key),
     isShapeSelected: (state) => (shape) => state.selectedShapes.has(shape),
     selectedLayer: (state) => state.selectedLayer,
-    selectedShape: (state) => state.selectedShape,
+    selectedShape: (state) => state.selectedShapes.size === 1 ? Array.from(state.selectedShapes)[0] : undefined,
     selectedShapes: (state) => Array.from(state.selectedShapes),
     showOutput: (state) => state.showOutput,
   },
