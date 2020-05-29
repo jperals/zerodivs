@@ -10,32 +10,32 @@ export default function reactToKeyboard(event) {
       break;
     case "ArrowLeft":
       if (isNotWriting(event)) {
-        store.dispatch("moveShapeBy", {
-          shape: store.getters.selectedShape,
+        store.dispatch("moveShapesBy", {
+          shapes: store.getters.selectedShapes,
           left: { value: -1, units: "px" },
         });
       }
       break;
     case "ArrowUp":
       if (isNotWriting(event)) {
-        store.dispatch("moveShapeBy", {
-          shape: store.getters.selectedShape,
+        store.dispatch("moveShapesBy", {
+          shapes: store.getters.selectedShapes,
           top: { value: -1, units: "px" },
         });
       }
       break;
     case "ArrowRight":
       if (isNotWriting(event)) {
-        store.dispatch("moveShapeBy", {
-          shape: store.getters.selectedShape,
+        store.dispatch("moveShapesBy", {
+          shapes: store.getters.selectedShapes,
           left: { value: 1, units: "px" },
         });
       }
       break;
     case "ArrowDown":
       if (isNotWriting(event)) {
-        store.dispatch("moveShapeBy", {
-          shape: store.getters.selectedShape,
+        store.dispatch("moveShapesBy", {
+          shapes: store.getters.selectedShapes,
           top: { value: 1, units: "px" },
         });
       }

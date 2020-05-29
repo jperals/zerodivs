@@ -315,6 +315,14 @@ const shapes = {
         dispatch("addSnapshot");
       });
     },
+    moveShapesBy({ commit, dispatch }, { shapes, left, top }) {
+      for (const shape of shapes) {
+        commit("moveShapeBy", { shape, left, top});
+      }
+      dispatch("updateProject");
+      dispatch("setCurrentSnaps");
+      dispatch("addSnapshot");
+    },
     removeSelectedShape({ dispatch, getters }) {
       dispatch("removeShape", getters.selectedShape);
       dispatch("unselectShape");
