@@ -310,32 +310,35 @@ const shapes = {
       }
       commit("moveShapeBy", { shape, left, top });
       dispatch("roundShapeProperties", { shape, left, top }).then(() => {
-        dispatch("updateProject");
         dispatch("setCurrentSnaps");
-        dispatch("addSnapshot");
+        dispatch("commitChange");
       });
     },
     moveShapesBy({ commit, dispatch }, { shapes, left, top }) {
       for (const shape of shapes) {
         commit("moveShapeBy", { shape, left, top});
       }
-      dispatch("updateProject");
       dispatch("setCurrentSnaps");
-      dispatch("addSnapshot");
+      dispatch("commitChange");
     },
     removeSelectedShape({ dispatch, getters }) {
       dispatch("removeShape", getters.selectedShape);
       dispatch("unselectShape");
     },
+    removeSelectedShapes({ commit, dispatch, getters }) {
+      for(const shape of getters.selectedShapes) {
+        commit("removeShape", shape);
+      }
+      dispatch("unselectShape");
+      dispatch("commitChange");
+    },
     removeShape({ commit, dispatch }, shape) {
       commit("removeShape", shape);
-      dispatch("updateProject");
-      dispatch("addSnapshot");
+      dispatch("commitChange");
     },
     removeStop({ commit, dispatch }, { shape, index }) {
       commit("removeStop", { shape, index });
-      dispatch("updateProject");
-      dispatch("addSnapshot");
+      dispatch("commitChange");
     },
     resizeShape(
       { commit, dispatch },

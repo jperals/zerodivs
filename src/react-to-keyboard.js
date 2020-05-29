@@ -5,7 +5,7 @@ export default function reactToKeyboard(event) {
     case "Backspace":
     case "Delete":
       if (isNotWriting(event)) {
-        store.dispatch("removeSelectedShape");
+        store.dispatch("removeSelectedShapes");
       }
       break;
     case "ArrowLeft":
