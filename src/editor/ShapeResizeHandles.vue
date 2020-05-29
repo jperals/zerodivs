@@ -1,45 +1,47 @@
 <template>
   <div class="shape-handles-wrapper" :style="containerStyle" v-on:mouseup="onMouseUp">
-    <div
-      class="handle top-left"
-      v-on:mousedown="($event) => onMouseDown('top-left', $event)"
-      :style="transformTopLeft"
-    ></div>
-    <div
-      class="handle top"
-      v-on:mousedown="($event) => onMouseDown('top', $event)"
-      :style="transformTop"
-    ></div>
-    <div
-      class="handle top-right"
-      v-on:mousedown="($event) => onMouseDown('top-right', $event)"
-      :style="transformTopRight"
-    ></div>
-    <div
-      class="handle right"
-      v-on:mousedown="($event) => onMouseDown('right', $event)"
-      :style="transformRight"
-    ></div>
-    <div
-      class="handle bottom-right"
-      v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
-      :style="transformBottomRight"
-    ></div>
-    <div
-      class="handle bottom"
-      v-on:mousedown="($event) => onMouseDown('bottom', $event)"
-      :style="transformBottom"
-    ></div>
-    <div
-      class="handle bottom-left"
-      v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
-      :style="transformBottomLeft"
-    ></div>
-    <div
-      class="handle left"
-      v-on:mousedown="($event) => onMouseDown('left', $event)"
-      :style="transformLeft"
-    ></div>
+    <template v-if="showHandles">
+      <div
+        class="handle top-left"
+        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
+        :style="transformTopLeft"
+      ></div>
+      <div
+        class="handle top"
+        v-on:mousedown="($event) => onMouseDown('top', $event)"
+        :style="transformTop"
+      ></div>
+      <div
+        class="handle top-right"
+        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
+        :style="transformTopRight"
+      ></div>
+      <div
+        class="handle right"
+        v-on:mousedown="($event) => onMouseDown('right', $event)"
+        :style="transformRight"
+      ></div>
+      <div
+        class="handle bottom-right"
+        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
+        :style="transformBottomRight"
+      ></div>
+      <div
+        class="handle bottom"
+        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
+        :style="transformBottom"
+      ></div>
+      <div
+        class="handle bottom-left"
+        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
+        :style="transformBottomLeft"
+      ></div>
+      <div
+        class="handle left"
+        v-on:mousedown="($event) => onMouseDown('left', $event)"
+        :style="transformLeft"
+      ></div>
+    </template>
   </div>
 </template>
 
@@ -48,6 +50,11 @@ import shapes2css from "@/common/shapes2css";
 export default {
   props: {
     canvasPosition: Object,
+    showHandles: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     onMouseDown: Function,
     onMouseUp: Function,
     viewportTransform: Object,

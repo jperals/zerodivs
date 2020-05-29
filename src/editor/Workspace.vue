@@ -30,6 +30,7 @@
       :onMouseDown="onResizeHandleMouseDown"
       :onMouseUp="onMouseUp"
       :shape="shape"
+      :showHandles="!!selectedShape"
       :viewportTransform="viewportTransform"
     />
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
