@@ -21,7 +21,7 @@ export default [
   [
     function(color) {
       return {
-        name: "Triangle",
+        name: "Bottom right triangle",
         type: "linear",
         direction: "to bottom right",
         stops: [
@@ -41,7 +41,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Triangle",
+        name: "Top left triangle",
         type: "linear",
         direction: "to top left",
         stops: [
@@ -61,7 +61,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Triangle",
+        name: "Bottom left triangle",
         type: "linear",
         direction: "to bottom left",
         stops: [
@@ -81,7 +81,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Triangle",
+        name: "Top right triangle",
         type: "linear",
         direction: "to top right",
         stops: [
@@ -103,7 +103,7 @@ export default [
   [
     function(color) {
       return {
-        name: "Hexagon",
+        name: "Cropped stripe, bottom left to top right",
         type: "linear",
         direction: "to top right",
         stops: [
@@ -131,7 +131,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Hexagon",
+        name: "Cropped stripe, bottom right to top left",
         type: "linear",
         direction: "to top left",
         stops: [
@@ -184,7 +184,7 @@ export default [
   [
     function(color) {
       return {
-        name: "Circle section",
+        name: "Bottom right circle section",
         type: "radial",
         direction: "at top left",
         stops: [
@@ -205,7 +205,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Circle section",
+        name: "Bottom left circle section",
         type: "radial",
         direction: "at top right",
         stops: [
@@ -226,7 +226,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Circle section",
+        name: "Top left circle section",
         type: "radial",
         direction: "at bottom right",
         stops: [
@@ -247,7 +247,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Circle section",
+        name: "Top right circle section",
         type: "radial",
         direction: "at bottom left",
         stops: [
@@ -270,7 +270,7 @@ export default [
   [
     function(color) {
       return {
-        name: "Arc",
+        name: "Bottom right arc",
         type: "radial",
         direction: "at top left",
         stops: [
@@ -295,7 +295,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Arc",
+        name: "Bottom left arc",
         type: "radial",
         direction: "at top right",
         stops: [
@@ -321,7 +321,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Arc",
+        name: "Top left arc",
         type: "radial",
         direction: "at bottom right",
         stops: [
@@ -347,7 +347,7 @@ export default [
     },
     function(color) {
       return {
-        name: "Arc",
+        name: "Top right arc",
         type: "radial",
         direction: "at bottom left",
         stops: [
