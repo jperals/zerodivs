@@ -49,6 +49,7 @@ const ui = {
     selectedLayer: (state) => state.selectedLayer,
     selectedShape: (state) => state.selectedShapes.size === 1 ? Array.from(state.selectedShapes)[0] : undefined,
     selectedShapes: (state) => Array.from(state.selectedShapes),
+    selectMultiple: (state) => state.pressedKeys.has("Shift"),
     showOutput: (state) => state.showOutput,
   },
   actions: {

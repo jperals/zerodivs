@@ -43,6 +43,7 @@
 <script>
 import store from "@/store";
 import Canvas from "./Canvas";
+import { deepCopy } from "@/common/utils";
 import { transformCoords } from "@/common/geometry";
 import ShapeOverlays from "./ShapeOverlays";
 import ShapeResizeHandles from "./ShapeResizeHandles";
@@ -59,7 +60,7 @@ export default {
       initialPointerPosition: null,
       resizeDirection: null,
       shapeBeingAdded: null,
-      shapeBeingMoved: null,
+      shapesBeingMoved: null,
       viewportTransform: {
         x: 0,
         y: 0,
@@ -93,21 +94,46 @@ export default {
         round: true
       });
     },
-    moveShape(diff) {
-      const newPosition = {
-        left: this.initialShapeProps.left.value + diff.left,
-        top: this.initialShapeProps.top.value + diff.top
-      };
-      store.dispatch("moveShape", {
-        shape: this.shapeBeingMoved,
-        left: { value: newPosition.left, units: "px" },
-        top: { value: newPosition.top, units: "px" }
+    initDrag({ event }) {
+      this.shapesBeingMoved = {};
+      for (const shape of store.getters.selectedShapes) {
+        this.shapesBeingMoved[shape.id] = deepCopy(shape);
+      }
+      this.updateCanvasPosition();
+      this.initialMousePosition = this.transformCoords({
+        x: event.x,
+        y: event.y
       });
     },
+    moveShapes(diff) {
+      const selectedShapes = store.getters.selectedShapes;
+      if (selectedShapes.length === 1) {
+        const newPosition = {
+          left: this.initialShapeProps.left.value + diff.left,
+          top: this.initialShapeProps.top.value + diff.top
+        };
+        store.dispatch("moveShape", {
+          shape: selectedShapes[0],
+          left: { value: newPosition.left, units: "px" },
+          top: { value: newPosition.top, units: "px" }
+        });
+      } else {
+        for (const shape of store.getters.selectedShapes) {
+          const initialShapeProps = this.shapesBeingMoved[shape.id];
+          store.dispatch("moveShape", {
+            shape,
+            left: {
+              value: initialShapeProps.left.value + diff.left,
+              units: "px"
+            },
+            top: { value: initialShapeProps.top.value + diff.top, units: "px" }
+          });
+        }
+      }
+    },
     onChange() {
-      store.dispatch("updateProject");
       store.dispatch("setCurrentSnaps");
-      store.dispatch("addSnapshot");
+      store.dispatch("commitChange");
     },
     onDrag(event) {
       if (!this.initialMousePosition) {
@@ -125,8 +151,8 @@ export default {
         this.dragNewShape(diff);
       } else if (this.resizeDirection) {
         this.resizeShape(diff);
-      } else if (this.shapeBeingMoved) {
-        this.moveShape(diff);
+      } else if (this.shapesBeingMoved) {
+        this.moveShapes(diff);
       }
     },
     onMouseDown(event) {
@@ -171,7 +197,7 @@ export default {
       this.initialMousePosition = null;
       this.initialShapeProps = null;
       this.resizeDirection = null;
-      this.shapeBeingMoved = null;
+      this.shapesBeingMoved = null;
       if (this.addingShape) {
         store
           .dispatch("addShape", {
@@ -180,7 +206,7 @@ export default {
           })
           .then(newShape => {
             store
-              .dispatch("selectShape", {shape: newShape})
+              .dispatch("selectShape", { shape: newShape })
               .then(() => store.dispatch("generateSnapPoints"));
           });
         this.shapeBeingAdded = null;
@@ -214,21 +240,19 @@ export default {
         return;
       }
       event.stopPropagation();
-      this.shapeBeingMoved = shape;
-      this.updateCanvasPosition();
-      this.initialMousePosition = this.transformCoords({
-        x: event.x,
-        y: event.y
-      });
+      this.initDrag({ event });
       this.initialShapeProps = {
         left: { ...shape.left },
         top: { ...shape.top },
         width: { ...shape.width },
         height: { ...shape.height }
       };
-      store
-        .dispatch("selectShape", {shape, keepSelection: store.getters.isKeyPressed("Shift")})
-        .then(() => store.dispatch("generateSnapPoints"));
+      const selectMultiple = store.getters.isKeyPressed("Shift");
+      if (!selectMultiple) {
+        store
+          .dispatch("selectShape", { shape })
+          .then(() => store.dispatch("generateSnapPoints"));
+      }
     },
     onShapeMouseUp(shape, event) {
       if (this.addingShape) {
@@ -238,10 +262,16 @@ export default {
       this.initialMousePosition = null;
       this.initialShapeProps = null;
       this.resizeDirection = null;
-      this.shapeBeingMoved = null;
+      this.shapesBeingMoved = null;
       if (this.dragging) {
         this.onChange();
         this.dragging = false;
+      }
+      const selectMultiple = store.getters.isKeyPressed("Shift");
+      if (selectMultiple) {
+        store
+          .dispatch("selectShape", { shape, keepSelection: true })
+          .then(() => store.dispatch("generateSnapPoints"));
       }
     },
     resetZoom() {

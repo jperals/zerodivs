@@ -47,7 +47,7 @@ const shapes = {
   state: {
     layers: initialLayersState(),
     round: true,
-    shapeToBeAdded: null,
+    shapeToBeAdded: null
   },
   mutations: {
     addNewStop(state, { shape, index }) {
@@ -143,7 +143,7 @@ const shapes = {
     setShapeToBeAdded(state, shape) {
       state.shapeToBeAdded = deepCopy(shape);
     },
-    swapLayerShapes(state, {layerName, sourceIndex, targetIndex}) {
+    swapLayerShapes(state, { layerName, sourceIndex, targetIndex }) {
       const shapes = state.layers[layerName].shapes;
       const sourceShape = shapes[sourceIndex];
       const targetShape = shapes[targetIndex];
@@ -151,13 +151,13 @@ const shapes = {
       shapes[targetIndex] = sourceShape;
       state.layers[layerName].shapes = [...shapes];
     },
-    swapStops(state, {shape, sourceIndex, targetIndex}) {
-      const {stops} = shape;
+    swapStops(state, { shape, sourceIndex, targetIndex }) {
+      const { stops } = shape;
       const sourceStop = stops[sourceIndex];
       const targetStop = stops[targetIndex];
       stops[sourceIndex] = targetStop;
       stops[targetIndex] = sourceStop;
-      state.layers = {...state.layers};
+      state.layers = { ...state.layers };
     },
     toggleLayer(state, layerName) {
       state.layers[layerName].active = !state.layers[layerName].active;
@@ -191,7 +191,10 @@ const shapes = {
       state.layers[layerName].extraStyles || "",
     isLayerActive: (state) => (layerName) =>
       get(state, `layers[${layerName}].active`, false),
-    layerIdFromShape: (state) => (shape) => Object.keys(state.layers).find(key => state.layers[key].shapes.includes(shape)),
+    layerIdFromShape: (state) => (shape) =>
+      Object.keys(state.layers).find((key) =>
+        state.layers[key].shapes.includes(shape)
+      ),
     layerShapes: (state) => (layerName) =>
       get(state, `layers[${layerName}].shapes`, []),
     shapes: (state, getters) => {
@@ -251,7 +254,7 @@ const shapes = {
       duplicatedShape.left = newPosition.left;
       duplicatedShape.top = newPosition.top;
       dispatch("addShape", { shape: duplicatedShape }).then((shape) =>
-        dispatch("selectShape", {shape})
+        dispatch("selectShape", { shape })
       );
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {
@@ -316,7 +319,7 @@ const shapes = {
     },
     moveShapesBy({ commit, dispatch }, { shapes, left, top }) {
       for (const shape of shapes) {
-        commit("moveShapeBy", { shape, left, top});
+        commit("moveShapeBy", { shape, left, top });
       }
       dispatch("setCurrentSnaps");
       dispatch("commitChange");
@@ -326,7 +329,7 @@ const shapes = {
       dispatch("unselectShape");
     },
     removeSelectedShapes({ commit, dispatch, getters }) {
-      for(const shape of getters.selectedShapes) {
+      for (const shape of getters.selectedShapes) {
         commit("removeShape", shape);
       }
       dispatch("unselectShape");
@@ -373,11 +376,11 @@ const shapes = {
     setShapeToBeAdded({ commit }, shape) {
       commit("setShapeToBeAdded", shape);
     },
-    swapLayerShapes({commit}, {layerName, sourceIndex, targetIndex}) {
-      commit("swapLayerShapes", {layerName, sourceIndex, targetIndex});
+    swapLayerShapes({ commit }, { layerName, sourceIndex, targetIndex }) {
+      commit("swapLayerShapes", { layerName, sourceIndex, targetIndex });
     },
-    swapStops({commit}, {shape, sourceIndex, targetIndex}) {
-      commit("swapStops", {shape, sourceIndex, targetIndex});
+    swapStops({ commit }, { shape, sourceIndex, targetIndex }) {
+      commit("swapStops", { shape, sourceIndex, targetIndex });
     },
     toggleLayer({ commit, dispatch }, layerName) {
       commit("toggleLayer", layerName);
