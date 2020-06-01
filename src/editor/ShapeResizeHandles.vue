@@ -3,6 +3,7 @@
     class="shape-handles-wrapper"
     v-if="canvasPosition"
     :style="containerStyle"
+    ref="wrapper"
     v-on:mouseup="onMouseUp"
   >
     <template v-if="showHandles">
@@ -215,6 +216,11 @@ export default {
       const transformed = this.transformCoords({ top, left });
       return `transform: translate(${transformed.left.value}${left.units}, ${transformed.top.value}${top.units})`;
     },
+    handleWheel(event) {
+      if (event.target.classList.contains("handle")) {
+        event.preventDefault();
+      }
+    },
     transformCoords({ top, left, offset = { top: 0, left: 0 } }) {
       if (!this.canvasPosition) {
         return;
@@ -236,6 +242,12 @@ export default {
         }
       };
     }
+  },
+  mounted() {
+    this.$refs.wrapper.addEventListener("wheel", this.handleWheel);
+  },
+  beforeDestroy() {
+    this.$refs.wrapper.removeEventListener("wheel", this.handleWheel);
   }
 };
 </script>
