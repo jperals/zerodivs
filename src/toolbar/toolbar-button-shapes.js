@@ -371,5 +371,79 @@ export default [
         repeat: "no-repeat"
       };
     }
+  ],
+  [
+    function(color) {
+      return {
+        name: "4 Tiles #1",
+        type: "conic",
+        stops: [
+          {
+            color
+          },
+          {
+            color,
+            position: "25%"
+          },
+          {
+            color: "transparent",
+            position: "25%"
+          },
+          {
+            color: "transparent",
+            position: "50%"
+          },
+          {
+            color,
+            position: "50%"
+          },
+          {
+            color,
+            position: "75%"
+          },
+          {
+            color: "transparent",
+            position: "75%"
+          },
+        ],
+        repeat: "no-repeat"
+      };
+    },
+    function(color) {
+      return {
+        name: "4 Tiles #2",
+        type: "conic",
+        stops: [
+          {
+            color: "transparent"
+          },
+          {
+            color: "transparent",
+            position: "25%"
+          },
+          {
+            color,
+            position: "25%"
+          },
+          {
+            color,
+            position: "50%"
+          },
+          {
+            color: "transparent",
+            position: "50%"
+          },
+          {
+            color: "transparent",
+            position: "75%"
+          },
+          {
+            color,
+            position: "75%"
+          },
+        ],
+        repeat: "no-repeat"
+      };
+    }
   ]
 ];
