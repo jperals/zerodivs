@@ -1,5 +1,6 @@
 <template>
   <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape }">
+    <input type="text" ref="focus" class="fake-focus" />
     <pinch-zoom ref="pinchZoom">
       <div
         class="pinch-zoom-wrapper"
@@ -156,6 +157,7 @@ export default {
       }
     },
     onMouseDown(event) {
+      this.$refs.focus.focus();
       if (this.addingShape) {
         event.stopPropagation();
         this.updateCanvasPosition();
@@ -387,6 +389,10 @@ pinch-zoom {
 }
 .workspace.adding-shape {
   cursor: crosshair;
+}
+.fake-focus {
+  position: absolute;
+  z-index: -1;
 }
 .pinch-zoom-wrapper {
   width: 100%;
