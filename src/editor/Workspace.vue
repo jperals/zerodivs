@@ -316,13 +316,15 @@ export default {
     }
   },
   mounted() {
-    this.$refs.pinchZoomInner.addEventListener("wheel", this.updateViewport, {
+    this.$refs.pinchZoom.addEventListener("wheel", this.updateViewport, {
       passive: true
     });
+    this.$refs.pinchZoom.addEventListener("pointermove", this.updateViewport);
     this.updateCanvasPosition();
   },
   beforeDestroy() {
-    this.$refs.pinchZoomInner.removeEventListener("wheel", this.updateViewport);
+    this.$refs.pinchZoom.removeEventListener("wheel", this.updateViewport);
+    this.$refs.pinchZoom.removeEventListener("pointermove", this.updateViewport);
     store.dispatch("unselectShape");
   },
   computed: {
