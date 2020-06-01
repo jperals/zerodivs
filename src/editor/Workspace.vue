@@ -247,8 +247,7 @@ export default {
         width: { ...shape.width },
         height: { ...shape.height }
       };
-      const selectMultiple = store.getters.isKeyPressed("Shift");
-      if (!selectMultiple) {
+      if (!this.selectingMultipleShapes) {
         store
           .dispatch("selectShape", { shape })
           .then(() => store.dispatch("generateSnapPoints"));
@@ -266,11 +265,12 @@ export default {
       if (this.dragging) {
         this.onChange();
         this.dragging = false;
-      }
-      const selectMultiple = store.getters.isKeyPressed("Shift");
-      if (selectMultiple) {
+      } else if (this.selectingMultipleShapes) {
         store
-          .dispatch("selectShape", { shape, keepSelection: true })
+          .dispatch("selectShape", {
+            shape,
+            keepSelection: store.getters.isKeyPressed("Shift")
+          })
           .then(() => store.dispatch("generateSnapPoints"));
       }
     },
@@ -335,6 +335,10 @@ export default {
     },
     selectedShapes() {
       return store.getters.selectedShapes;
+    },
+    selectingMultipleShapes() {
+      const selectMultiple = store.getters.isKeyPressed("Shift");
+      return selectMultiple || 1 < store.getters.selectedShapes.length;
     },
     shapes() {
       return store.getters.shapes;

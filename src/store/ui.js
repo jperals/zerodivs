@@ -10,9 +10,11 @@ const ui = {
   mutations: {
     addPressedKey(state, key) {
       state.pressedKeys.add(key);
+      state.pressedKeys = new Set(state.pressedKeys); // Workaround Vue's lack of first-class support reactivity for Sets
     },
     removePressedKey(state, key) {
       state.pressedKeys.delete(key);
+      state.pressedKeys = new Set(state.pressedKeys); // Workaround Vue's lack of first-class support reactivity for Sets
     },
     selectColor(state, color) {
       state.currentColor = color;
