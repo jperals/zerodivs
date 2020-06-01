@@ -35,7 +35,16 @@ const ui = {
           state.selectedShapes.add(shape);
         }
       }
-      state.selectedShapes = new Set(Array.from(state.selectedShapes));
+      state.selectedShapes = new Set(state.selectedShapes); // Workaround Vue's lack of first-class support reactivity for Sets
+    },
+    selectShapes(state, { shapes, keepSelection }) {
+      if (!keepSelection) {
+        state.selectedShapes = new Set();
+      }
+      for (const shape of shapes) {
+        state.selectedShapes.add(shape);
+      }
+      state.selectedShapes = new Set(state.selectedShapes); // Workaround Vue's lack of first-class support reactivity for Sets
     },
     toggleOutput(state, value) {
       state.showOutput = value === undefined ? !state.showOutput : value;
@@ -49,7 +58,10 @@ const ui = {
     isKeyPressed: (state) => (key) => state.pressedKeys.has(key),
     isShapeSelected: (state) => (shape) => state.selectedShapes.has(shape),
     selectedLayer: (state) => state.selectedLayer,
-    selectedShape: (state) => state.selectedShapes.size === 1 ? Array.from(state.selectedShapes)[0] : undefined,
+    selectedShape: (state) =>
+      state.selectedShapes.size === 1
+        ? Array.from(state.selectedShapes)[0]
+        : undefined,
     selectedShapes: (state) => Array.from(state.selectedShapes),
     selectMultiple: (state) => state.pressedKeys.has("Shift"),
     showOutput: (state) => state.showOutput,
@@ -61,16 +73,20 @@ const ui = {
     removePressedKey({ commit }, key) {
       commit("removePressedKey", key);
     },
+    selectAllShapes({ commit, getters }) {
+      const selectedLayerId = getters.selectedLayer;
+      if (getters.isLayerActive(selectedLayerId)) {
+        const shapes = getters.layerShapes(selectedLayerId);
+        commit("selectShapes", { shapes });
+      }
+    },
     selectColor({ commit }, color) {
       commit("selectColor", color);
     },
     selectLayer({ commit }, layerId) {
       commit("selectLayer", layerId);
     },
-    selectShape(
-      { commit, getters, dispatch },
-      { shape, keepSelection }
-    ) {
+    selectShape({ commit, getters, dispatch }, { shape, keepSelection }) {
       commit("selectShape", { shape, keepSelection });
       const layerId = getters.layerIdFromShape(shape);
       return dispatch("selectLayer", layerId);
