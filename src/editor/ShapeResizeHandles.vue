@@ -1,5 +1,10 @@
 <template>
-  <div class="shape-handles-wrapper" :style="containerStyle" v-on:mouseup="onMouseUp">
+  <div
+    class="shape-handles-wrapper"
+    v-if="canvasPosition"
+    :style="containerStyle"
+    v-on:mouseup="onMouseUp"
+  >
     <template v-if="showHandles">
       <div
         class="handle top-left"
@@ -211,6 +216,9 @@ export default {
       return `transform: translate(${transformed.left.value}${left.units}, ${transformed.top.value}${top.units})`;
     },
     transformCoords({ top, left, offset = { top: 0, left: 0 } }) {
+      if (!this.canvasPosition) {
+        return;
+      }
       return {
         top: {
           ...top,
