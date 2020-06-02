@@ -1,5 +1,12 @@
 <template>
-  <codemirror v-model="css" :options="codeMirrorOptions" class="code-editor code-editor-css-output" />
+  <div class="output-code">
+    <codemirror
+      v-model="css"
+      :options="codeMirrorOptions"
+      class="code-editor code-editor-css-output"
+    />
+    <button v-clipboard:copy="css" class="copy-output-to-clipboard">Copy</button>
+  </div>
 </template>
 
 <script>
@@ -14,7 +21,7 @@ export default {
   },
   computed: {
     css() {
-      return layers2css({layers: this.shapesLayers});
+      return layers2css({ layers: this.shapesLayers });
     },
     codeMirrorOptions() {
       return {
@@ -31,13 +38,16 @@ export default {
   },
   methods: {
     close() {
-      this.$router.push({name: "editor"});
+      this.$router.push({ name: "editor" });
     }
   }
 };
 </script>
 
 <style scoped>
+.css-output {
+  position: relative;
+}
 .code-editor {
   width: 100%;
   font-size: 0.75rem;

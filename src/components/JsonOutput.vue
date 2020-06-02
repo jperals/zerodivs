@@ -1,5 +1,8 @@
 <template>
-  <codemirror v-model="jsonResult" :options="codeMirrorOptions" class="code-editor code-editor-json-output" />
+  <div class="output-code">
+    <codemirror v-model="jsonResult" :options="codeMirrorOptions" class="code-editor code-editor-json-output" />
+    <button v-clipboard:copy="jsonResult" class="copy-output-to-clipboard">Copy</button>
+  </div>
 </template>
 
 <script>

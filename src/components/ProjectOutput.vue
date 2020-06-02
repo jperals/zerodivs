@@ -70,3 +70,15 @@ export default {
   padding-right: 1rem;
 }
 </style>
+
+<style>
+.output-code {
+  position: relative;
+}
+button.copy-output-to-clipboard {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+</style>
