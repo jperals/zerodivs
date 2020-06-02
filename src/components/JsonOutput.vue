@@ -1,18 +1,20 @@
 <template>
   <div class="output-code">
     <codemirror v-model="jsonResult" :options="codeMirrorOptions" class="code-editor code-editor-json-output" />
-    <button v-clipboard:copy="jsonResult" class="copy-output-to-clipboard">Copy</button>
+    <CopyButton :content="jsonResult" class="copy-output-to-clipboard"/>
   </div>
 </template>
 
 <script>
 import store from "@/store";
 import { codemirror } from "vue-codemirror-lite";
+import CopyButton from "@/components/CopyButton/CopyButton";
 require("codemirror/mode/javascript/javascript");
 require("codemirror/theme/nord.css");
 export default {
   components: {
-    codemirror
+    codemirror,
+    CopyButton
   },
   computed: {
     jsonResult() {

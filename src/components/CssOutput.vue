@@ -5,7 +5,7 @@
       :options="codeMirrorOptions"
       class="code-editor code-editor-css-output"
     />
-    <button v-clipboard:copy="css" class="copy-output-to-clipboard">Copy</button>
+    <CopyButton :content="css" class="copy-output-to-clipboard"/>
   </div>
 </template>
 
@@ -13,11 +13,13 @@
 import layers2css from "@/common/layers2css";
 import store from "@/store";
 import { codemirror } from "vue-codemirror-lite";
+import CopyButton from "@/components/CopyButton/CopyButton";
 require("codemirror/mode/css/css");
 require("codemirror/theme/nord.css");
 export default {
   components: {
-    codemirror
+    codemirror,
+    CopyButton
   },
   computed: {
     css() {

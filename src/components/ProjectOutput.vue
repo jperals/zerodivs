@@ -77,7 +77,7 @@ export default {
 }
 button.copy-output-to-clipboard {
   position: absolute;
-  top: 1rem;
+  top: 0.5rem;
   right: 1rem;
   z-index: 10;
 }
