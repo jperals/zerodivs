@@ -6,7 +6,10 @@
 import shapes2css from "@/common/shapes2css";
 export default {
   props: {
-    onClick: Function
+    onClick: {
+      type: Function,
+      required: false
+    }
   },
   data() {
     const color = "white";

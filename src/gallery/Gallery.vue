@@ -1,7 +1,12 @@
 <template>
   <div class="div-gallery">
     <ul>
-      <li v-for="project in divs" :key="project.id" class="div-thumbnail" :class="{'options-open': isOptionsOpenId(project.id)}">
+      <li
+        v-for="project in divs"
+        :key="project.id"
+        class="div-thumbnail"
+        :class="{'options-open': isOptionsOpenId(project.id)}"
+      >
         <router-link :to="link(project.id)">
           <GalleryThumbnail :projectId="project.id" />
           <div v-if="project.name" class="project-name">{{project.name}}</div>
@@ -18,8 +23,8 @@
           <HamburgerButton class="close-button" :isOpen="isOptionsOpenId(project.id)" />
         </div>
       </li>
-      <li class="div-thumbnail">
-        <button v-on:click="createNewDiv" class="new-div-button">Create New</button>
+      <li class="div-thumbnail new">
+        <button v-on:click="createNewDiv" class="new-project-button">Create New</button>
       </li>
     </ul>
     <div v-if="askingForDeleteConfirmation" class="modal-container delete-confirmation-modal">
@@ -122,7 +127,7 @@ export default {
   box-shadow: 2px 2px 20px black;
 }
 .div-thumbnail a,
-.new-div-button {
+.new-project-button {
   display: block;
   width: 200px;
   height: 200px;
@@ -136,11 +141,8 @@ export default {
   position: relative;
 }
 .div-thumbnail a:hover,
-.new-div-button:hover {
+.new-project-button:hover {
   border-color: hsl(0, 0%, 75%);
-}
-.new-div-button:hover {
-  background-color: hsl(0, 0%, 97%);
 }
 .div-thumbnail:not(.options-open) a:not(:hover):before {
   position: absolute;
@@ -227,11 +229,53 @@ export default {
   cursor: pointer;
   position: absolute;
   top: 0.5rem;
-  right: 0.5rem;  
-  background:rgba(0, 0, 0, 0.25);
+  right: 0.5rem;
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 0.25rem;
   padding: 0.25rem;
   z-index: 30;
+}
+.new-project-button {
+  background-color: var(--gray-800);
+  font-size: 1.25rem;
+  color: white;
+  border-color: var(--gray-800);
+  transition: opacity 200ms;
+}
+.new-project-button:before {
+  content: "";
+  display: block;
+  border-radius: 50%;
+  background-color: var(--gray-600);
+  background-image: linear-gradient(
+      transparent 45%,
+      white 45%,
+      white 55%,
+      transparent 55%
+    ),
+    linear-gradient(
+      to right,
+      transparent 45%,
+      white 45%,
+      white 55%,
+      transparent 55%
+    );
+  background-position: center center, center center;
+  background-size: 60% 60%, 60% 60%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 0.75rem;
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  transition: transform 200ms;
+}
+.new-project-button:not(:hover) {
+  opacity: .5;
+}
+.new-project-button:hover:before {
+  transform: scale(1.2);
 }
 @keyframes from-top {
   from {
