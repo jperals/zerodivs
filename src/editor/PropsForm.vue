@@ -33,6 +33,7 @@ form {
   width: var(--shape-form-width);
   height: 100%;
   border-left: 1px solid var(--panel-border-color);
-  overflow: auto;
+  overflow-x: visible;
+  overflow-y: auto;
 }
 </style>
