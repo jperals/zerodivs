@@ -1,19 +1,28 @@
 <template>
   <div class="color-picker">
     <input type="text" v-model="selectedColor" />
-    <span class="sample" :style="{ backgroundColor: selectedColor }">
-      <input type="color" v-model="selectedColorHex" :style="{ backgroundColor: selectedColor }" />
-    </span>
+    <span class="sample" :style="{ backgroundColor: selectedColor }" v-on:click="togglePicker"></span>
+    <div class="color-modal" v-if="pickerOpen">
+      <VColorPicker class="picker" v-model="selectedColorHex" />
+    </div>
   </div>
 </template>
 
 <script>
-import convertCssColorNameToHex from 'convert-css-color-name-to-hex';
 import validateColor from 'validate-color';
+import {VColorPicker} from 'vuetify/lib';
 export default {
   props: {
     value: String,
     onPick: Function
+  },
+  data() {
+    return {
+      pickerOpen: false
+    };
+  },
+  components: {
+    VColorPicker
   },
   computed: {
     selectedColor: {
@@ -26,7 +35,7 @@ export default {
     },
     selectedColorHex: {
       get() {
-        return convertCssColorNameToHex(this.value);
+        return this.value;
       },
       set(value) {
         this.selectColor(value);
@@ -38,6 +47,9 @@ export default {
         if (typeof this.onPick === "function" && validateColor(value)) {
           this.onPick(value);
         }
+    },
+    togglePicker() {
+      this.pickerOpen = !(this.pickerOpen);
     }
   }
 };
@@ -50,6 +62,7 @@ $border-color: lightgray;
   height: var(--side);
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 .color-picker > * {
   height: 100%;
@@ -68,11 +81,12 @@ input[type="text"] {
   box-sizing: border-box;
   border: 1px solid $border-color;
 }
-input[type="color"] {
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  border: 0 none;
-  padding: 0;
+.color-modal {
+  position: absolute;
+  top: 100%;
+  right: 0;
+}
+.color-modal .picker {
+  margin: 0 auto;
 }
 </style>

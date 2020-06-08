@@ -1,17 +1,20 @@
 <template>
   <div id="app" :class="colorMode">
-    <Nav />
-    <router-view />
+    <v-app>
+      <Nav />
+      <router-view />
+    </v-app>
   </div>
 </template>
 
 <script>
 import Nav from "@/components/Nav";
+import {VApp} from 'vuetify/lib';
 export default {
-  components: { Nav },
+  components: { Nav, VApp },
   computed: {
     colorMode() {
-      return this.$route.name === "gallery" ? 'dark' : 'white'
+      return this.$route.name === "gallery" ? "dark" : "white";
     }
   }
 };
