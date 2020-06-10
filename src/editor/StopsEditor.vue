@@ -13,7 +13,7 @@
         v-on:mouseup="onItemMouseUp"
       >
         <span class="draggable-indicator" />
-        <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" anchor="bottom-right" />
+        <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" anchor="right" />
         <input
           type="text"
           class="w-s m-l-s"

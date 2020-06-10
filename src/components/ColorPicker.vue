@@ -1,10 +1,12 @@
 <template>
-  <div class="color-picker" :class="anchorClass" v-on:click="stopPropagation">
+  <div class="color-picker" :class="{anchorClass, active: pickerOpen}" ref="container">
     <input type="text" v-model="selectedColor" />
     <span class="sample" :style="{ backgroundColor: selectedColor }" v-on:click="togglePicker"></span>
-    <div class="color-modal" v-if="pickerOpen">
-      <ChromeColorPicker class="picker" v-model="selectedColorHex" />
-    </div>
+    <portal to="color-picker">
+      <div class="color-modal" v-if="pickerOpen" v-on:click="closePicker" ref="modal">
+        <ChromeColorPicker class="picker" v-model="selectedColorHex" :style="pickerStyle" />
+      </div>
+    </portal>
   </div>
 </template>
 
@@ -23,7 +25,8 @@ export default {
   },
   data() {
     return {
-      pickerOpen: false
+      pickerOpen: false,
+      pickerStyle: null
     };
   },
   components: {
@@ -51,8 +54,10 @@ export default {
     }
   },
   methods: {
-    closePicker() {
-      this.pickerOpen = false;
+    closePicker(event) {
+      if (event.target === this.$refs.modal) {
+        this.pickerOpen = false;
+      }
     },
     openPicker() {
       this.pickerOpen = true;
@@ -62,11 +67,30 @@ export default {
         this.onPick(value);
       }
     },
-    stopPropagation(event) {
-      event.stopPropagation();
-    },
     togglePicker() {
+      const box = this.$refs.container.getBoundingClientRect();
       this.pickerOpen = !this.pickerOpen;
+      const padding = 20;
+      this.pickerStyle = {
+        top: box.top + box.height - 100 + "px",
+        left: box.left - 100 + "px"
+      };
+      if (this.anchor) {
+        if (this.anchor.includes("left")) {
+          this.pickerStyle.left = box.left + box.width + padding + "px";
+        }
+        if (this.anchor.includes("right")) {
+          this.pickerStyle.left = undefined;
+          this.pickerStyle.right = (window.innerWidth - box.left) + padding + "px";
+        }
+        if (this.anchor.includes("top")) {
+          this.pickerStyle.top = box.top + box.height + padding + "px";
+        }
+        if (this.anchor.includes("bottom")) {
+          this.pickerStyle.top = undefined;
+          this.pickerStyle.bottom = (window.innerHeight - box.top) + padding + "px";
+        }
+      }
     }
   }
 };
@@ -106,15 +130,23 @@ input[type="color"] {
   padding: 0;
 }
 .color-modal {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
   right: 0;
+  bottom: 0;
 }
 .color-modal .picker {
   margin: 0 auto;
+  position: absolute;
 }
 .color-picker.anchor-bottom-right .color-modal {
   right: calc(100% + 1rem);
   bottom: 0;
+}
+.color-picker.active input,
+.color-picker.active .sample {
+  border-color: var(--selected-color);
 }
 </style>
