@@ -4,7 +4,10 @@
     <span class="sample" :style="{ backgroundColor: selectedColor }" v-on:click="togglePicker"></span>
     <portal to="color-picker">
       <div class="color-modal" v-if="pickerOpen" v-on:click="closePicker" ref="modal">
-        <ChromeColorPicker class="picker" v-model="selectedColorHex" :style="pickerStyle" />
+        <div class="picker-container" :style="pickerStyle">
+          <ChromeColorPicker class="picker" v-model="selectedColorHex" />
+          <CornerCloseButton :onClick="togglePicker" />
+        </div>
       </div>
     </portal>
   </div>
@@ -14,6 +17,7 @@
 import convertCssColorNameToHex from "convert-css-color-name-to-hex";
 import validateColor from "validate-color";
 import { Chrome } from "vue-color";
+import CornerCloseButton from "@/components/CornerCloseButton";
 export default {
   props: {
     anchor: {
@@ -30,7 +34,8 @@ export default {
     };
   },
   components: {
-    ChromeColorPicker: Chrome
+    ChromeColorPicker: Chrome,
+    CornerCloseButton
   },
   computed: {
     anchorClass() {
@@ -81,14 +86,16 @@ export default {
         }
         if (this.anchor.includes("right")) {
           this.pickerStyle.left = undefined;
-          this.pickerStyle.right = (window.innerWidth - box.left) + padding + "px";
+          this.pickerStyle.right =
+            window.innerWidth - box.left + padding + "px";
         }
         if (this.anchor.includes("top")) {
           this.pickerStyle.top = box.top + box.height + padding + "px";
         }
         if (this.anchor.includes("bottom")) {
           this.pickerStyle.top = undefined;
-          this.pickerStyle.bottom = (window.innerHeight - box.top) + padding + "px";
+          this.pickerStyle.bottom =
+            window.innerHeight - box.top + padding + "px";
         }
       }
     }
@@ -137,7 +144,7 @@ input[type="color"] {
   right: 0;
   bottom: 0;
 }
-.color-modal .picker {
+.color-modal .picker-container {
   margin: 0 auto;
   position: absolute;
 }
