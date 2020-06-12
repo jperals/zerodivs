@@ -6,7 +6,7 @@
       <div class="color-modal" v-if="isPickerOpen">
         <div class="picker-container" :class="anchorClass" :style="pickerStyle">
           <ChromeColorPicker class="picker" v-model="selectedColorHex" />
-          <CornerCloseButton :onClick="closePicker" />
+          <EdgeCloseButton :onClick="closePicker" />
         </div>
       </div>
     </portal>
@@ -17,7 +17,7 @@
 import convertCssColorNameToHex from "convert-css-color-name-to-hex";
 import validateColor from "validate-color";
 import { Chrome } from "vue-color";
-import CornerCloseButton from "@/components/CornerCloseButton";
+import EdgeCloseButton from "@/components/EdgeCloseButton";
 import store from "@/store";
 export default {
   props: {
@@ -36,7 +36,7 @@ export default {
   },
   components: {
     ChromeColorPicker: Chrome,
-    CornerCloseButton
+    EdgeCloseButton
   },
   computed: {
     anchorClass() {
@@ -63,6 +63,11 @@ export default {
       set(value) {
         this.selectColor(value.hex8);
       }
+    }
+  },
+  beforeDestroy() {
+    if (this.isPickerOpen) {
+      this.closePicker();
     }
   },
   methods: {
@@ -165,5 +170,13 @@ input[type="color"] {
 .color-picker.active .sample {
   border-color: var(--selected-color);
   box-shadow: 0 0 5px var(--selected-color);
+}
+.picker-container {
+  box-shadow: 0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3);
+  background-color: white;
+  padding-top: 1rem;
+}
+.picker-container .vc-chrome {
+  box-shadow: none;
 }
 </style>
