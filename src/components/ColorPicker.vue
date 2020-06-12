@@ -1,12 +1,12 @@
 <template>
-  <div class="color-picker" :class="{anchorClass, active: pickerOpen}" ref="container">
+  <div class="color-picker" :class="{active: isPickerOpen}" ref="container">
     <input type="text" v-model="selectedColor" />
     <span class="sample" :style="{ backgroundColor: selectedColor }" v-on:click="togglePicker"></span>
     <portal to="color-picker">
-      <div class="color-modal" v-if="pickerOpen" v-on:click="closePicker" ref="modal">
-        <div class="picker-container" :style="pickerStyle">
+      <div class="color-modal" v-if="isPickerOpen">
+        <div class="picker-container" :class="anchorClass" :style="pickerStyle">
           <ChromeColorPicker class="picker" v-model="selectedColorHex" />
-          <CornerCloseButton :onClick="togglePicker" />
+          <CornerCloseButton :onClick="closePicker" />
         </div>
       </div>
     </portal>
@@ -18,18 +18,19 @@ import convertCssColorNameToHex from "convert-css-color-name-to-hex";
 import validateColor from "validate-color";
 import { Chrome } from "vue-color";
 import CornerCloseButton from "@/components/CornerCloseButton";
+import store from "@/store";
 export default {
   props: {
     anchor: {
       type: String,
       required: false
     },
-    value: String,
-    onPick: Function
+    id: String,
+    onPick: Function,
+    value: String
   },
   data() {
     return {
-      pickerOpen: false,
       pickerStyle: null
     };
   },
@@ -40,6 +41,12 @@ export default {
   computed: {
     anchorClass() {
       return this.anchor ? `anchor-${this.anchor}` : undefined;
+    },
+    openColorPickerId() {
+      return store.getters.openColorPickerId;
+    },
+    isPickerOpen() {
+      return this.openColorPickerId === this.id;
     },
     selectedColor: {
       get() {
@@ -59,22 +66,12 @@ export default {
     }
   },
   methods: {
-    closePicker(event) {
-      if (event.target === this.$refs.modal) {
-        this.pickerOpen = false;
-      }
+    closePicker() {
+      store.dispatch("setOpenColorPickerId", null);
     },
     openPicker() {
-      this.pickerOpen = true;
-    },
-    selectColor(value) {
-      if (typeof this.onPick === "function" && validateColor(value)) {
-        this.onPick(value);
-      }
-    },
-    togglePicker() {
       const box = this.$refs.container.getBoundingClientRect();
-      this.pickerOpen = !this.pickerOpen;
+      store.dispatch("setOpenColorPickerId", this.id);
       const padding = 20;
       this.pickerStyle = {
         top: box.top + box.height - 100 + "px",
@@ -97,6 +94,18 @@ export default {
           this.pickerStyle.bottom =
             window.innerHeight - box.top + padding + "px";
         }
+      }
+    },
+    selectColor(value) {
+      if (typeof this.onPick === "function" && validateColor(value)) {
+        this.onPick(value);
+      }
+    },
+    togglePicker() {
+      if (this.isPickerOpen) {
+        this.closePicker();
+      } else {
+        this.openPicker();
       }
     }
   }
@@ -142,7 +151,7 @@ input[type="color"] {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  overflow: visible;
 }
 .color-modal .picker-container {
   margin: 0 auto;
@@ -155,5 +164,6 @@ input[type="color"] {
 .color-picker.active input,
 .color-picker.active .sample {
   border-color: var(--selected-color);
+  box-shadow: 0 0 5px var(--selected-color);
 }
 </style>

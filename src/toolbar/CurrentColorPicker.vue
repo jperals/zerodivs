@@ -1,5 +1,5 @@
 <template>
-  <ColorPicker v-model="currentColor" :on-pick="selectColor" class="current-color-picker" anchor="top" />
+  <ColorPicker v-model="currentColor" :on-pick="selectColor" class="current-color-picker" anchor="top" id="current-color" />
 </template>
 
 <script>
