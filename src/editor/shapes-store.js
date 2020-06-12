@@ -52,7 +52,7 @@ const shapes = {
   mutations: {
     addNewStop(state, { shape, index }) {
       const lastStop = shape.stops[shape.stops.length - 1];
-      const newStop = { color: lastStop.color, position: "" };
+      const newStop = { color: lastStop.color, id: uuid(), position: "" };
       if (typeof index === "number") {
         shape.stops.splice(index, 0, newStop);
       } else {
