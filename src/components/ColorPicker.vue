@@ -29,11 +29,6 @@ export default {
     onPick: Function,
     value: String
   },
-  data() {
-    return {
-      pickerStyle: null
-    };
-  },
   components: {
     ChromeColorPicker: Chrome,
     EdgeCloseButton
@@ -47,6 +42,14 @@ export default {
     },
     isPickerOpen() {
       return this.openColorPickerId === this.id;
+    },
+    pickerStyle() {
+      return {
+        transform: `translate(${this.position.x}px,${this.position.y}px)`
+      };
+    },
+    position() {
+      return store.getters.colorPickerPosition;
     },
     selectedColor: {
       get() {
@@ -75,31 +78,34 @@ export default {
       store.dispatch("setOpenColorPickerId", null);
     },
     openPicker() {
-      const box = this.$refs.container.getBoundingClientRect();
-      store.dispatch("setOpenColorPickerId", this.id);
-      const padding = 20;
-      this.pickerStyle = {
-        top: box.top + box.height - 100 + "px",
-        left: box.left - 100 + "px"
-      };
-      if (this.anchor) {
-        if (this.anchor.includes("left")) {
-          this.pickerStyle.left = box.left + box.width + padding + "px";
+      if (!store.getters.colorPickerPosition) {
+        const box = this.$refs.container.getBoundingClientRect();
+        const width = 225;
+        const height = 242;
+        const padding = 20;
+        const position = {
+          x: box.left - width / 2,
+          y: box.top - height / 2
+        };
+        console.log({box});
+        if (this.anchor) {
+          if (this.anchor.includes("left")) {
+            position.x = box.left + padding;
+          }
+          if (this.anchor.includes("right")) {
+            position.x = box.left - width - padding;
+          }
+          if (this.anchor.includes("top")) {
+            position.y = box.top + padding;
+          }
+          if (this.anchor.includes("bottom")) {
+            position.y = box.top - height - padding;
+          }
+          console.log({position});
         }
-        if (this.anchor.includes("right")) {
-          this.pickerStyle.left = undefined;
-          this.pickerStyle.right =
-            window.innerWidth - box.left + padding + "px";
-        }
-        if (this.anchor.includes("top")) {
-          this.pickerStyle.top = box.top + box.height + padding + "px";
-        }
-        if (this.anchor.includes("bottom")) {
-          this.pickerStyle.top = undefined;
-          this.pickerStyle.bottom =
-            window.innerHeight - box.top + padding + "px";
-        }
+        store.dispatch("setColorPickerPosition", position);
       }
+      store.dispatch("setOpenColorPickerId", this.id);
     },
     selectColor(value) {
       if (typeof this.onPick === "function" && validateColor(value)) {
@@ -172,7 +178,7 @@ input[type="color"] {
   box-shadow: 0 0 5px var(--selected-color);
 }
 .picker-container {
-  box-shadow: 0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
   background-color: white;
   padding-top: 1rem;
 }

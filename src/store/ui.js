@@ -1,5 +1,6 @@
 const ui = {
   state: {
+    colorPickerPosition: null,
     currentColor: "turquoise",
     openColorPickerId: null,
     pressedKeys: new Set(),
@@ -47,6 +48,9 @@ const ui = {
       }
       state.selectedShapes = new Set(state.selectedShapes); // Workaround Vue's lack of first-class support reactivity for Sets
     },
+    setColorPickerPosition(state, position) {
+      state.colorPickerPosition = position;
+    },
     setOpenColorPickerId(state, id) {
       state.openColorPickerId = id;
     },
@@ -58,6 +62,7 @@ const ui = {
     },
   },
   getters: {
+    colorPickerPosition: (state) => state.colorPickerPosition,
     currentColor: (state) => state.currentColor,
     isKeyPressed: (state) => (key) => state.pressedKeys.has(key),
     isShapeSelected: (state) => (shape) => state.selectedShapes.has(shape),
@@ -77,6 +82,9 @@ const ui = {
     },
     removePressedKey({ commit }, key) {
       commit("removePressedKey", key);
+    },
+    setColorPickerPosition({ commit }, position) {
+      commit("setColorPickerPosition", position);
     },
     selectAllShapes({ commit, getters }) {
       const selectedLayerId = getters.selectedLayer;
