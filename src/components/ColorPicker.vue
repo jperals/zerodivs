@@ -3,8 +3,13 @@
     <input type="text" v-model="selectedColor" />
     <span class="sample" :style="{ backgroundColor: selectedColor }" v-on:click="togglePicker"></span>
     <portal to="color-picker">
-      <div class="color-modal" v-if="isPickerOpen">
+      <div class="color-modal" v-if="isPickerOpen" :class="{dragging}" v-on:pointermove="onDrag">
         <div class="picker-container" :class="anchorClass" :style="pickerStyle">
+          <div
+            class="top-bar"
+            v-on:pointerdown="onTopBarPointerDown"
+            v-on:pointerup="onTopBarPointerUp"
+          />
           <ChromeColorPicker class="picker" v-model="selectedColorHex" />
           <EdgeCloseButton :onClick="closePicker" />
         </div>
@@ -19,6 +24,7 @@ import validateColor from "validate-color";
 import { Chrome } from "vue-color";
 import EdgeCloseButton from "@/components/EdgeCloseButton";
 import store from "@/store";
+import { deepCopy } from "@/common/utils";
 export default {
   props: {
     anchor: {
@@ -26,8 +32,20 @@ export default {
       required: false
     },
     id: String,
+    onClose: {
+      type: Function,
+      required: false
+    },
     onPick: Function,
     value: String
+  },
+  data() {
+    return {
+      dragging: false,
+      initialPointerPosition: null,
+      initialPosition: null,
+      position: deepCopy(store.getters.colorPickerPosition)
+    };
   },
   components: {
     ChromeColorPicker: Chrome,
@@ -37,19 +55,16 @@ export default {
     anchorClass() {
       return this.anchor ? `anchor-${this.anchor}` : undefined;
     },
-    openColorPickerId() {
-      return store.getters.openColorPickerId;
-    },
     isPickerOpen() {
       return this.openColorPickerId === this.id;
+    },
+    openColorPickerId() {
+      return store.getters.openColorPickerId;
     },
     pickerStyle() {
       return {
         transform: `translate(${this.position.x}px,${this.position.y}px)`
       };
-    },
-    position() {
-      return store.getters.colorPickerPosition;
     },
     selectedColor: {
       get() {
@@ -76,6 +91,33 @@ export default {
   methods: {
     closePicker() {
       store.dispatch("setOpenColorPickerId", null);
+      if (this.onClose) {
+        this.onClose();
+      }
+    },
+    onDrag(event) {
+      if (this.dragging) {
+        const diff = {
+          x: event.x - this.initialPointerPosition.x,
+          y: event.y - this.initialPointerPosition.y
+        };
+        this.position = {
+          x: this.initialPosition.x + diff.x,
+          y: this.initialPosition.y + diff.y
+        };
+      }
+    },
+    onTopBarPointerDown(event) {
+      this.initialPointerPosition = {
+        x: event.x,
+        y: event.y
+      };
+      this.initialPosition = deepCopy(this.position);
+      this.dragging = true;
+    },
+    onTopBarPointerUp() {
+      this.dragging = false;
+      store.dispatch("setColorPickerPosition", this.position);
     },
     openPicker() {
       if (!store.getters.colorPickerPosition) {
@@ -87,7 +129,6 @@ export default {
           x: box.left - width / 2,
           y: box.top - height / 2
         };
-        console.log({box});
         if (this.anchor) {
           if (this.anchor.includes("left")) {
             position.x = box.left + padding;
@@ -101,9 +142,9 @@ export default {
           if (this.anchor.includes("bottom")) {
             position.y = box.top - height - padding;
           }
-          console.log({position});
         }
         store.dispatch("setColorPickerPosition", position);
+        this.position = position;
       }
       store.dispatch("setOpenColorPickerId", this.id);
     },
@@ -164,6 +205,9 @@ input[type="color"] {
   right: 0;
   overflow: visible;
 }
+.color-modal.dragging {
+  bottom: 0;
+}
 .color-modal .picker-container {
   margin: 0 auto;
   position: absolute;
@@ -179,8 +223,10 @@ input[type="color"] {
 }
 .picker-container {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.top-bar {
   background-color: white;
-  padding-top: 1rem;
+  height: 1rem;
 }
 .picker-container .vc-chrome {
   box-shadow: none;
