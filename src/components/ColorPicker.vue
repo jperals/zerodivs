@@ -91,6 +91,7 @@ export default {
   methods: {
     closePicker() {
       store.dispatch("setOpenColorPickerId", null);
+      store.dispatch("setColorPickerPosition", this.position);
       if (this.onClose) {
         this.onClose();
       }
@@ -117,10 +118,11 @@ export default {
     },
     onTopBarPointerUp() {
       this.dragging = false;
-      store.dispatch("setColorPickerPosition", this.position);
     },
     openPicker() {
-      if (!store.getters.colorPickerPosition) {
+      if (store.getters.colorPickerPosition) {
+        this.position = store.getters.colorPickerPosition;
+      } else {
         const box = this.$refs.container.getBoundingClientRect();
         const width = 225;
         const height = 242;
