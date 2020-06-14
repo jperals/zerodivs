@@ -40,6 +40,11 @@
         </div>
       </div>
     </div>
+    <v-style>
+      body {
+        background-color: var(--gray-900);
+      }
+    </v-style>
   </div>
 </template>
 
@@ -111,7 +116,6 @@ export default {
 .div-gallery {
   padding: 0;
   margin: 0;
-  background-color: var(--gray-900);
 }
 .div-gallery > ul {
   display: flex;
@@ -272,7 +276,7 @@ export default {
   transition: transform 200ms;
 }
 .new-project-button:not(:hover) {
-  opacity: .5;
+  opacity: 0.5;
 }
 .new-project-button:hover:before {
   transform: scale(1.2);

@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style>
-#app {
+body {
   --brightness-300: 36%;
   --brightness-400: 43%;
   --brightness-500: 59%;
