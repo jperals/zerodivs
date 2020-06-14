@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Gallery from "@/gallery/Gallery";
 import Editor from "@/editor/Editor";
+import About from "@/about-page/About";
 import ProjectOutput from "@/components/ProjectOutput";
 import CssOutput from "@/components/CssOutput";
 import JsonOutput from "@/components/JsonOutput";
@@ -13,6 +14,11 @@ const routes = [
     path: "/",
     name: "gallery",
     component: Gallery
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: About
   },
   {
     path: "/div/:id",
