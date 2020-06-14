@@ -13,7 +13,13 @@
         v-on:mouseup="onItemMouseUp"
       >
         <span class="draggable-indicator" />
-        <ColorPicker v-model="stop.color" :on-pick="color => onStopColorPick(stop, color)" />
+        <ColorPicker
+          v-model="stop.color"
+          :on-pick="color => onStopColorPick(stop, color)"
+          :on-close="commitChange"
+          anchor="right"
+          :id="stop.id"
+        />
         <input
           type="text"
           class="w-s m-l-s"
@@ -46,6 +52,9 @@ export default {
   methods: {
     addNewStop(index) {
       store.dispatch("addNewStop", { shape: this.shape, index });
+    },
+    commitChange() {
+      store.dispatch("commitChange");
     },
     onStopColorPick(stop, color) {
       this.updateStop(stop, { color });
