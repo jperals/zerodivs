@@ -35,7 +35,11 @@
     <div class="list-node">
       <label class="row wrapper">
         <span class="label">Type</span>
-        <input type="text" v-model="type" class="w-l" />
+        <select v-model="type" class="w-l">
+          <option value="linear">Linear</option>
+          <option value="radial">Radial</option>
+          <option value="conic">Conic</option>
+        </select>
       </label>
     </div>
     <div class="list-node">

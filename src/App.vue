@@ -11,7 +11,7 @@ export default {
   components: { Nav },
   computed: {
     colorMode() {
-      return this.$route.name === "gallery" ? 'dark' : 'white'
+      return this.$route.name === "gallery" ? "dark" : "white";
     }
   }
 };
@@ -107,6 +107,9 @@ input[type="number"].w-m {
 input[type="text"].w-l,
 input[type="number"].w-l {
   width: 12ch;
+}
+select.w-l {
+  width: calc(12ch + 0.5rem);
 }
 .modal-container {
   position: fixed;
