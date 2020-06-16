@@ -7,7 +7,7 @@
     <input
       type="number"
       v-model="threshold"
-      class="w-xs"
+      class="w-s"
       :class="{inactive: !snap}"
       :disabled="!snap"
     />
