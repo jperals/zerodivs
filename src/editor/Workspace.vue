@@ -76,16 +76,20 @@ export default {
   },
   methods: {
     dragNewShape(diff) {
+      const roundedDiff = {
+        left: Math.round(diff.left),
+        top: Math.round(diff.top)
+      };
       const x =
-        0 <= diff.left
+        0 <= roundedDiff.left
           ? this.initialNewShapePosition.left
-          : this.initialNewShapePosition.left + diff.left;
-      const width = Math.abs(diff.left);
+          : this.initialNewShapePosition.left + roundedDiff.left;
+      const width = Math.abs(roundedDiff.left);
       const y =
-        0 <= diff.top
+        0 <= roundedDiff.top
           ? this.initialNewShapePosition.top
-          : this.initialNewShapePosition.top + diff.top;
-      const height = Math.abs(diff.top);
+          : this.initialNewShapePosition.top + roundedDiff.top;
+      const height = Math.abs(roundedDiff.top);
       store.dispatch("updateShape", {
         shape: store.getters.shapeToBeAdded,
         width: { value: width },
