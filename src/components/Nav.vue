@@ -66,9 +66,6 @@ nav > button {
   border-radius: 6px;
   cursor: pointer;
 }
-nav > button:hover {
-  text-decoration: underline;
-}
 input {
   color: var(--gray-900);
   font-size: 1rem;

@@ -168,6 +168,7 @@ button,
   min-height: 27px;
   border-radius: 0.25rem;
   cursor: pointer;
+  background-color: white;
 }
 .main-action {
   background-color: var(--selected-color);
@@ -194,5 +195,6 @@ button {
 }
 button:hover {
   background-color: var(--gray-200);
+  text-decoration: none;
 }
 </style>
