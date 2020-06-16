@@ -1,6 +1,9 @@
+import { deepCopy } from "@/common/utils";
+
 const ui = {
   state: {
     colorPickerPosition: null,
+    copiedShapes: [],
     currentColor: "turquoise",
     openColorPickerId: null,
     pressedKeys: new Set(),
@@ -13,6 +16,9 @@ const ui = {
     addPressedKey(state, key) {
       state.pressedKeys.add(key);
       state.pressedKeys = new Set(state.pressedKeys); // Workaround Vue's lack of first-class support reactivity for Sets
+    },
+    copyShapes(state, shapes) {
+      state.copiedShapes = shapes.map((shape) => deepCopy(shape));
     },
     removePressedKey(state, key) {
       state.pressedKeys.delete(key);
@@ -63,6 +69,7 @@ const ui = {
   },
   getters: {
     colorPickerPosition: (state) => state.colorPickerPosition,
+    copiedShapes: (state) => state.copiedShapes,
     currentColor: (state) => state.currentColor,
     isKeyPressed: (state) => (key) => state.pressedKeys.has(key),
     isShapeSelected: (state) => (shape) => state.selectedShapes.has(shape),
@@ -79,6 +86,21 @@ const ui = {
   actions: {
     addPressedKey({ commit }, key) {
       commit("addPressedKey", key);
+    },
+    copyShapes({ commit, getters }, shapes = getters.selectedShapes) {
+      commit("copyShapes", shapes);
+    },
+    cutShapes({ commit, dispatch, getters }, shapes = getters.selectedShapes) {
+      commit("copyShapes", shapes);
+      dispatch("removeSelectedShapes");
+    },
+    pasteShapes({ dispatch, getters }) {
+      dispatch("addShapes", {
+        shapes: getters.copiedShapes,
+      }).then((newShapes) => {
+        dispatch("commitChange");
+        dispatch("selectShapes", { shapes: newShapes });
+      });
     },
     removePressedKey({ commit }, key) {
       commit("removePressedKey", key);

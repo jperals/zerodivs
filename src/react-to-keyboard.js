@@ -46,6 +46,11 @@ export default function reactToKeyboard(event) {
         });
       }
       break;
+    case "c":
+      if (isNotWriting(event) && event.metaKey) {
+        store.dispatch("copyShapes");
+      }
+      break;
     case "d":
       if (isNotWriting(event)) {
         store.dispatch("duplicateSelectedShapes");
@@ -54,6 +59,16 @@ export default function reactToKeyboard(event) {
     case "Escape":
       if (isNotWriting(event)) {
         store.dispatch("setShapeToBeAdded", null);
+      }
+      break;
+    case "v":
+      if (isNotWriting(event) && event.metaKey) {
+        store.dispatch("pasteShapes");
+      }
+      break;
+    case "x":
+      if (isNotWriting(event) && event.metaKey) {
+        store.dispatch("cutShapes");
       }
       break;
     case "z":
