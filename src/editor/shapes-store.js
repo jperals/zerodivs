@@ -268,9 +268,10 @@ const shapes = {
         duplicatedShape.top = newPosition.top;
         newShapes.push(duplicatedShape);
       }
-      dispatch("addShapes", { shapes: newShapes }).then((shapesWithId) =>
-        dispatch("selectShapes", { shapes: shapesWithId })
-      );
+      dispatch("addShapes", { shapes: newShapes }).then((shapesWithId) => {
+        dispatch("commitChange");
+        dispatch("selectShapes", { shapes: shapesWithId });
+      });
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {
       const moved = move({ left, shape, top });
