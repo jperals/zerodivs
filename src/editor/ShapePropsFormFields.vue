@@ -48,13 +48,13 @@
         <input type="text" v-model="direction" class="m-l-s w-l" />
       </label>
     </div>
-    <StopsEditor :shape="shape" />
     <div class="list-node">
       <label class="row wrapper">
         <div class="label">Repeat</div>
         <input type="text" v-model="backgroundRepeat" class="w-l" />
       </label>
     </div>
+    <StopsEditor :shape="shape" />
   </div>
 </template>
 
