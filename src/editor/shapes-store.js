@@ -47,7 +47,7 @@ const shapes = {
   state: {
     layers: initialLayersState(),
     round: true,
-    shapeToBeAdded: null
+    shapeToBeAdded: null,
   },
   mutations: {
     addNewStop(state, { shape, index }) {
@@ -243,18 +243,33 @@ const shapes = {
       dispatch("updateProject");
       return shapeWithId;
     },
-    duplicateSelectedShape({ dispatch, getters }) {
-      const selectedShape = getters.selectedShape;
-      const duplicatedShape = newShape(deepCopy(selectedShape));
-      const newPosition = moveBy({
-        shape: duplicatedShape,
-        top: { value: 10 },
-        left: { value: 10 },
-      });
-      duplicatedShape.left = newPosition.left;
-      duplicatedShape.top = newPosition.top;
-      dispatch("addShape", { shape: duplicatedShape }).then((shape) =>
-        dispatch("selectShape", { shape })
+    addShapes(
+      { commit, getters },
+      { layerName = getters.selectedLayer, shapes }
+    ) {
+      const shapesWithId = [];
+      for (const shape of shapes) {
+        const shapeWithId = newShape(shape);
+        commit("addShape", { layerName, shape: shapeWithId });
+        shapesWithId.push(shapeWithId);
+      }
+      return shapesWithId;
+    },
+    duplicateSelectedShapes({ dispatch, getters }) {
+      const newShapes = [];
+      for (const shape of getters.selectedShapes) {
+        const duplicatedShape = newShape(deepCopy(shape));
+        const newPosition = moveBy({
+          shape: duplicatedShape,
+          top: { value: 10 },
+          left: { value: 10 },
+        });
+        duplicatedShape.left = newPosition.left;
+        duplicatedShape.top = newPosition.top;
+        newShapes.push(duplicatedShape);
+      }
+      dispatch("addShapes", { shapes: newShapes }).then((shapesWithId) =>
+        dispatch("selectShapes", { shapes: shapesWithId })
       );
     },
     moveShape({ commit, dispatch, getters }, { shape, left, top }) {

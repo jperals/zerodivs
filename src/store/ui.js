@@ -39,7 +39,7 @@ const ui = {
       }
       state.selectedShapes = new Set(state.selectedShapes); // Workaround Vue's lack of first-class support reactivity for Sets
     },
-    selectShapes(state, { shapes, keepSelection }) {
+    selectShapes(state, { shapes, keepSelection = false }) {
       if (!keepSelection) {
         state.selectedShapes = new Set();
       }
@@ -103,6 +103,9 @@ const ui = {
       commit("selectShape", { shape, keepSelection });
       const layerId = getters.layerIdFromShape(shape);
       return dispatch("selectLayer", layerId);
+    },
+    selectShapes({ commit }, { shapes, keepSelection }) {
+      commit("selectShapes", { shapes, keepSelection });
     },
     setOpenColorPickerId({ commit }, value) {
       commit("setOpenColorPickerId", value);

@@ -48,7 +48,7 @@ export default function reactToKeyboard(event) {
       break;
     case "d":
       if (isNotWriting(event)) {
-        store.dispatch("duplicateSelectedShape");
+        store.dispatch("duplicateSelectedShapes");
       }
       break;
     case "Escape":
