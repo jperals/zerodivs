@@ -128,6 +128,8 @@ export default {
 .div-thumbnail {
   margin: 1rem;
   position: relative;
+}
+.div-thumbnail:not(.new) {
   box-shadow: 2px 2px 20px black;
 }
 .div-thumbnail a,
@@ -135,14 +137,14 @@ export default {
   display: block;
   width: 200px;
   height: 200px;
-  border: 1px solid var(--gray-600);
   cursor: pointer;
   border-radius: 0.5rem;
 }
-.div-thumbnail a {
+.div-thumbnail:not(.new) a {
   background-color: lightgray;
   overflow: hidden;
   position: relative;
+  border: 1px solid var(--gray-600);
 }
 .div-thumbnail a:hover,
 .new-project-button:hover {
@@ -240,7 +242,7 @@ export default {
   z-index: 30;
 }
 .new-project-button {
-  background-color: var(--gray-800);
+  background-color: transparent;
   font-size: 1.25rem;
   color: white;
   border-color: var(--gray-800);
@@ -250,7 +252,7 @@ export default {
   content: "";
   display: block;
   border-radius: 50%;
-  background-color: var(--gray-600);
+  background-color: var(--gray-700);
   background-image: linear-gradient(
       transparent 45%,
       white 45%,
@@ -269,17 +271,14 @@ export default {
   background-repeat: no-repeat;
   border-radius: 50%;
   display: block;
-  margin: 0 auto 0.75rem;
+  margin: 0 auto 1rem;
   height: 2rem;
   width: 2rem;
   padding: 0;
   transition: transform 200ms;
 }
-.new-project-button:not(:hover) {
-  opacity: 0.5;
-}
 .new-project-button:hover:before {
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
 @keyframes from-top {
   from {
