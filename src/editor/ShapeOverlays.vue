@@ -1,7 +1,7 @@
 <template>
   <div class="overlays-wrapper">
     <div class="overlays" :class="'overlays-' + projectId">
-      <div class="overlays--main">
+      <div class="overlays--main" v-if="isMainActive">
         <ShapeOverlay
           v-for="shape in shapesMain"
           :shape="shape"
@@ -10,7 +10,7 @@
           :key="shape.id"
         />
       </div>
-      <div class="overlays--before">
+      <div class="overlays--before" v-if="isBeforeActive">
         <ShapeOverlay
           v-for="shape in shapesBefore"
           :shape="shape"
@@ -19,7 +19,7 @@
           :key="shape.id"
         />
       </div>
-      <div class="overlays--after">
+      <div class="overlays--after" v-if="isAfterActive">
         <ShapeOverlay
           v-for="shape in shapesAfter"
           :shape="shape"

@@ -186,6 +186,9 @@ li li {
 </style>
 
 <style>
+.layer:not(.active) .shape-name {
+  opacity: 0.35;
+}
 .shape-name {
   width: 6.5rem;
 }
