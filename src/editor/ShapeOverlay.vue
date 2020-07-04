@@ -5,8 +5,7 @@
     :style="computedStyle"
     v-on:pointerdown="$event => onMouseDown(shape, $event)"
     v-on:pointerup="$event => onMouseUp(shape, $event)"
-  >
-  </div>
+  ></div>
 </template>
 
 <script>
@@ -19,10 +18,8 @@ export default {
   },
   computed: {
     computedStyle() {
-      const left =
-        this.shape.left.value + this.shape.left.units;
-      const top =
-        this.shape.top.value + this.shape.left.units;
+      const left = this.shape.left.value + this.shape.left.units;
+      const top = this.shape.top.value + this.shape.left.units;
       return {
         transform: `translate(${left}, ${top})`,
         width: this.shape.width.value + this.shape.width.units,
@@ -39,6 +36,24 @@ export default {
 <style scoped>
 .overlay {
   position: absolute;
+}
+.overlay:hover:not(.selected) {
+  /* background-color: rgba(170, 170, 255, .3); */
+  --stripe-color-dark: rgba(0, 0, 255, 0.5);
+  --stripe-color-bright: rgba(255, 255, 255, 0.25);
+  background-image: linear-gradient(
+    135deg,
+    var(--stripe-color-bright) 24.5%,
+    var(--stripe-color-dark) 24.5%,
+    var(--stripe-color-dark) 25.5%,
+    var(--stripe-color-bright) 25.5%,
+    var(--stripe-color-bright) 74.5%,
+    var(--stripe-color-dark) 74.5%,
+    var(--stripe-color-dark) 75.5%,
+    var(--stripe-color-bright) 75.5%
+  );
+  background-size: 3px 3px;
+  background-repeat: repeat;
 }
 .overlay.selected {
   z-index: 10;
