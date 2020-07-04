@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="colorMode">
+  <div id="app" :class="mode">
     <Nav />
     <router-view />
   </div>
@@ -10,8 +10,8 @@ import Nav from "@/components/Nav";
 export default {
   components: { Nav },
   computed: {
-    colorMode() {
-      return this.$route.name === "gallery" ? "dark" : "white";
+    mode() {
+      return this.$route.name === "gallery" ? "at-root" : "";
     }
   }
 };
@@ -68,14 +68,17 @@ body {
 #app .editor {
   flex-grow: 1;
 }
-#app.dark > nav {
+#app.at-root {
+  height: 100%;
+}
+#app.at-root > nav {
   background-color: var(--gray-900);
   color: white;
 }
-#app.dark > nav a,
-#app.dark > nav a:link,
-#app.dark > nav a:hover,
-#app.dark > nav a:visited {
+#app.at-root > nav a,
+#app.at-root > nav a:link,
+#app.at-root > nav a:hover,
+#app.at-root > nav a:visited {
   color: white;
   text-decoration: none;
 }

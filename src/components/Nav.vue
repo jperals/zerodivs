@@ -1,7 +1,7 @@
 <template>
-  <nav>
+  <nav :class="{'at-root': !currentProject}">
     <section class="breadcrumbs">
-      <router-link to="/" class="link-to-home">Mirage</router-link>
+      <router-link to="/" class="link-to-home">zerodivs.com</router-link>
       <span v-if="currentProject">/</span>
       <span v-if="currentProject">
         <input v-model="projectName" placeholder="Project name" />
@@ -45,6 +45,11 @@ nav {
   justify-content: space-between;
   transition: background-color 300ms;
 }
+nav.at-root {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
 nav > * {
   display: inline-block;
 }
@@ -57,6 +62,7 @@ nav > * {
   padding-left: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  text-decoration: none;
 }
 span {
   color: var(--gray-700);
