@@ -1,28 +1,22 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-if [[ $(git status -s) ]]
-then
-    echo "The working directory is dirty. Please commit any pending changes."
-    exit 1;
-fi
+# abort on errors
+set -e
 
-echo "Deleting old publication"
-rm -rf dist
-mkdir dist
-git worktree prune
-rm -rf .git/worktrees/dist/
-
-echo "Removing existing files"
-rm -rf dist/*
-
-echo "Generating site"
+# build
 npm run build
 
-echo "Checking out gh-pages branch into dist"
-git worktree add -B gh-pages dist github/gh-pages
+# navigate into the build output directory
+cd dist
 
-echo "Updating gh-pages branch"
-cd dist && git add --all && git commit -m "New build"
+# if you are deploying to a custom domain
+# echo 'www.example.com' > CNAME
 
-echo "Publishing to Github pages"
-git push && cd ..
+git init
+git add -A
+git commit -m 'deploy'
+
+# if you are deploying to https://<USERNAME>.github.io/<REPO>
+git push -f git@github.com:jperals/deepdiv.git master:gh-pages
+
+cd -
