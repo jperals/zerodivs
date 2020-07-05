@@ -12,14 +12,14 @@ mkdir dist
 git worktree prune
 rm -rf .git/worktrees/dist/
 
-echo "Checking out gh-pages branch into dist"
-git worktree add -B gh-pages dist github/gh-pages
-
 echo "Removing existing files"
 rm -rf dist/*
 
 echo "Generating site"
 npm run build
+
+echo "Checking out gh-pages branch into dist"
+git worktree add -B gh-pages dist github/gh-pages
 
 echo "Updating gh-pages branch"
 cd dist && git add --all && git commit -m "New build"
