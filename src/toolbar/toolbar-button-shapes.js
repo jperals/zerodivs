@@ -7,12 +7,10 @@ export default [
         direction: "to bottom",
         stops: [
           {
-            color,
-            position: "0%"
+            color
           },
           {
-            color,
-            position: "100%"
+            color
           }
         ]
       };
@@ -25,9 +23,6 @@ export default [
         type: "linear",
         direction: "to bottom right",
         stops: [
-          {
-            color: "transparent"
-          },
           {
             color: "transparent",
             position: "50%"
@@ -46,9 +41,6 @@ export default [
         direction: "to top left",
         stops: [
           {
-            color: "transparent"
-          },
-          {
             color: "transparent",
             position: "50%"
           },
@@ -66,9 +58,6 @@ export default [
         direction: "to bottom left",
         stops: [
           {
-            color: "transparent"
-          },
-          {
             color: "transparent",
             position: "50%"
           },
@@ -85,9 +74,6 @@ export default [
         type: "linear",
         direction: "to top right",
         stops: [
-          {
-            color: "transparent"
-          },
           {
             color: "transparent",
             position: "50%"
@@ -107,9 +93,6 @@ export default [
         type: "linear",
         direction: "to top right",
         stops: [
-          {
-            color: "transparent"
-          },
           {
             color: "transparent",
             position: "15%"
@@ -135,9 +118,6 @@ export default [
         type: "linear",
         direction: "to top left",
         stops: [
-          {
-            color: "transparent"
-          },
           {
             color: "transparent",
             position: "15%"
@@ -166,9 +146,6 @@ export default [
         direction: "at center",
         stops: [
           {
-            color
-          },
-          {
             color,
             position: "71%"
           },
@@ -189,9 +166,6 @@ export default [
         direction: "at top left",
         stops: [
           {
-            color
-          },
-          {
             color,
             position: "71%"
           },
@@ -209,9 +183,6 @@ export default [
         type: "radial",
         direction: "at top right",
         stops: [
-          {
-            color
-          },
           {
             color,
             position: "71%"
@@ -231,9 +202,6 @@ export default [
         direction: "at bottom right",
         stops: [
           {
-            color
-          },
-          {
             color,
             position: "71%"
           },
@@ -251,9 +219,6 @@ export default [
         type: "radial",
         direction: "at bottom left",
         stops: [
-          {
-            color
-          },
           {
             color,
             position: "71%"
@@ -379,9 +344,6 @@ export default [
         type: "conic",
         stops: [
           {
-            color
-          },
-          {
             color,
             position: "25%"
           },
@@ -414,9 +376,6 @@ export default [
         name: "4 Tiles #2",
         type: "conic",
         stops: [
-          {
-            color: "transparent"
-          },
           {
             color: "transparent",
             position: "25%"
