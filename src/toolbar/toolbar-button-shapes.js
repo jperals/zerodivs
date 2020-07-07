@@ -7,14 +7,14 @@ export default [
         direction: "to bottom",
         stops: [
           {
-            color
+            color,
           },
           {
-            color
-          }
-        ]
+            color,
+          },
+        ],
       };
-    }
+    },
   ],
   [
     function(color) {
@@ -25,13 +25,13 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "50%"
+            position: "50%",
           },
           {
             color,
-            position: "50%"
-          }
-        ]
+            position: "50%",
+          },
+        ],
       };
     },
     function(color) {
@@ -42,13 +42,13 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "50%"
+            position: "50%",
           },
           {
             color,
-            position: "50%"
-          }
-        ]
+            position: "50%",
+          },
+        ],
       };
     },
     function(color) {
@@ -59,13 +59,13 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "50%"
+            position: "50%",
           },
           {
             color,
-            position: "50%"
-          }
-        ]
+            position: "50%",
+          },
+        ],
       };
     },
     function(color) {
@@ -76,15 +76,15 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "50%"
+            position: "50%",
           },
           {
             color,
-            position: "50%"
-          }
-        ]
+            position: "50%",
+          },
+        ],
       };
-    }
+    },
   ],
   [
     function(color) {
@@ -95,21 +95,21 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "15%"
+            position: "15%",
           },
           {
             color,
-            position: "15%"
+            position: "15%",
           },
           {
             color,
-            position: "85%"
+            position: "85%",
           },
           {
             color: "transparent",
-            position: "85%"
-          }
-        ]
+            position: "85%",
+          },
+        ],
       };
     },
     function(color) {
@@ -120,23 +120,23 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "15%"
+            position: "15%",
           },
           {
             color,
-            position: "15%"
+            position: "15%",
           },
           {
             color,
-            position: "85%"
+            position: "85%",
           },
           {
             color: "transparent",
-            position: "85%"
-          }
-        ]
+            position: "85%",
+          },
+        ],
       };
-    }
+    },
   ],
   [
     function(color) {
@@ -147,16 +147,42 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
-    }
+    },
+    function(color) {
+      return {
+        name: "Empty circle",
+        type: "radial",
+        direction: "at center",
+        stops: [
+          {
+            color: "transparent",
+            position: "29%",
+          },
+          {
+            color,
+            position: "29%",
+          },
+          {
+            color,
+            position: "71%",
+          },
+          {
+            color: "transparent",
+            position: "71%",
+          },
+        ],
+        repeat: "no-repeat",
+      };
+    },
   ],
   [
     function(color) {
@@ -167,14 +193,14 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
     },
     function(color) {
@@ -185,14 +211,14 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
     },
     function(color) {
@@ -203,14 +229,14 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
     },
     function(color) {
@@ -221,16 +247,16 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
-    }
+    },
   ],
   [
     function(color) {
@@ -241,21 +267,21 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
-        ]
+            position: "71%",
+          },
+        ],
       };
     },
     function(color) {
@@ -266,22 +292,22 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
     },
     function(color) {
@@ -292,22 +318,22 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
     },
     function(color) {
@@ -318,24 +344,24 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "29%"
+            position: "29%",
           },
           {
             color,
-            position: "71%"
+            position: "71%",
           },
           {
             color: "transparent",
-            position: "71%"
-          }
+            position: "71%",
+          },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
-    }
+    },
   ],
   [
     function(color) {
@@ -345,30 +371,30 @@ export default [
         stops: [
           {
             color,
-            position: "25%"
+            position: "25%",
           },
           {
             color: "transparent",
-            position: "25%"
+            position: "25%",
           },
           {
             color: "transparent",
-            position: "50%"
+            position: "50%",
           },
           {
             color,
-            position: "50%"
+            position: "50%",
           },
           {
             color,
-            position: "75%"
+            position: "75%",
           },
           {
             color: "transparent",
-            position: "75%"
+            position: "75%",
           },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
     },
     function(color) {
@@ -378,31 +404,31 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "25%"
+            position: "25%",
           },
           {
             color,
-            position: "25%"
+            position: "25%",
           },
           {
             color,
-            position: "50%"
+            position: "50%",
           },
           {
             color: "transparent",
-            position: "50%"
+            position: "50%",
           },
           {
             color: "transparent",
-            position: "75%"
+            position: "75%",
           },
           {
             color,
-            position: "75%"
+            position: "75%",
           },
         ],
-        repeat: "no-repeat"
+        repeat: "no-repeat",
       };
-    }
-  ]
+    },
+  ],
 ];
