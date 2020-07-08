@@ -92,4 +92,10 @@ input {
 input:not(:hover) {
   border-color: transparent;
 }
+.secondary {
+  border-bottom: 4px solid transparent;
+}
+.secondary.router-link-active {
+  border-color: #00ffb8;
+}
 </style>

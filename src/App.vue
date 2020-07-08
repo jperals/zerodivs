@@ -82,9 +82,9 @@ body {
   color: white;
   text-decoration: none;
 }
-#app.at-root > nav a.secondary:not(:hover),
-#app.at-root > nav a.secondary:link:not(:hover),
-#app.at-root > nav a.secondary:visited:not(:hover) {
+#app.at-root > nav a.secondary:not(.router-link-active):not(:hover),
+#app.at-root > nav a.secondary:link:not(.router-link-active):not(:hover),
+#app.at-root > nav a.secondary:visited:not(.router-link-active):not(:hover) {
   color: var(--gray-500);
 }
 .panel {
