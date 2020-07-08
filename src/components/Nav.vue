@@ -48,7 +48,7 @@ nav {
 nav.at-root {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 30;
 }
 nav > * {
   display: inline-block;

@@ -21,7 +21,7 @@ const routes = [
     component: About
   },
   {
-    path: "/div/:id",
+    path: "/i/:id",
     name: "editor",
     component: Editor,
     children: [

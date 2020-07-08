@@ -4,7 +4,7 @@ const ui = {
   state: {
     colorPickerPosition: null,
     copiedShapes: [],
-    currentColor: "turquoise",
+    currentColor: "black",
     openColorPickerId: null,
     pressedKeys: new Set(),
     selectedLayer: "main",
