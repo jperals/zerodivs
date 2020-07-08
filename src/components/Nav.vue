@@ -8,6 +8,7 @@
       </span>
     </section>
     <button v-if="currentProject" v-on:click="toggleOutput">Result</button>
+    <router-link v-if="!currentProject" to="/about" class="about-link secondary">About</router-link>
   </nav>
 </template>
 
@@ -59,10 +60,16 @@ nav > * {
   padding-right: 0.25rem;
 }
 .link-to-home {
+  text-decoration: none;
+}
+.link-to-home,
+.about-link {
   padding-left: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  text-decoration: none;
+}  
+.about-link {
+  padding-right: 1rem;
 }
 span {
   color: var(--gray-700);

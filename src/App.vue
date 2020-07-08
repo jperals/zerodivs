@@ -11,7 +11,7 @@ export default {
   components: { Nav },
   computed: {
     mode() {
-      return this.$route.name === "gallery" ? "at-root" : "";
+      return (this.$route.name === "gallery" || this.$route.name === "about") ? "at-root" : "";
     }
   }
 };
@@ -81,6 +81,11 @@ body {
 #app.at-root > nav a:visited {
   color: white;
   text-decoration: none;
+}
+#app.at-root > nav a.secondary:not(:hover),
+#app.at-root > nav a.secondary:link:not(:hover),
+#app.at-root > nav a.secondary:visited:not(:hover) {
+  color: var(--gray-500);
 }
 .panel {
   backdrop-filter: blur(4px);
