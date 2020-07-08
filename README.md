@@ -1,4 +1,4 @@
-# deepdiv
+# zerodivs
 
 ## Project setup
 ```
