@@ -15,7 +15,7 @@ const routes = [
     component: Gallery
   },
   {
-    path: "/div/:id",
+    path: "/i/:id",
     name: "editor",
     component: Editor,
     children: [

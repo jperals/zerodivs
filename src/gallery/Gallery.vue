@@ -87,7 +87,7 @@ export default {
       return this.optionsOpenId === id;
     },
     link(id) {
-      return `/div/${id}`;
+      return `/i/${id}`;
     },
     toggleOptions(id) {
       if (this.optionsOpenId === id) {

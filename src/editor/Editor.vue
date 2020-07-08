@@ -10,7 +10,7 @@
       <portal-target name="color-picker"/>
       <router-view />
     </template>
-    <div v-else>Couldn't find this div. :-/</div>
+    <div v-else>Couldn't find this project. :-/</div>
   </div>
 </template>
 
