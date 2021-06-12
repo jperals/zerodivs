@@ -11,9 +11,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {},
   mutations: {},
-  getters: {
-    snap: (state, getters) => getters.selectedShape && state.snap,
-  },
+  getters: {},
   actions: {
     commitChange({dispatch}) {
       dispatch("addSnapshot");

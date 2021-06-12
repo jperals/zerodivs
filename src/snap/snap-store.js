@@ -9,6 +9,7 @@ export default {
   },
   getters: {
     currentSnaps: state => state.currentSnaps,
+    snap: state => state.snap,
     snapPoint: state => point =>
       findClosestSnap({ snapPointsSorted: state.snapPoints, point }),
     snapPoints: state => state.snapPoints,
