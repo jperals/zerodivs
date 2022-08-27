@@ -1,6 +1,6 @@
 import { get, isObject } from "lodash";
 import uuid from "uuid/v1";
-import warn from "@/warn";
+import { warn } from "@/warn";
 import { move, moveBy } from "./shapes";
 import { getSnaps, moveToSnaps } from "@/snap/snap";
 
