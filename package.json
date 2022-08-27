@@ -11,7 +11,7 @@
   "dependencies": {
     "convert-css-color-name-to-hex": "^0.1.1",
     "core-js": "^3.4.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "portal-vue": "^2.1.7",
     "uuid": "^3.3.3",
     "validate-color": "^1.0.8",
