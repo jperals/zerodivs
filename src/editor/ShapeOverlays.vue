@@ -30,17 +30,17 @@
       </div>
     </div>
     <v-style type="text/css">
-      .overlays-{{projectId}} {
+      .overlays-{{ projectId }} {
       {{ mainCustomStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isBeforeActive">
-      .overlays-{{projectId}} .overlays--before {
+      .overlays-{{ projectId }} .overlays--before {
       {{ beforeStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isAfterActive">
-      .overlays-{{projectId}} .overlays--after {
+      .overlays-{{ projectId }} .overlays--after {
       {{ afterStyle }}
       }
     </v-style>

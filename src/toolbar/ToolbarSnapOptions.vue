@@ -8,7 +8,7 @@
       type="number"
       v-model="threshold"
       class="w-s"
-      :class="{inactive: !snap}"
+      :class="{ inactive: !snap }"
       :disabled="!snap"
     />
     <span class="units">px</span>
@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 label {
-  margin-right: .25rem;
+  margin-right: 0.25rem;
 }
 input.inactive {
   pointer-events: none;

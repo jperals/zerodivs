@@ -151,8 +151,8 @@ export function moveByAndSnap({ left, shape, snapPoints, threshold, top }) {
 }
 
 export function moveSnap({ shape, snapPoints, threshold }) {
-  const snaps = getSnaps({ shape, snapPoints, threshold});
-  return moveToSnaps({shape, snaps});
+  const snaps = getSnaps({ shape, snapPoints, threshold });
+  return moveToSnaps({ shape, snaps });
 }
 
 function moveToSnap({ shape, snap }) {
@@ -160,7 +160,7 @@ function moveToSnap({ shape, snap }) {
   if (snap) {
     switch (snap.location) {
       case "top":
-        moved.top.value = snap.point.value
+        moved.top.value = snap.point.value;
         break;
       case "right":
         moved.left.value = snap.point.value - shape.width.value;
@@ -176,9 +176,10 @@ function moveToSnap({ shape, snap }) {
   return moved;
 }
 
-export function moveToSnaps({ shape, snaps}) {
-  const snappedX = moveToSnap({ shape, snap: snaps.x});
-  return moveToSnap({ shape: snappedX, snap: snaps.y});}
+export function moveToSnaps({ shape, snaps }) {
+  const snappedX = moveToSnap({ shape, snap: snaps.x });
+  return moveToSnap({ shape: snappedX, snap: snaps.y });
+}
 
 function snapDistance({ snapPoint, number }) {
   return Math.abs(snapPoint.value - number);

@@ -1,5 +1,9 @@
 <template>
-  <div class="hamburger-button" :class="{active: isOpen}" v-on:click="tryClick"></div>
+  <div
+    class="hamburger-button"
+    :class="{ active: isOpen }"
+    v-on:click="tryClick"
+  ></div>
 </template>
 
 <script>

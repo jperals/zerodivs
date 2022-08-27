@@ -1,23 +1,28 @@
 <template>
-  <div class="thumbnail-wrapper" :class="'thumbnail-wrapper-' + projectId" v-if="shapesLayers" :style="offsetStyle">
+  <div
+    class="thumbnail-wrapper"
+    :class="'thumbnail-wrapper-' + projectId"
+    v-if="shapesLayers"
+    :style="offsetStyle"
+  >
     <div class="thumbnail" :class="'thumbnail-' + projectId"></div>
     <v-style type="text/css">
-      .thumbnail-wrapper-{{projectId}} {
+      .thumbnail-wrapper-{{ projectId }} {
       {{ mainCustomStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isMainActive">
-      .thumbnail-{{projectId}} {
+      .thumbnail-{{ projectId }} {
       {{ mainStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isBeforeActive">
-      .thumbnail-{{projectId}}:before {
+      .thumbnail-{{ projectId }}:before {
       {{ beforeStyle }}
       }
     </v-style>
     <v-style type="text/css" v-if="isAfterActive">
-      .thumbnail-{{projectId}}:after {
+      .thumbnail-{{ projectId }}:after {
       {{ afterStyle }}
       }
     </v-style>
@@ -56,24 +61,26 @@ export default {
       return this.isLayerActive("after");
     },
     offset() {
-      const allShapes = this.shapesMain.concat(this.shapesBefore).concat(this.shapesAfter);
+      const allShapes = this.shapesMain
+        .concat(this.shapesBefore)
+        .concat(this.shapesAfter);
       if (!allShapes.length) {
-        return {x: 0, y: 0};
+        return { x: 0, y: 0 };
       }
       let minLeft = Infinity;
       let minTop = Infinity;
-      for(const shape of allShapes) {
+      for (const shape of allShapes) {
         minLeft = Math.min(minLeft, shape.left.value);
         minTop = Math.min(minTop, shape.top.value);
       }
-      return {x: minLeft, y: minTop};
+      return { x: minLeft, y: minTop };
     },
     offsetStyle() {
       return {
         minHeight: `calc(100% + ${this.offset.y}px)`,
-        left: '0',
-        margin: '0',
-        top: '0',
+        left: "0",
+        margin: "0",
+        top: "0",
         transform: `translate(${-this.offset.x}px, ${-this.offset.y}px)`,
         minWidth: `calc(100% + ${this.offset.x}px)`
       };

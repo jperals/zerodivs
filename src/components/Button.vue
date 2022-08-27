@@ -11,7 +11,7 @@ export default {
   },
   data() {
     return {
-      style: this.shapes instanceof Array ? shapes2css(this.shapes) : ''
+      style: this.shapes instanceof Array ? shapes2css(this.shapes) : ""
     };
   }
 };

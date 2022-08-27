@@ -38,7 +38,7 @@ button:before {
   background-repeat: no-repeat;
   transform: rotate(45deg);
   display: block;
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: relative;

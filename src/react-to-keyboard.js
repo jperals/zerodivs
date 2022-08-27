@@ -18,7 +18,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapesBy", {
           shapes: store.getters.selectedShapes,
-          left: { value: -1, units: "px" },
+          left: { value: -1, units: "px" }
         });
       }
       break;
@@ -26,7 +26,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapesBy", {
           shapes: store.getters.selectedShapes,
-          top: { value: -1, units: "px" },
+          top: { value: -1, units: "px" }
         });
       }
       break;
@@ -34,7 +34,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapesBy", {
           shapes: store.getters.selectedShapes,
-          left: { value: 1, units: "px" },
+          left: { value: 1, units: "px" }
         });
       }
       break;
@@ -42,7 +42,7 @@ export default function reactToKeyboard(event) {
       if (isNotWriting(event)) {
         store.dispatch("moveShapesBy", {
           shapes: store.getters.selectedShapes,
-          top: { value: 1, units: "px" },
+          top: { value: 1, units: "px" }
         });
       }
       break;

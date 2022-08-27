@@ -27,7 +27,9 @@ function formatImages(shapes) {
 
 export function formatImage(shape) {
   const formattedStops = formatStops(shape.stops);
-  const items = shape.direction ? [shape.direction, formattedStops] : [formattedStops];
+  const items = shape.direction
+    ? [shape.direction, formattedStops]
+    : [formattedStops];
   return `${formatType(shape.type)}(${items.join(", ")})`;
 }
 

@@ -22,7 +22,7 @@ export default {
       return store.getters.selectedShape;
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -1,5 +1,7 @@
 <template>
-  <button v-clipboard:copy="content" title="Copy to clipboard" :style="style">Copy</button>
+  <button v-clipboard:copy="content" title="Copy to clipboard" :style="style">
+    Copy
+  </button>
 </template>
 
 <script>

@@ -9,42 +9,42 @@
     <template v-if="showHandles">
       <div
         class="handle top-left"
-        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
+        v-on:mousedown="$event => onMouseDown('top-left', $event)"
         :style="transformTopLeft"
       ></div>
       <div
         class="handle top"
-        v-on:mousedown="($event) => onMouseDown('top', $event)"
+        v-on:mousedown="$event => onMouseDown('top', $event)"
         :style="transformTop"
       ></div>
       <div
         class="handle top-right"
-        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
+        v-on:mousedown="$event => onMouseDown('top-right', $event)"
         :style="transformTopRight"
       ></div>
       <div
         class="handle right"
-        v-on:mousedown="($event) => onMouseDown('right', $event)"
+        v-on:mousedown="$event => onMouseDown('right', $event)"
         :style="transformRight"
       ></div>
       <div
         class="handle bottom-right"
-        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
+        v-on:mousedown="$event => onMouseDown('bottom-right', $event)"
         :style="transformBottomRight"
       ></div>
       <div
         class="handle bottom"
-        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
+        v-on:mousedown="$event => onMouseDown('bottom', $event)"
         :style="transformBottom"
       ></div>
       <div
         class="handle bottom-left"
-        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
+        v-on:mousedown="$event => onMouseDown('bottom-left', $event)"
         :style="transformBottomLeft"
       ></div>
       <div
         class="handle left"
-        v-on:mousedown="($event) => onMouseDown('left', $event)"
+        v-on:mousedown="$event => onMouseDown('left', $event)"
         :style="transformLeft"
       ></div>
     </template>

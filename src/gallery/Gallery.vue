@@ -5,29 +5,47 @@
         v-for="project in divs"
         :key="project.id"
         class="div-thumbnail"
-        :class="{'options-open': isOptionsOpenId(project.id)}"
+        :class="{ 'options-open': isOptionsOpenId(project.id) }"
       >
         <router-link :to="link(project.id)">
           <GalleryThumbnail :projectId="project.id" />
-          <div v-if="project.name" class="project-name">{{project.name}}</div>
+          <div v-if="project.name" class="project-name">{{ project.name }}</div>
         </router-link>
         <ul class="actions" v-if="isOptionsOpenId(project.id)">
           <li>
-            <button v-on:click="duplicate(project)" class="action-button">Duplicate</button>
+            <button v-on:click="duplicate(project)" class="action-button">
+              Duplicate
+            </button>
           </li>
           <li>
-            <button v-on:click="confirmDeleteDiv(project)" class="action-button">Delete</button>
+            <button
+              v-on:click="confirmDeleteDiv(project)"
+              class="action-button"
+            >
+              Delete
+            </button>
           </li>
         </ul>
-        <div class="options-toggle" v-on:click="() => toggleOptions(project.id)">
-          <HamburgerButton class="close-button" :isOpen="isOptionsOpenId(project.id)" />
+        <div
+          class="options-toggle"
+          v-on:click="() => toggleOptions(project.id)"
+        >
+          <HamburgerButton
+            class="close-button"
+            :isOpen="isOptionsOpenId(project.id)"
+          />
         </div>
       </li>
       <li class="div-thumbnail new">
-        <button v-on:click="createNewDiv" class="new-project-button">Create New</button>
+        <button v-on:click="createNewDiv" class="new-project-button">
+          Create New
+        </button>
       </li>
     </ul>
-    <div v-if="askingForDeleteConfirmation" class="modal-container delete-confirmation-modal">
+    <div
+      v-if="askingForDeleteConfirmation"
+      class="modal-container delete-confirmation-modal"
+    >
       <div class="modal-overlay" v-on:click="cancelDelete"></div>
       <div class="modal">
         <h3 class="header">Delete Project?</h3>
@@ -35,15 +53,15 @@
           <p>This operation cannot be undone.</p>
         </div>
         <div class="actions actions-bottom">
-          <button class="cancel-button" v-on:click="cancelDelete">Cancel</button>
+          <button class="cancel-button" v-on:click="cancelDelete">
+            Cancel
+          </button>
           <button class="main-action" v-on:click="deleteDiv">Delete</button>
         </div>
       </div>
     </div>
     <v-style>
-      body {
-        background-color: var(--gray-900);
-      }
+      body { background-color: var(--gray-900); }
     </v-style>
   </div>
 </template>

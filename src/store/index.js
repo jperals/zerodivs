@@ -13,7 +13,7 @@ export default new Vuex.Store({
   mutations: {},
   getters: {},
   actions: {
-    commitChange({dispatch}) {
+    commitChange({ dispatch }) {
       dispatch("addSnapshot");
       return dispatch("updateProject");
     }

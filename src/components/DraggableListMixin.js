@@ -9,7 +9,7 @@ export default {
       offset: null,
       itemBeingDragged: null,
       indexMovedDown: null,
-      indexMovedUp: null,
+      indexMovedUp: null
     };
   },
   methods: {
@@ -23,7 +23,9 @@ export default {
       if (isNotWriting(event)) {
         const listItem = event.target.closest("li.draggable");
         if (listItem) {
-          this.elementHeight = parseInt(listItem.getBoundingClientRect().height);
+          this.elementHeight = parseInt(
+            listItem.getBoundingClientRect().height
+          );
           const item = this.items[index];
           this.itemBeingDragged = item;
           this.initialMousePosition = event.y;
@@ -67,11 +69,11 @@ export default {
         return {
           position: "relative",
           transform: `translateY(${this.offset}px)`,
-          zIndex: 10,
+          zIndex: 10
         };
       } else {
         return {};
       }
-    },
-  },
+    }
+  }
 };

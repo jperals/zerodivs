@@ -1,5 +1,10 @@
 <template>
-  <codemirror v-model="style" :options="codeMirrorOptions" class="code-editor code-editor-extra-styles" ref="codeEditor" />
+  <codemirror
+    v-model="style"
+    :options="codeMirrorOptions"
+    class="code-editor code-editor-extra-styles"
+    ref="codeEditor"
+  />
 </template>
 
 <script>

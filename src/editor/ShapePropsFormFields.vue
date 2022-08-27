@@ -5,14 +5,14 @@
         <label class="wrapper">
           <span class="label">Top</span>
           <input type="number" v-model="top" class="w-m" />
-          <span class="units">{{shape.top.units}}</span>
+          <span class="units">{{ shape.top.units }}</span>
         </label>
       </div>
       <div class="row">
         <label class="wrapper">
           <span class="label">Left</span>
           <input type="number" v-model="left" class="w-m" />
-          <span class="units">{{shape.left.units}}</span>
+          <span class="units">{{ shape.left.units }}</span>
         </label>
       </div>
     </div>
@@ -21,14 +21,14 @@
         <label class="wrapper">
           <span class="label">Width</span>
           <input type="number" v-model="width" class="w-m" />
-          <span class="units">{{shape.width.units}}</span>
+          <span class="units">{{ shape.width.units }}</span>
         </label>
       </div>
       <div class="row">
         <label class="wrapper">
           <span class="label">Height</span>
           <input type="number" v-model="height" class="w-m" />
-          <span class="units">{{shape.height.units}}</span>
+          <span class="units">{{ shape.height.units }}</span>
         </label>
       </div>
     </div>

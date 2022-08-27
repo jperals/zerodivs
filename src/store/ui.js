@@ -10,7 +10,7 @@ const ui = {
     selectedLayer: "main",
     selectedShape: null,
     selectedShapes: new Set(),
-    showOutput: false,
+    showOutput: false
   },
   mutations: {
     addPressedKey(state, key) {
@@ -18,7 +18,7 @@ const ui = {
       state.pressedKeys = new Set(state.pressedKeys); // Workaround Vue's lack of first-class support reactivity for Sets
     },
     copyShapes(state, shapes) {
-      state.copiedShapes = shapes.map((shape) => deepCopy(shape));
+      state.copiedShapes = shapes.map(shape => deepCopy(shape));
     },
     removePressedKey(state, key) {
       state.pressedKeys.delete(key);
@@ -65,23 +65,23 @@ const ui = {
     },
     unselectShape(state, shape) {
       state.selectedShapes.delete(shape);
-    },
+    }
   },
   getters: {
-    colorPickerPosition: (state) => state.colorPickerPosition,
-    copiedShapes: (state) => state.copiedShapes,
-    currentColor: (state) => state.currentColor,
-    isKeyPressed: (state) => (key) => state.pressedKeys.has(key),
-    isShapeSelected: (state) => (shape) => state.selectedShapes.has(shape),
-    openColorPickerId: (state) => state.openColorPickerId,
-    selectedLayer: (state) => state.selectedLayer,
-    selectedShape: (state) =>
+    colorPickerPosition: state => state.colorPickerPosition,
+    copiedShapes: state => state.copiedShapes,
+    currentColor: state => state.currentColor,
+    isKeyPressed: state => key => state.pressedKeys.has(key),
+    isShapeSelected: state => shape => state.selectedShapes.has(shape),
+    openColorPickerId: state => state.openColorPickerId,
+    selectedLayer: state => state.selectedLayer,
+    selectedShape: state =>
       state.selectedShapes.size === 1
         ? Array.from(state.selectedShapes)[0]
         : undefined,
-    selectedShapes: (state) => Array.from(state.selectedShapes),
-    selectMultiple: (state) => state.pressedKeys.has("Shift"),
-    showOutput: (state) => state.showOutput,
+    selectedShapes: state => Array.from(state.selectedShapes),
+    selectMultiple: state => state.pressedKeys.has("Shift"),
+    showOutput: state => state.showOutput
   },
   actions: {
     addPressedKey({ commit }, key) {
@@ -96,8 +96,8 @@ const ui = {
     },
     pasteShapes({ dispatch, getters }) {
       dispatch("addShapes", {
-        shapes: getters.copiedShapes,
-      }).then((newShapes) => {
+        shapes: getters.copiedShapes
+      }).then(newShapes => {
         dispatch("commitChange");
         dispatch("selectShapes", { shapes: newShapes });
       });
@@ -137,8 +137,8 @@ const ui = {
     },
     unselectShape({ commit }) {
       commit("selectShape", { shape: null });
-    },
-  },
+    }
+  }
 };
 
 export default ui;

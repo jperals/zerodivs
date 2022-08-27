@@ -1,15 +1,27 @@
 <template>
-  <li class="layer" :class="{ active: isLayerActive, layerName, selected: isLayerSelected }">
+  <li
+    class="layer"
+    :class="{ active: isLayerActive, layerName, selected: isLayerSelected }"
+  >
     <div class="list-node root-node" v-on:click="selectLayer">
       <label>{{ label }}</label>
       <span class="checkbox">
-        <input type="checkbox" :checked="isLayerActive" v-on:click.stop="toggleLayer" />
+        <input
+          type="checkbox"
+          :checked="isLayerActive"
+          v-on:click.stop="toggleLayer"
+        />
       </span>
     </div>
     <ul class="shapes">
       <li
         class="shape list-node draggable"
-        :class="{ selected: isShapeSelected(shape), 'moved-down': isItemMovedDown(index), 'moved-up': isItemMovedUp(index), dragging: shape === itemBeingDragged }"
+        :class="{
+          selected: isShapeSelected(shape),
+          'moved-down': isItemMovedDown(index),
+          'moved-up': isItemMovedUp(index),
+          dragging: shape === itemBeingDragged
+        }"
         :style="listItemStyle(shape)"
         v-for="(shape, index) in items"
         :key="shape.id"
@@ -61,7 +73,10 @@ export default {
       store.dispatch("unselectShape");
     },
     selectShape(shape) {
-      store.dispatch("selectShape", {shape, keepSelection: store.getters.isKeyPressed("Shift")});
+      store.dispatch("selectShape", {
+        shape,
+        keepSelection: store.getters.isKeyPressed("Shift")
+      });
     },
     shapeLabel(shape) {
       return shape.name;

@@ -2,8 +2,8 @@
   <form action="https://codepen.io/pen/define" method="POST" target="_blank">
     <input type="hidden" name="data" :value="value" />
     <button type="submit">
-     <span class="codepen-icon" :style="buttonStyle"></span>
-     Export to CodePen
+      <span class="codepen-icon" :style="buttonStyle"></span>
+      Export to CodePen
     </button>
   </form>
 </template>
@@ -42,19 +42,19 @@ export default {
 button[type="submit"] {
   background-color: hsl(271, 17%, 52%);
   border: 0 none;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: .125rem .65rem .125rem .5rem;
+  padding: 0.125rem 0.65rem 0.125rem 0.5rem;
   color: white;
-  font-size: .75rem;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 .codepen-icon {
   height: 23px;
   width: 24px;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   display: inline-block;
   transform: scale(0.75);
 }

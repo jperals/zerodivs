@@ -14,7 +14,7 @@ position: relative;
 margin: 0 auto;
 background-color: white;
 `,
-      shapes: [],
+      shapes: []
     },
     before: {
       active: false,
@@ -26,7 +26,7 @@ bottom: 0;
 display: block;
 content: "";
 `,
-      shapes: [],
+      shapes: []
     },
     after: {
       active: false,
@@ -38,8 +38,8 @@ bottom: 0;
 display: block;
 content: "";
 `,
-      shapes: [],
-    },
+      shapes: []
+    }
   };
 }
 
@@ -47,7 +47,7 @@ const shapes = {
   state: {
     layers: initialLayersState(),
     round: true,
-    shapeToBeAdded: null,
+    shapeToBeAdded: null
   },
   mutations: {
     addNewStop(state, { shape, index }) {
@@ -60,7 +60,7 @@ const shapes = {
       }
     },
     addShape(state, { layerName, shape }) {
-      get(shape, "stops", []).forEach((stop) => (stop.id = uuid()));
+      get(shape, "stops", []).forEach(stop => (stop.id = uuid()));
       state.layers[layerName].shapes.push(shape);
     },
     moveShapeBy(state, { shape, left, top }) {
@@ -74,7 +74,7 @@ const shapes = {
     },
     removeShape(state, shape) {
       for (const layer of Object.values(state.layers)) {
-        const index = layer.shapes.findIndex((s) => s === shape);
+        const index = layer.shapes.findIndex(s => s === shape);
         if (index !== -1) {
           layer.shapes.splice(index, 1);
           break;
@@ -183,19 +183,19 @@ const shapes = {
         }
       }
       shape.stops = [...shape.stops];
-    },
+    }
   },
   getters: {
-    allLayers: (state) => state.layers,
-    extraStyles: (state) => (layerName) =>
+    allLayers: state => state.layers,
+    extraStyles: state => layerName =>
       state.layers[layerName].extraStyles || "",
-    isLayerActive: (state) => (layerName) =>
+    isLayerActive: state => layerName =>
       get(state, `layers[${layerName}].active`, false),
-    layerIdFromShape: (state) => (shape) =>
-      Object.keys(state.layers).find((key) =>
+    layerIdFromShape: state => shape =>
+      Object.keys(state.layers).find(key =>
         state.layers[key].shapes.includes(shape)
       ),
-    layerShapes: (state) => (layerName) =>
+    layerShapes: state => layerName =>
       get(state, `layers[${layerName}].shapes`, []),
     shapes: (state, getters) => {
       let shapes = [];
@@ -207,7 +207,7 @@ const shapes = {
       }
       return shapes;
     },
-    shapeToBeAdded: (state) => state.shapeToBeAdded,
+    shapeToBeAdded: state => state.shapeToBeAdded,
     visibleShapes: (state, getters) => {
       let shapes = [];
       for (const layerName of ["main", "before", "active"]) {
@@ -226,7 +226,7 @@ const shapes = {
         shapes.push(state.shapeToBeAdded);
       }
       return shapes;
-    },
+    }
   },
   actions: {
     addNewStop({ commit, dispatch }, { shape, index }) {
@@ -262,13 +262,13 @@ const shapes = {
         const newPosition = moveBy({
           shape: duplicatedShape,
           top: { value: 10 },
-          left: { value: 10 },
+          left: { value: 10 }
         });
         duplicatedShape.left = newPosition.left;
         duplicatedShape.top = newPosition.top;
         newShapes.push(duplicatedShape);
       }
-      dispatch("addShapes", { shapes: newShapes }).then((shapesWithId) => {
+      dispatch("addShapes", { shapes: newShapes }).then(shapesWithId => {
         dispatch("commitChange");
         dispatch("selectShapes", { shapes: shapesWithId });
       });
@@ -279,7 +279,7 @@ const shapes = {
         const snaps = getSnaps({
           shape: moved,
           snapPoints: getters.snapPoints,
-          threshold: getters.snapThreshold,
+          threshold: getters.snapThreshold
         });
         dispatch("setCurrentSnaps", snaps);
         const snapped = moveToSnaps({ shape: moved, snaps });
@@ -295,30 +295,30 @@ const shapes = {
         if (propertiesToRound.length) {
           dispatch("roundShapeProperties", {
             shape: snapped,
-            propertyNames: propertiesToRound,
+            propertyNames: propertiesToRound
           }).then(() => {
             commit("updateShape", {
               shape,
               left: snapped.left,
-              top: snapped.top,
+              top: snapped.top
             });
           });
         } else {
           commit("updateShape", {
             shape,
             left: snapped.left,
-            top: snapped.top,
+            top: snapped.top
           });
         }
       } else {
         dispatch("roundShapeProperties", {
           shape: moved,
-          propertyNames: ["top", "left"],
+          propertyNames: ["top", "left"]
         }).then(() => {
           commit("updateShape", {
             shape,
             left: moved.left,
-            top: moved.top,
+            top: moved.top
           });
         });
       }
@@ -407,7 +407,7 @@ const shapes = {
       if (round) {
         dispatch("roundShapeProperties", {
           shape,
-          propertyNames: ["left", "top"],
+          propertyNames: ["left", "top"]
         }).then(() => dispatch("updateProject"));
       } else {
         dispatch("updateProject");
@@ -416,8 +416,8 @@ const shapes = {
     updateShapeStop({ commit, dispatch }, { shape, stop, ...newProps }) {
       commit("updateShapeStop", { shape, stop, ...newProps });
       dispatch("updateProject");
-    },
-  },
+    }
+  }
 };
 
 function deepCopy(obj) {

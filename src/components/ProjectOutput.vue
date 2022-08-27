@@ -4,8 +4,8 @@
     <div class="modal output">
       <div class="actions">
         <div class="tabs">
-          <router-link :to="{name: 'json-result'}">JSON</router-link>
-          <router-link :to="{name: 'css-result'}">CSS</router-link>
+          <router-link :to="{ name: 'json-result' }">JSON</router-link>
+          <router-link :to="{ name: 'css-result' }">CSS</router-link>
         </div>
         <ExportToCodePenButton />
         <button class="button close-button" v-on:click="close">Close</button>

@@ -22,7 +22,7 @@ export default {
     ShapeButton
   },
   data() {
-    const firstShape = this.shapeGeneratorGroup[0](store.getters.currentColor)
+    const firstShape = this.shapeGeneratorGroup[0](store.getters.currentColor);
     return {
       defaultShapeName: get(firstShape, "name")
     };
@@ -45,7 +45,9 @@ export default {
       );
     },
     wasSelected() {
-      return get(store.getters.shapeToBeAdded, "name") === this.defaultShapeName;
+      return (
+        get(store.getters.shapeToBeAdded, "name") === this.defaultShapeName
+      );
     }
   }
 };

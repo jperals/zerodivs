@@ -1,5 +1,5 @@
 <template>
-  <nav :class="{'at-root': !currentProject}">
+  <nav :class="{ 'at-root': !currentProject }">
     <section class="breadcrumbs">
       <router-link to="/" class="link-to-home">zerodivs.com</router-link>
       <span v-if="currentProject">/</span>
@@ -8,7 +8,9 @@
       </span>
     </section>
     <button v-if="currentProject" v-on:click="toggleOutput">Result</button>
-    <router-link v-if="!currentProject" to="/about" class="about-link secondary">About</router-link>
+    <router-link v-if="!currentProject" to="/about" class="about-link secondary"
+      >About</router-link
+    >
   </nav>
 </template>
 
@@ -67,7 +69,7 @@ nav > * {
   padding-left: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}  
+}
 .about-link {
   padding-right: 1rem;
 }

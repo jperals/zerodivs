@@ -1,7 +1,11 @@
 <template>
   <div class="output-code">
-    <codemirror v-model="jsonResult" :options="codeMirrorOptions" class="code-editor code-editor-json-output" />
-    <CopyButton :content="jsonResult" class="copy-output-to-clipboard"/>
+    <codemirror
+      v-model="jsonResult"
+      :options="codeMirrorOptions"
+      class="code-editor code-editor-json-output"
+    />
+    <CopyButton :content="jsonResult" class="copy-output-to-clipboard" />
   </div>
 </template>
 

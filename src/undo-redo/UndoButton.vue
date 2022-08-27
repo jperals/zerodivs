@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="undo" :class="{disabled: !canUndo}">
+  <button v-on:click="undo" :class="{ disabled: !canUndo }">
     <div class="icon" :style="style" />
   </button>
 </template>
@@ -53,6 +53,6 @@ button.disabled {
   cursor: default;
 }
 button.disabled .icon {
-  opacity: .5;
+  opacity: 0.5;
 }
 </style>

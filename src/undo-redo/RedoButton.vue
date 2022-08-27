@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="undo" :class="{disabled: !canRedo}">
+  <button v-on:click="undo" :class="{ disabled: !canRedo }">
     <div class="icon" :style="style" />
   </button>
 </template>

@@ -5,7 +5,7 @@
       :options="codeMirrorOptions"
       class="code-editor code-editor-css-output"
     />
-    <CopyButton :content="css" class="copy-output-to-clipboard"/>
+    <CopyButton :content="css" class="copy-output-to-clipboard" />
   </div>
 </template>
 

@@ -1,5 +1,9 @@
 <template>
-  <div class="workspace" ref="workspace" :class="{ 'adding-shape': addingShape }">
+  <div
+    class="workspace"
+    ref="workspace"
+    :class="{ 'adding-shape': addingShape }"
+  >
     <input type="text" ref="focus" class="fake-focus" />
     <pinch-zoom ref="pinchZoom">
       <div
@@ -10,7 +14,11 @@
         ref="pinchZoomInner"
       >
         <div class="full-wrapper">
-          <div class="canvas-wrapper" :class="'canvas-wrapper-' + projectId" ref="canvas">
+          <div
+            class="canvas-wrapper"
+            :class="'canvas-wrapper-' + projectId"
+            ref="canvas"
+          >
             <Canvas :projectId="projectId" :shapesLayers="shapesLayers" />
           </div>
         </div>
@@ -35,7 +43,7 @@
       :viewportTransform="viewportTransform"
     />
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
-      <p class="zoom-value">Zoom: {{zoomLevel * 100 | decimals(0)}}%</p>
+      <p class="zoom-value">Zoom: {{ (zoomLevel * 100) | decimals(0) }}%</p>
       <button v-on:click="resetZoom">Reset</button>
     </div>
   </div>
@@ -328,7 +336,10 @@ export default {
   },
   beforeDestroy() {
     this.$refs.pinchZoom.removeEventListener("wheel", this.updateViewport);
-    this.$refs.pinchZoom.removeEventListener("pointermove", this.updateViewport);
+    this.$refs.pinchZoom.removeEventListener(
+      "pointermove",
+      this.updateViewport
+    );
     store.dispatch("unselectShape");
   },
   computed: {

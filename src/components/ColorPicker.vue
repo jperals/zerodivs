@@ -1,9 +1,18 @@
 <template>
-  <div class="color-picker" :class="{active: isPickerOpen}" ref="container">
+  <div class="color-picker" :class="{ active: isPickerOpen }" ref="container">
     <input type="text" v-model="selectedColor" />
-    <span class="sample" :style="{ backgroundColor: selectedColor }" v-on:click="togglePicker"></span>
+    <span
+      class="sample"
+      :style="{ backgroundColor: selectedColor }"
+      v-on:click="togglePicker"
+    ></span>
     <portal to="color-picker">
-      <div class="color-modal" v-if="isPickerOpen" :class="{dragging}" v-on:pointermove="onDrag">
+      <div
+        class="color-modal"
+        v-if="isPickerOpen"
+        :class="{ dragging }"
+        v-on:pointermove="onDrag"
+      >
         <div class="picker-container" :class="anchorClass" :style="pickerStyle">
           <div
             class="top-bar"

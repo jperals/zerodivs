@@ -1,5 +1,11 @@
 <template>
-  <ColorPicker v-model="currentColor" :on-pick="selectColor" class="current-color-picker" anchor="top" id="current-color" />
+  <ColorPicker
+    v-model="currentColor"
+    :on-pick="selectColor"
+    class="current-color-picker"
+    anchor="top"
+    id="current-color"
+  />
 </template>
 
 <script>
@@ -23,8 +29,8 @@ export default {
 <style scoped>
 .current-color-picker {
   --side: 1.75rem;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   box-sizing: border-box;
 }
 </style>

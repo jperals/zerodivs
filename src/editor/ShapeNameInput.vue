@@ -1,7 +1,13 @@
 <template>
   <span class="root" v-on:click="onClick">
-    <input v-if="active" class="shape-name" type="text" v-model="shapeName" ref="input" />
-    <span v-else class="shape-name">{{shapeName}}</span>
+    <input
+      v-if="active"
+      class="shape-name"
+      type="text"
+      v-model="shapeName"
+      ref="input"
+    />
+    <span v-else class="shape-name">{{ shapeName }}</span>
   </span>
 </template>
 

@@ -6,7 +6,11 @@
         v-for="(stop, index) in shape.stops"
         :key="stop.id"
         class="stop draggable"
-        :class="{ 'moved-down': isItemMovedDown(index), 'moved-up': isItemMovedUp(index), dragging: stop === itemBeingDragged }"
+        :class="{
+          'moved-down': isItemMovedDown(index),
+          'moved-up': isItemMovedUp(index),
+          dragging: stop === itemBeingDragged
+        }"
         :style="listItemStyle(stop)"
         v-on:mousedown="onItemMouseDown(index, $event)"
         v-on:mousemove="onItemMouseMove"
@@ -24,13 +28,25 @@
           type="text"
           class="w-s m-l-s"
           v-model="stop.position"
-          v-on:change="(event) => updateStop(stop, {position: event.target.value})"
+          v-on:change="
+            event => updateStop(stop, { position: event.target.value })
+          "
         />
-        <CloseButton class="remove-stop" :on-click="() => removeStop(index)" title="Remove stop" />
+        <CloseButton
+          class="remove-stop"
+          :on-click="() => removeStop(index)"
+          title="Remove stop"
+        />
       </li>
     </ul>
     <div class="row add-new">
-      <button class="add-new-stop" v-on:click="() => addNewStop()" title="Add new stop">Add stop</button>
+      <button
+        class="add-new-stop"
+        v-on:click="() => addNewStop()"
+        title="Add new stop"
+      >
+        Add stop
+      </button>
     </div>
   </div>
 </template>

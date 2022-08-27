@@ -81,10 +81,9 @@ section button:last-child {
   align-items: center;
 }
 .toolbar section.right section:not(:first-child) {
-  margin-left: .75rem;
+  margin-left: 0.75rem;
 }
 .toolbar section.right section:not(:last-child) {
   margin-right: 0.75rem;
 }
-
 </style>

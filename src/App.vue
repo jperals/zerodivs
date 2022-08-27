@@ -11,7 +11,9 @@ export default {
   components: { Nav },
   computed: {
     mode() {
-      return (this.$route.name === "gallery" || this.$route.name === "about") ? "at-root" : "";
+      return this.$route.name === "gallery" || this.$route.name === "about"
+        ? "at-root"
+        : "";
     }
   }
 };
