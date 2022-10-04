@@ -1,6 +1,66 @@
 export default [
   [
     function(color) {
+      const lineWidth = {
+        value: 4,
+        unit: "px"
+      };
+      return {
+        name: "Line, to bottom right",
+        type: "linear",
+        direction: "to bottom right",
+        stops: [
+          {
+            color: "transparent",
+            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+          },
+          {
+            color,
+            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+          },
+          {
+            color,
+            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+          },
+          {
+            color: "transparent",
+            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+          }
+        ]
+      };
+    },
+    function(color) {
+      const lineWidth = {
+        value: 4,
+        unit: "px"
+      };
+      return {
+        name: "Line, to bottom left",
+        type: "linear",
+        direction: "to bottom left",
+        stops: [
+          {
+            color: "transparent",
+            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+          },
+          {
+            color,
+            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+          },
+          {
+            color,
+            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+          },
+          {
+            color: "transparent",
+            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+          }
+        ]
+      };
+    }
+  ],
+  [
+    function(color) {
       return {
         name: "Rectangle",
         type: "linear",
