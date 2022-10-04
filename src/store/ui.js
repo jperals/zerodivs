@@ -5,6 +5,7 @@ const ui = {
     colorPickerPosition: null,
     copiedShapes: [],
     currentColor: "black",
+    lineThickness: "4px",
     openColorPickerId: null,
     pressedKeys: new Set(),
     selectedLayer: "main",
@@ -57,6 +58,9 @@ const ui = {
     setColorPickerPosition(state, position) {
       state.colorPickerPosition = position;
     },
+    setLineThickness(state, thickness) {
+      state.lineThickness = thickness;
+    },
     setOpenColorPickerId(state, id) {
       state.openColorPickerId = id;
     },
@@ -73,6 +77,7 @@ const ui = {
     currentColor: state => state.currentColor,
     isKeyPressed: state => key => state.pressedKeys.has(key),
     isShapeSelected: state => shape => state.selectedShapes.has(shape),
+    lineThickness: state => state.lineThickness,
     openColorPickerId: state => state.openColorPickerId,
     selectedLayer: state => state.selectedLayer,
     selectedShape: state =>
@@ -128,6 +133,9 @@ const ui = {
     },
     selectShapes({ commit }, { shapes, keepSelection }) {
       commit("selectShapes", { shapes, keepSelection });
+    },
+    setLineThickness({ commit }, value) {
+      commit("setLineThickness", value);
     },
     setOpenColorPickerId({ commit }, value) {
       commit("setOpenColorPickerId", value);

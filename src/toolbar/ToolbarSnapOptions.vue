@@ -41,10 +41,16 @@ export default {
 
 <style scoped>
 label {
+  align-items: center;
+  display: flex;
+  flex-direction: colum;
   margin-right: 0.25rem;
 }
 input.inactive {
   pointer-events: none;
   color: lightgray;
+}
+.units {
+  margin-left: 0.25em;
 }
 </style>

@@ -1,10 +1,11 @@
+import store from "@/store";
+
+const circleEdge = "71%";
+
 export default [
   [
     function(color) {
-      const lineWidth = {
-        value: 4,
-        unit: "px"
-      };
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Line, to bottom right",
         type: "linear",
@@ -12,28 +13,25 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% - ${lineWidth} / 2)`
           },
           {
             color,
-            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% - ${lineWidth} / 2)`
           },
           {
             color,
-            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% + ${lineWidth} / 2)`
           },
           {
             color: "transparent",
-            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% + ${lineWidth} / 2)`
           }
         ]
       };
     },
     function(color) {
-      const lineWidth = {
-        value: 4,
-        unit: "px"
-      };
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Line, to bottom left",
         type: "linear",
@@ -41,19 +39,19 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% - ${lineWidth} / 2)`
           },
           {
             color,
-            position: `calc(50% - ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% - ${lineWidth} / 2)`
           },
           {
             color,
-            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% + ${lineWidth} / 2)`
           },
           {
             color: "transparent",
-            position: `calc(50% + ${lineWidth.value / 2}${lineWidth.unit})`
+            position: `calc(50% + ${lineWidth} / 2)`
           }
         ]
       };
@@ -149,75 +147,24 @@ export default [
   [
     function(color) {
       return {
-        name: "Cropped stripe, bottom left to top right",
-        type: "linear",
-        direction: "to top right",
-        stops: [
-          {
-            color: "transparent",
-            position: "15%"
-          },
-          {
-            color,
-            position: "15%"
-          },
-          {
-            color,
-            position: "85%"
-          },
-          {
-            color: "transparent",
-            position: "85%"
-          }
-        ]
-      };
-    },
-    function(color) {
-      return {
-        name: "Cropped stripe, bottom right to top left",
-        type: "linear",
-        direction: "to top left",
-        stops: [
-          {
-            color: "transparent",
-            position: "15%"
-          },
-          {
-            color,
-            position: "15%"
-          },
-          {
-            color,
-            position: "85%"
-          },
-          {
-            color: "transparent",
-            position: "85%"
-          }
-        ]
-      };
-    }
-  ],
-  [
-    function(color) {
-      return {
         name: "Circle",
         type: "radial",
         direction: "at center",
         stops: [
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
       };
     },
     function(color) {
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Empty circle",
         type: "radial",
@@ -225,19 +172,19 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
@@ -253,11 +200,11 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
@@ -271,11 +218,11 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
@@ -289,11 +236,11 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
@@ -307,11 +254,11 @@ export default [
         stops: [
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
@@ -320,6 +267,7 @@ export default [
   ],
   [
     function(color) {
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Bottom right arc",
         type: "radial",
@@ -327,24 +275,25 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ]
       };
     },
     function(color) {
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Bottom left arc",
         type: "radial",
@@ -352,25 +301,26 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
       };
     },
     function(color) {
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Top left arc",
         type: "radial",
@@ -378,25 +328,26 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"
       };
     },
     function(color) {
+      const lineWidth = store.getters.lineThickness;
       return {
         name: "Top right arc",
         type: "radial",
@@ -404,19 +355,19 @@ export default [
         stops: [
           {
             color: "transparent",
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "29%"
+            position: `calc(${circleEdge} - ${lineWidth})`
           },
           {
             color,
-            position: "71%"
+            position: circleEdge
           },
           {
             color: "transparent",
-            position: "71%"
+            position: circleEdge
           }
         ],
         repeat: "no-repeat"

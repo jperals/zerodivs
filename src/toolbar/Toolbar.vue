@@ -1,8 +1,13 @@
 <template>
   <div class="toolbar">
     <section>
-      <UndoButton />
-      <RedoButton />
+      <section>
+        <UndoButton />
+        <RedoButton />
+      </section>
+    </section>
+    <section>
+      <CurrentColorPicker />
     </section>
     <section>
       <ShapeButtonGroup
@@ -11,8 +16,10 @@
         :shapeGeneratorGroup="shapeGeneratorGroup"
       />
     </section>
-    <section class="right">
-      <CurrentColorPicker />
+    <section class="input">
+      <LineThicknessPicker />
+    </section>
+    <section class="input">
       <ToolbarSnapOptions />
     </section>
   </div>
@@ -21,6 +28,7 @@
 <script>
 import buttonShapeGenerators from "./toolbar-button-shapes";
 import CurrentColorPicker from "./CurrentColorPicker";
+import LineThicknessPicker from "./LineThicknessPicker.vue";
 import RedoButton from "@/undo-redo/RedoButton";
 import ShapeButtonGroup from "./ShapeButtonGroup";
 import store from "@/store";
@@ -29,6 +37,7 @@ import UndoButton from "@/undo-redo/UndoButton";
 export default {
   components: {
     CurrentColorPicker,
+    LineThicknessPicker,
     RedoButton,
     ShapeButtonGroup,
     ToolbarSnapOptions,
@@ -66,15 +75,16 @@ section button:first-child {
 section button:last-child {
   margin-right: 0;
 }
-.toolbar > section {
+.toolbar > section:not(.input) > * {
+  height: 100%;
+}
+.toolbar > section.input {
   display: flex;
-  flex-direction: row;
-  min-width: 33%;
+  align-items: center;
 }
-.toolbar section.right {
-  justify-content: space-between;
-}
-.toolbar section.right > * {
+
+.toolbar > section:first-child > *,
+.toolbar > section:last-child > * {
   display: flex;
   height: 100%;
   flex-direction: row;
