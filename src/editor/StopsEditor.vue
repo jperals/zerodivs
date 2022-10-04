@@ -26,7 +26,7 @@
         />
         <input
           type="text"
-          class="w-s m-l-s"
+          class="m-l-s"
           v-model="stop.position"
           v-on:change="
             event => updateStop(stop, { position: event.target.value })
@@ -172,6 +172,9 @@ li.moved-up {
 
 <style>
 .stop .color-picker input[type="text"] {
-  width: 10ch;
+  width: 7ch;
+}
+.stop .color-picker + input[type="text"] {
+  width: 8ch;
 }
 </style>
