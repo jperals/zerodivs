@@ -1,23 +1,16 @@
-import Vue from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import PortalVue from "portal-vue";
-import VueClipboard from "vue-clipboard2";
+import VueClipboard from "vue3-clipboard";
 
-Vue.use(PortalVue);
-Vue.use(VueClipboard);
-
-Vue.config.productionTip = false;
-
-Vue.component("v-style", {
-  render: function(createElement) {
-    return createElement("style", this.$slots.default);
-  }
+const app = createApp(App);
+app.use(store);
+app.use(router);
+app.use(VueClipboard, {
+  autoSetContainer: true
 });
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+app.config.productionTip = false;
+
+app.mount("#app");

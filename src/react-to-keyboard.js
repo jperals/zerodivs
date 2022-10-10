@@ -1,5 +1,6 @@
 import { isNotWriting } from "@/common/ui";
 import store from "@/store";
+
 export default function reactToKeyboard(event) {
   switch (event.key) {
     case "a":

@@ -60,9 +60,9 @@
         </div>
       </div>
     </div>
-    <v-style>
+    <component :is="'style'">
       body { background-color: var(--gray-900); }
-    </v-style>
+    </component>
   </div>
 </template>
 

@@ -1,25 +1,25 @@
 <template>
   <div class="canvas" :class="'canvas-' + projectId">
-    <v-style type="text/css">
+    <component :is="'style'" type="text/css">
       .canvas-wrapper-{{ projectId }} {
       {{ mainCustomStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isMainActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isMainActive">
       .canvas-{{ projectId }} {
       {{ mainStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isBeforeActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isBeforeActive">
       .canvas-{{ projectId }}:before {
       {{ beforeStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isAfterActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isAfterActive">
       .canvas-{{ projectId }}:after {
       {{ afterStyle }}
       }
-    </v-style>
+    </component>
   </div>
 </template>
 

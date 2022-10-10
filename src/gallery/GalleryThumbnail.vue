@@ -6,26 +6,26 @@
     :style="offsetStyle"
   >
     <div class="thumbnail" :class="'thumbnail-' + projectId"></div>
-    <v-style type="text/css">
+    <component :is="'style'" type="text/css">
       .thumbnail-wrapper-{{ projectId }} {
       {{ mainCustomStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isMainActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isMainActive">
       .thumbnail-{{ projectId }} {
       {{ mainStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isBeforeActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isBeforeActive">
       .thumbnail-{{ projectId }}:before {
       {{ beforeStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isAfterActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isAfterActive">
       .thumbnail-{{ projectId }}:after {
       {{ afterStyle }}
       }
-    </v-style>
+    </component>
   </div>
 </template>
 

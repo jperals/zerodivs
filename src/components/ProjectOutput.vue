@@ -59,6 +59,7 @@ export default {
 .output .tabs a:hover {
   background-color: #f7f7f7;
 }
+
 .output pre {
   font-family: "Courier New", Courier, monospace;
   font-size: 0.75rem;
@@ -75,6 +76,23 @@ export default {
 .output-code {
   position: relative;
 }
+
+.code-editor {
+  font-size: 0.75rem;
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.code-editor .cm-content {
+  flex-shrink: initial;
+  width: 0;
+}
+.code-editor .cm-line {
+  white-space: pre-wrap;
+}
+
 button.copy-output-to-clipboard {
   position: absolute;
   top: 0.5rem;

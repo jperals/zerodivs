@@ -1,6 +1,7 @@
 <template>
   <div id="app" :class="mode">
     <Nav />
+    <div id="color-picker"></div>
     <router-view />
   </div>
 </template>

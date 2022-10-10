@@ -29,21 +29,21 @@
         />
       </div>
     </div>
-    <v-style type="text/css">
+    <component :is="'style'" type="text/css">
       .overlays-{{ projectId }} {
       {{ mainCustomStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isBeforeActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isBeforeActive">
       .overlays-{{ projectId }} .overlays--before {
       {{ beforeStyle }}
       }
-    </v-style>
-    <v-style type="text/css" v-if="isAfterActive">
+    </component>
+    <component :is="'style'" type="text/css" v-if="isAfterActive">
       .overlays-{{ projectId }} .overlays--after {
       {{ afterStyle }}
       }
-    </v-style>
+    </component>
   </div>
 </template>
 

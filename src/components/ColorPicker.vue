@@ -6,7 +6,7 @@
       :style="{ backgroundColor: selectedColor }"
       v-on:click="togglePicker"
     ></span>
-    <portal to="color-picker">
+    <Teleport to="#color-picker">
       <div
         class="color-modal"
         v-if="isPickerOpen"
@@ -23,14 +23,14 @@
           <EdgeCloseButton :onClick="closePicker" />
         </div>
       </div>
-    </portal>
+    </Teleport>
   </div>
 </template>
 
 <script>
 import convertCssColorNameToHex from "convert-css-color-name-to-hex";
 import validateColor from "validate-color";
-import { Chrome } from "vue-color";
+import { Chrome as ChromeColorPicker } from "@ckpack/vue-color";
 import EdgeCloseButton from "@/components/EdgeCloseButton";
 import store from "@/store";
 import { deepCopy } from "@/common/utils";
@@ -46,7 +46,7 @@ export default {
       required: false
     },
     onPick: Function,
-    value: String
+    modelValue: String
   },
   data() {
     return {
@@ -57,7 +57,7 @@ export default {
     };
   },
   components: {
-    ChromeColorPicker: Chrome,
+    ChromeColorPicker,
     EdgeCloseButton
   },
   computed: {
@@ -77,7 +77,7 @@ export default {
     },
     selectedColor: {
       get() {
-        return this.value;
+        return this.modelValue;
       },
       set(value) {
         this.selectColor(value);
@@ -85,7 +85,7 @@ export default {
     },
     selectedColorHex: {
       get() {
-        return convertCssColorNameToHex(this.value);
+        return convertCssColorNameToHex(this.modelValue || "");
       },
       set(value) {
         this.selectColor(value.hex8);

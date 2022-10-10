@@ -1,13 +1,10 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Gallery from "@/gallery/Gallery";
 import Editor from "@/editor/Editor";
 import About from "@/about-page/About";
 import ProjectOutput from "@/components/ProjectOutput";
 import CssOutput from "@/components/CssOutput";
 import JsonOutput from "@/components/JsonOutput";
-
-Vue.use(VueRouter);
 
 const routes = [
   {
@@ -49,7 +46,8 @@ const routes = [
   }
 ];
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes
 });
 

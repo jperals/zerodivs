@@ -1,42 +1,43 @@
 <template>
   <div class="output-code">
     <codemirror
-      v-model="css"
-      :options="codeMirrorOptions"
+      v-model="cssCode"
+      height="auto"
+      :extensions="extensions"
+      mode="css"
+      :disabled="true"
+      :line-wrapping="true"
       class="code-editor code-editor-css-output"
     />
-    <CopyButton :content="css" class="copy-output-to-clipboard" />
+    <CopyButton :content="cssCode" class="copy-output-to-clipboard" />
   </div>
 </template>
 
 <script>
 import layers2css from "@/common/layers2css";
 import store from "@/store";
-import { codemirror } from "vue-codemirror-lite";
+import { Codemirror } from "vue-codemirror";
+import { css } from "@codemirror/lang-css";
+import { oneDark } from "@codemirror/theme-one-dark";
 import CopyButton from "@/components/CopyButton/CopyButton";
-require("codemirror/mode/css/css");
-require("codemirror/theme/nord.css");
+
 export default {
   components: {
-    codemirror,
+    Codemirror,
     CopyButton
   },
   computed: {
-    css() {
+    cssCode() {
       return layers2css({ layers: this.shapesLayers });
-    },
-    codeMirrorOptions() {
-      return {
-        height: "auto",
-        lineWrapping: true,
-        mode: "css",
-        readOnly: true,
-        theme: "nord"
-      };
     },
     shapesLayers() {
       return store.getters.allLayers;
     }
+  },
+  data() {
+    return {
+      extensions: [css(), oneDark]
+    };
   },
   methods: {
     close() {
@@ -45,20 +46,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.css-output {
-  position: relative;
-}
-.code-editor {
-  width: 100%;
-  font-size: 0.75rem;
-}
-</style>
-
-<style>
-.code-editor-css-output .CodeMirror {
-  height: auto;
-  padding: 0.5rem 1rem;
-}
-</style>

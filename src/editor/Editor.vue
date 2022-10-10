@@ -7,7 +7,6 @@
         <Layers />
         <PropsForm />
       </div>
-      <portal-target name="color-picker" />
       <router-view />
     </template>
     <div v-else>Couldn't find this project. :-/</div>

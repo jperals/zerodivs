@@ -1,38 +1,25 @@
 <template>
   <codemirror
     v-model="style"
-    :options="codeMirrorOptions"
+    :extensions="extensions"
+    mode="css"
+    height="auto"
     class="code-editor code-editor-extra-styles"
-    ref="codeEditor"
   />
 </template>
 
 <script>
 import store from "@/store";
-import { codemirror } from "vue-codemirror-lite";
-require("codemirror/mode/css/css");
-require("codemirror/addon/comment/comment");
+import { Codemirror } from "vue-codemirror";
+import { css } from "@codemirror/lang-css";
 export default {
   props: {
     layerName: String
   },
   components: {
-    codemirror
+    Codemirror
   },
   computed: {
-    codeEditor() {
-      return this.$refs.codeEditor.editor;
-    },
-    codeMirrorOptions() {
-      return {
-        extraKeys: {
-          "Ctrl-/": this.toggleComment,
-          "Cmd-/": this.toggleComment
-        },
-        height: "auto",
-        mode: "css"
-      };
-    },
     style: {
       get() {
         return store.getters.extraStyles(this.layerName);
@@ -47,10 +34,8 @@ export default {
       }
     }
   },
-  methods: {
-    toggleComment() {
-      this.codeEditor.execCommand("toggleComment");
-    }
+  data() {
+    return { extensions: [css()] };
   }
 };
 </script>

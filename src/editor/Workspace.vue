@@ -43,7 +43,7 @@
       :viewportTransform="viewportTransform"
     />
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
-      <p class="zoom-value">Zoom: {{ (zoomLevel * 100) | decimals(0) }}%</p>
+      <p class="zoom-value">Zoom: {{ zoomLevelPercentage }}%</p>
       <button v-on:click="resetZoom">Reset</button>
     </div>
   </div>
@@ -367,31 +367,33 @@ export default {
     },
     zoomLevel() {
       return this.viewportTransform.scale;
-    }
-  },
-  filters: {
-    decimals(n, desiredDecimals) {
-      if (!desiredDecimals) {
-        return Math.round(n);
-      }
-      const rounded =
-        Math.round(n * Math.pow(10, desiredDecimals)) /
-        Math.pow(10, desiredDecimals);
-      let str = String(rounded);
-      const actualDecimalDigits = str.split(".")[1];
-      let actualLength = 0;
-      if (actualDecimalDigits === undefined) {
-        str += ".";
-      } else {
-        actualLength = actualDecimalDigits.length;
-      }
-      for (let i = 0; i < desiredDecimals - actualLength; i++) {
-        str += "0";
-      }
-      return str;
+    },
+    zoomLevelPercentage() {
+      return decimals(this.zoomLevel * 100, 0);
     }
   }
 };
+
+function decimals(n, desiredDecimals) {
+  if (!desiredDecimals) {
+    return Math.round(n);
+  }
+  const rounded =
+    Math.round(n * Math.pow(10, desiredDecimals)) /
+    Math.pow(10, desiredDecimals);
+  let str = String(rounded);
+  const actualDecimalDigits = str.split(".")[1];
+  let actualLength = 0;
+  if (actualDecimalDigits === undefined) {
+    str += ".";
+  } else {
+    actualLength = actualDecimalDigits.length;
+  }
+  for (let i = 0; i < desiredDecimals - actualLength; i++) {
+    str += "0";
+  }
+  return str;
+}
 </script>
 
 <style scoped>
