@@ -10,19 +10,21 @@
 export default {
   props: {
     isOpen: Boolean,
-    onClick: { type: Function, required: false }
+    onClick: { type: Function, required: false },
   },
   methods: {
     tryClick(event) {
       if (this.onClick) {
         this.onClick(event);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
+@use "sass:math";
+
 // Preferably keep border-width to
 // an even number,
 // because some calculations
@@ -75,7 +77,7 @@ $border-color-hover: var(--gray-200);
 }
 
 .hamburger-button:before {
-  top: calc(-#{$border-width/2} - 50%);
+  top: calc(-#{math.div($border-width, 2)} - 50%);
   border-top-width: 0;
   border-bottom-width: $border-width;
 }
@@ -96,7 +98,10 @@ $border-color-hover: var(--gray-200);
 }
 
 .hamburger-button.active:after {
-  transform: translate(-#{$border-width/2}, calc(#{$border-width/2} - 100%))
+  transform: translate(
+      -#{math.div($border-width, 2)},
+      calc(#{math.div($border-width, 2)} - 100%)
+    )
     rotate(-90deg);
 }
 </style>

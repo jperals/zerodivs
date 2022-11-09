@@ -253,6 +253,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use "sass:math";
+
 $handle-width: 8px;
 .shape-handles-wrapper {
   position: fixed;
@@ -270,8 +272,8 @@ $handle-width: 8px;
   width: $handle-width;
   height: $handle-width;
   pointer-events: all;
-  left: -$handle-width/2;
-  top: -$handle-width/2;
+  left: math.div(-$handle-width, 2);
+  top: math.div(-$handle-width, 2);
 }
 .top-left {
   cursor: nwse-resize;
