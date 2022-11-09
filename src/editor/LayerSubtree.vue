@@ -38,7 +38,7 @@
 
 <script>
 import DraggableListMixin from "@/components/DraggableListMixin";
-import ShapeNameInput from "@/editor/ShapeNameInput";
+import ShapeNameInput from "@/editor/ShapeNameInput.vue";
 import store from "@/store";
 export default {
   props: {

@@ -31,7 +31,7 @@
 import convertCssColorNameToHex from "convert-css-color-name-to-hex";
 import validateColor from "validate-color";
 import { Chrome as ChromeColorPicker } from "@ckpack/vue-color";
-import EdgeCloseButton from "@/components/EdgeCloseButton";
+import EdgeCloseButton from "@/components/EdgeCloseButton.vue";
 import store from "@/store";
 import { deepCopy } from "@/common/utils";
 export default {

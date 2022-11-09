@@ -9,42 +9,42 @@
     <template v-if="showHandles">
       <div
         class="handle top-left"
-        v-on:mousedown="$event => onMouseDown('top-left', $event)"
+        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
         :style="transformTopLeft"
       ></div>
       <div
         class="handle top"
-        v-on:mousedown="$event => onMouseDown('top', $event)"
+        v-on:mousedown="($event) => onMouseDown('top', $event)"
         :style="transformTop"
       ></div>
       <div
         class="handle top-right"
-        v-on:mousedown="$event => onMouseDown('top-right', $event)"
+        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
         :style="transformTopRight"
       ></div>
       <div
         class="handle right"
-        v-on:mousedown="$event => onMouseDown('right', $event)"
+        v-on:mousedown="($event) => onMouseDown('right', $event)"
         :style="transformRight"
       ></div>
       <div
         class="handle bottom-right"
-        v-on:mousedown="$event => onMouseDown('bottom-right', $event)"
+        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
         :style="transformBottomRight"
       ></div>
       <div
         class="handle bottom"
-        v-on:mousedown="$event => onMouseDown('bottom', $event)"
+        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
         :style="transformBottom"
       ></div>
       <div
         class="handle bottom-left"
-        v-on:mousedown="$event => onMouseDown('bottom-left', $event)"
+        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
         :style="transformBottomLeft"
       ></div>
       <div
         class="handle left"
-        v-on:mousedown="$event => onMouseDown('left', $event)"
+        v-on:mousedown="($event) => onMouseDown('left', $event)"
         :style="transformLeft"
       ></div>
     </template>
@@ -59,12 +59,12 @@ export default {
     showHandles: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     onMouseDown: Function,
     onMouseUp: Function,
     viewportTransform: Object,
-    shape: Object
+    shape: Object,
   },
   computed: {
     containerStyle() {
@@ -73,90 +73,90 @@ export default {
         {
           height: {
             value: 1,
-            units: "px"
+            units: "px",
           },
           width: {
             value: this.shape.width.value * this.viewportTransform.scale,
-            units: this.shape.width.units
+            units: this.shape.width.units,
           },
           ...this.transformCoords({ top: this.shapeTop, left: this.shapeLeft }),
           type: "linear",
           direction: "to bottom",
-          stops: [{ color }, { color }]
+          stops: [{ color }, { color }],
         },
         {
           height: {
             value: this.shape.height.value * this.viewportTransform.scale,
-            units: this.shape.height.units
+            units: this.shape.height.units,
           },
           width: {
             value: 1,
-            units: "px"
+            units: "px",
           },
           ...this.transformCoords({
             top: this.shapeTop,
-            left: this.shapeRight
+            left: this.shapeRight,
           }),
           type: "linear",
           direction: "to bottom",
-          stops: [{ color }, { color }]
+          stops: [{ color }, { color }],
         },
         {
           height: {
             value: 1,
-            units: "px"
+            units: "px",
           },
           width: {
             value: this.shape.width.value * this.viewportTransform.scale,
-            units: this.shape.width.units
+            units: this.shape.width.units,
           },
           ...this.transformCoords({
             top: this.shapeBottom,
-            left: this.shapeLeft
+            left: this.shapeLeft,
           }),
           type: "linear",
           direction: "to bottom",
-          stops: [{ color }, { color }]
+          stops: [{ color }, { color }],
         },
         {
           height: {
             value: this.shape.height.value * this.viewportTransform.scale,
-            units: this.shape.height.units
+            units: this.shape.height.units,
           },
           width: {
             value: 1,
-            units: "px"
+            units: "px",
           },
           ...this.transformCoords({ top: this.shapeTop, left: this.shapeLeft }),
           type: "linear",
           direction: "to bottom",
-          stops: [{ color }, { color }]
-        }
+          stops: [{ color }, { color }],
+        },
       ];
       return shapes2css(shapes);
     },
     shapeBottom() {
       return {
         value: this.shape.top.value + this.shape.height.value,
-        units: this.shape.top.units
+        units: this.shape.top.units,
       };
     },
     shapeLeft() {
       return {
         value: this.shape.left.value,
-        units: this.shape.left.units
+        units: this.shape.left.units,
       };
     },
     shapeRight() {
       return {
         value: this.shape.left.value + this.shape.width.value,
-        units: this.shape.left.units
+        units: this.shape.left.units,
       };
     },
     shapeTop() {
       return {
         value: this.shape.top.value,
-        units: this.shape.top.units
+        units: this.shape.top.units,
       };
     },
     transformBottom() {
@@ -164,8 +164,8 @@ export default {
         top: this.shapeBottom,
         left: {
           value: (this.shapeLeft.value + this.shapeRight.value) / 2,
-          units: this.shapeLeft.units
-        }
+          units: this.shapeLeft.units,
+        },
       });
     },
     transformBottomLeft() {
@@ -174,25 +174,25 @@ export default {
     transformBottomRight() {
       return this.cssTransform({
         top: this.shapeBottom,
-        left: this.shapeRight
+        left: this.shapeRight,
       });
     },
     transformLeft() {
       return this.cssTransform({
         top: {
           value: (this.shapeTop.value + this.shapeBottom.value) / 2,
-          units: this.shapeTop.units
+          units: this.shapeTop.units,
         },
-        left: this.shapeLeft
+        left: this.shapeLeft,
       });
     },
     transformRight() {
       return this.cssTransform({
         top: {
           value: (this.shapeTop.value + this.shapeBottom.value) / 2,
-          units: this.shapeTop.units
+          units: this.shapeTop.units,
         },
-        left: this.shapeRight
+        left: this.shapeRight,
       });
     },
     transformTop() {
@@ -200,8 +200,8 @@ export default {
         top: this.shapeTop,
         left: {
           value: (this.shapeLeft.value + this.shapeRight.value) / 2,
-          units: this.shapeLeft.units
-        }
+          units: this.shapeLeft.units,
+        },
       });
     },
     transformTopLeft() {
@@ -209,7 +209,7 @@ export default {
     },
     transformTopRight() {
       return this.cssTransform({ top: this.shapeTop, left: this.shapeRight });
-    }
+    },
   },
   methods: {
     cssTransform({ top, left }) {
@@ -231,24 +231,24 @@ export default {
           value:
             top.value * this.viewportTransform.scale +
             offset.top +
-            this.canvasPosition.y
+            this.canvasPosition.y,
         },
         left: {
           ...left,
           value:
             left.value * this.viewportTransform.scale +
             offset.left +
-            this.canvasPosition.x
-        }
+            this.canvasPosition.x,
+        },
       };
-    }
+    },
   },
   mounted() {
     this.$refs.wrapper.addEventListener("wheel", this.handleWheel);
   },
   beforeDestroy() {
     this.$refs.wrapper.removeEventListener("wheel", this.handleWheel);
-  }
+  },
 };
 </script>
 

@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import GalleryThumbnail from "./GalleryThumbnail";
-import HamburgerButton from "@/components/HamburgerButton";
+import GalleryThumbnail from "./GalleryThumbnail.vue";
+import HamburgerButton from "@/components/HamburgerButton.vue";
 import store from "@/store";
 export default {
   components: {

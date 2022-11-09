@@ -18,7 +18,7 @@ import store from "@/store";
 import { Codemirror } from "vue-codemirror";
 import { json } from "@codemirror/lang-json";
 import { oneDark } from "@codemirror/theme-one-dark";
-import CopyButton from "@/components/CopyButton/CopyButton";
+import CopyButton from "@/components/CopyButton/CopyButton.vue";
 
 export default {
   components: {

@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Gallery from "@/gallery/Gallery";
-import Editor from "@/editor/Editor";
-import About from "@/about-page/About";
-import ProjectOutput from "@/components/ProjectOutput";
-import CssOutput from "@/components/CssOutput";
-import JsonOutput from "@/components/JsonOutput";
+import Gallery from "@/gallery/ProjectGallery.vue";
+import Editor from "@/editor/ProjectEditor.vue";
+import About from "@/about-page/AboutPage.vue";
+import ProjectOutput from "@/components/ProjectOutput.vue";
+import CssOutput from "@/components/CssOutput.vue";
+import JsonOutput from "@/components/JsonOutput.vue";
 
 const routes = [
   {

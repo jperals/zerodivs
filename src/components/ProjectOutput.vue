@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ExportToCodePenButton from "./ExportToCodePenButton/ExportToCodePenButton";
+import ExportToCodePenButton from "./ExportToCodePenButton/ExportToCodePenButton.vue";
 export default {
   components: {
     ExportToCodePenButton

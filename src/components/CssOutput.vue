@@ -19,7 +19,7 @@ import store from "@/store";
 import { Codemirror } from "vue-codemirror";
 import { css } from "@codemirror/lang-css";
 import { oneDark } from "@codemirror/theme-one-dark";
-import CopyButton from "@/components/CopyButton/CopyButton";
+import CopyButton from "@/components/CopyButton/CopyButton.vue";
 
 export default {
   components: {

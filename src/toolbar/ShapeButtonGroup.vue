@@ -14,7 +14,7 @@
 
 <script>
 import { get } from "lodash";
-import ShapeButton from "./ShapeButton";
+import ShapeButton from "./ShapeButton.vue";
 import store from "@/store";
 export default {
   props: ["shapeGeneratorGroup"],

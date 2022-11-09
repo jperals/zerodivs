@@ -3,23 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
     "@ckpack/vue-color": "^1.2.0",
     "@codemirror/lang-css": "^6.0.0",
     "@codemirror/lang-json": "^6.0.0",
     "@codemirror/theme-one-dark": "^6.1.0",
-    "@vue/compat": "^3.1.0",
+    "@vitejs/plugin-vue": "^3.2.0",
     "codemirror": "^6.0.1",
     "convert-css-color-name-to-hex": "^0.1.1",
-    "core-js": "^3.25.0",
     "lodash": "^4.17.21",
     "uuid": "^3.3.3",
     "validate-color": "^1.0.8",
+    "vite": "^3.2.3",
     "vue": "^3.2.40",
     "vue-codemirror": "^6.1.1",
     "vue-router": "^4.0.0",
@@ -27,22 +27,14 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-plugin-router": "^5.0.8",
-    "@vue/cli-plugin-unit-jest": "^5.0.8",
-    "@vue/cli-plugin-vuex": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.1.0",
     "@vue/eslint-config-prettier": "^5.0.0",
-    "@vue/test-utils": "1.0.0-beta.29",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.27.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint-plugin-vue": "^8.7.1",
     "node-sass": "^4.14.1",
     "pinch-zoom-element": "^1.1.1",
     "prettier": "^1.19.1",
-    "sass-loader": "^8.0.0",
-    "@vue/compiler-sfc": "^3.1.0"
+    "sass": "^1.56.0"
   }
 }

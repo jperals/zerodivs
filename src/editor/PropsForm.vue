@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import LayerPropsFormFields from "./LayerPropsFormFields";
-import ShapePropsFormFields from "./ShapePropsFormFields";
+import LayerPropsFormFields from "./LayerPropsFormFields.vue";
+import ShapePropsFormFields from "./ShapePropsFormFields.vue";
 import store from "@/store";
 export default {
   components: {

@@ -1,15 +1,15 @@
 <template>
   <div id="app" :class="mode">
-    <Nav />
+    <TopNav />
     <div id="color-picker"></div>
     <router-view />
   </div>
 </template>
 
 <script>
-import Nav from "@/components/Nav";
+import TopNav from "@/components/TopNav.vue";
 export default {
-  components: { Nav },
+  components: { TopNav },
   computed: {
     mode() {
       return this.$route.name === "gallery" || this.$route.name === "about"

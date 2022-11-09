@@ -27,13 +27,13 @@
 
 <script>
 import buttonShapeGenerators from "./toolbar-button-shapes";
-import CurrentColorPicker from "./CurrentColorPicker";
+import CurrentColorPicker from "./CurrentColorPicker.vue";
 import LineThicknessPicker from "./LineThicknessPicker.vue";
-import RedoButton from "@/undo-redo/RedoButton";
-import ShapeButtonGroup from "./ShapeButtonGroup";
+import RedoButton from "@/undo-redo/RedoButton.vue";
+import ShapeButtonGroup from "./ShapeButtonGroup.vue";
 import store from "@/store";
-import ToolbarSnapOptions from "./ToolbarSnapOptions";
-import UndoButton from "@/undo-redo/UndoButton";
+import ToolbarSnapOptions from "./ToolbarSnapOptions.vue";
+import UndoButton from "@/undo-redo/UndoButton.vue";
 export default {
   components: {
     CurrentColorPicker,

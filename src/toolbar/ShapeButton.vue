@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ToolbarButton from "./ToolbarButton";
+import ToolbarButton from "./ToolbarButton.vue";
 import { formatImage } from "@/common/shapes2css";
 import store from "@/store";
 export default {

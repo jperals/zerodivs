@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import CloseButton from "@/components/CloseButton";
-import ColorPicker from "@/components/ColorPicker";
+import CloseButton from "@/components/CloseButton.vue";
+import ColorPicker from "@/components/ColorPicker.vue";
 import DraggableListMixin from "@/components/DraggableListMixin";
 import store from "@/store";
 export default {

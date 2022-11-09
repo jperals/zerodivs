@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ColorPicker from "@/components/ColorPicker";
+import ColorPicker from "@/components/ColorPicker.vue";
 import store from "@/store";
 export default {
   components: { ColorPicker },

@@ -19,7 +19,7 @@
             :class="'canvas-wrapper-' + projectId"
             ref="canvas"
           >
-            <Canvas :projectId="projectId" :shapesLayers="shapesLayers" />
+            <EditorCanvas :projectId="projectId" :shapesLayers="shapesLayers" />
           </div>
         </div>
         <div class="full-wrapper">
@@ -51,11 +51,11 @@
 
 <script>
 import store from "@/store";
-import Canvas from "./Canvas";
+import EditorCanvas from "./EditorCanvas.vue";
 import { deepCopy } from "@/common/utils";
 import { transformCoords } from "@/common/geometry";
-import ShapeOverlays from "./ShapeOverlays";
-import ShapeResizeHandles from "./ShapeResizeHandles";
+import ShapeOverlays from "./ShapeOverlays.vue";
+import ShapeResizeHandles from "./ShapeResizeHandles.vue";
 import "pinch-zoom-element";
 export default {
   data() {
@@ -73,20 +73,20 @@ export default {
       viewportTransform: {
         x: 0,
         y: 0,
-        scale: 1
-      }
+        scale: 1,
+      },
     };
   },
   components: {
-    Canvas,
+    EditorCanvas,
     ShapeOverlays,
-    ShapeResizeHandles
+    ShapeResizeHandles,
   },
   methods: {
     dragNewShape(diff) {
       const roundedDiff = {
         left: Math.round(diff.left),
-        top: Math.round(diff.top)
+        top: Math.round(diff.top),
       };
       const x =
         0 <= roundedDiff.left
@@ -104,7 +104,7 @@ export default {
         height: { value: height },
         top: { value: y },
         left: { value: x },
-        round: true
+        round: true,
       });
     },
     initDrag({ event }) {
@@ -115,7 +115,7 @@ export default {
       this.updateCanvasPosition();
       this.initialMousePosition = this.transformCoords({
         x: event.x,
-        y: event.y
+        y: event.y,
       });
     },
     moveShapes(diff) {
@@ -123,12 +123,12 @@ export default {
       if (selectedShapes.length === 1) {
         const newPosition = {
           left: this.initialShapeProps.left.value + diff.left,
-          top: this.initialShapeProps.top.value + diff.top
+          top: this.initialShapeProps.top.value + diff.top,
         };
         store.dispatch("moveShape", {
           shape: selectedShapes[0],
           left: { value: newPosition.left, units: "px" },
-          top: { value: newPosition.top, units: "px" }
+          top: { value: newPosition.top, units: "px" },
         });
       } else {
         for (const shape of store.getters.selectedShapes) {
@@ -137,9 +137,9 @@ export default {
             shape,
             left: {
               value: initialShapeProps.left.value + diff.left,
-              units: "px"
+              units: "px",
             },
-            top: { value: initialShapeProps.top.value + diff.top, units: "px" }
+            top: { value: initialShapeProps.top.value + diff.top, units: "px" },
           });
         }
       }
@@ -158,7 +158,7 @@ export default {
       const { x, y } = this.transformCoords({ x: event.x, y: event.y });
       const diff = {
         left: x - this.initialMousePosition.x,
-        top: y - this.initialMousePosition.y
+        top: y - this.initialMousePosition.y,
       };
       if (this.addingShape) {
         this.dragNewShape(diff);
@@ -175,31 +175,31 @@ export default {
         this.updateCanvasPosition();
         this.initialMousePosition = this.transformCoords({
           x: event.x,
-          y: event.y
+          y: event.y,
         });
         this.initialNewShapePosition = {
           left:
             (event.x - this.canvasPosition.x) / this.viewportTransform.scale,
-          top: (event.y - this.canvasPosition.y) / this.viewportTransform.scale
+          top: (event.y - this.canvasPosition.y) / this.viewportTransform.scale,
         };
         this.shapeBeingAdded = {
           ...store.getters.shapeToBeAdded,
           width: {
             units: "px",
-            value: 0
+            value: 0,
           },
           height: {
             units: "px",
-            value: 0
+            value: 0,
           },
           left: {
             units: "px",
-            value: this.initialNewShapePosition.left
+            value: this.initialNewShapePosition.left,
           },
           top: {
             units: "px",
-            value: this.initialNewShapePosition.top
-          }
+            value: this.initialNewShapePosition.top,
+          },
         };
         store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
       } else {
@@ -216,9 +216,9 @@ export default {
         store
           .dispatch("addShape", {
             layerName: store.getters.selectedLayer,
-            shape: store.getters.shapeToBeAdded
+            shape: store.getters.shapeToBeAdded,
           })
-          .then(newShape => {
+          .then((newShape) => {
             store
               .dispatch("selectShape", { shape: newShape })
               .then(() => store.dispatch("generateSnapPoints"));
@@ -240,13 +240,13 @@ export default {
       this.updateCanvasPosition();
       this.initialMousePosition = this.transformCoords({
         x: event.x,
-        y: event.y
+        y: event.y,
       });
       this.initialShapeProps = {
         left: { ...shape.left },
         top: { ...shape.top },
         width: { ...shape.width },
-        height: { ...shape.height }
+        height: { ...shape.height },
       };
     },
     onShapeMouseDown(shape, event) {
@@ -259,7 +259,7 @@ export default {
         left: { ...shape.left },
         top: { ...shape.top },
         width: { ...shape.width },
-        height: { ...shape.height }
+        height: { ...shape.height },
       };
       if (!this.selectingMultipleShapes) {
         store
@@ -283,7 +283,7 @@ export default {
         store
           .dispatch("selectShape", {
             shape,
-            keepSelection: store.getters.isKeyPressed("Shift")
+            keepSelection: store.getters.isKeyPressed("Shift"),
           })
           .then(() => store.dispatch("generateSnapPoints"));
       }
@@ -297,7 +297,7 @@ export default {
         diff,
         direction: this.resizeDirection,
         initialShapeProps: this.initialShapeProps,
-        shape: store.getters.selectedShape
+        shape: store.getters.selectedShape,
       });
     },
     preventZoom(event) {
@@ -307,7 +307,7 @@ export default {
       return transformCoords({
         x,
         y,
-        viewportTransform: this.viewportTransform
+        viewportTransform: this.viewportTransform,
       });
     },
     updateCanvasPosition() {
@@ -322,14 +322,14 @@ export default {
         this.viewportTransform = {
           x: this.$refs.pinchZoom.x,
           y: this.$refs.pinchZoom.y,
-          scale: this.$refs.pinchZoom.scale
+          scale: this.$refs.pinchZoom.scale,
         };
       }, 0);
-    }
+    },
   },
   mounted() {
     this.$refs.pinchZoom.addEventListener("wheel", this.updateViewport, {
-      passive: true
+      passive: true,
     });
     this.$refs.pinchZoom.addEventListener("pointermove", this.updateViewport);
     this.updateCanvasPosition();
@@ -370,8 +370,8 @@ export default {
     },
     zoomLevelPercentage() {
       return decimals(this.zoomLevel * 100, 0);
-    }
-  }
+    },
+  },
 };
 
 function decimals(n, desiredDecimals) {

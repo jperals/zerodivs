@@ -60,7 +60,7 @@
 
 <script>
 import store from "@/store";
-import StopsEditor from "./StopsEditor";
+import StopsEditor from "./StopsEditor.vue";
 export default {
   components: {
     StopsEditor

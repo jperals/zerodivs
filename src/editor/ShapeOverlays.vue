@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import ShapeOverlay from "./ShapeOverlay";
+import ShapeOverlay from "./ShapeOverlay.vue";
 import shapes2css from "@/common/shapes2css";
 export default {
   props: {

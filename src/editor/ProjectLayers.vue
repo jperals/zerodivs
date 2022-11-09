@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import LayerSubtree from "./LayerSubtree";
+import LayerSubtree from "./LayerSubtree.vue";
 export default {
   components: {
     LayerSubtree
