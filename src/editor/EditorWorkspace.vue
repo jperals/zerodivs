@@ -32,16 +32,18 @@
         </div>
       </div>
     </pinch-zoom>
-    <ShapeResizeHandles
-      v-for="shape in selectedShapes"
-      :canvasPosition="canvasPosition"
-      :key="shape.id"
-      :onMouseDown="onResizeHandleMouseDown"
-      :onMouseUp="onMouseUp"
-      :shape="shape"
-      :showHandles="!!selectedShape"
-      :viewportTransform="viewportTransform"
-    />
+    <template v-if="canvasPosition">
+      <ShapeResizeHandles
+        v-for="shape in selectedShapes"
+        :canvasPosition="canvasPosition"
+        :key="shape.id"
+        :onMouseDown="onResizeHandleMouseDown"
+        :onMouseUp="onMouseUp"
+        :shape="shape"
+        :showHandles="!!selectedShape"
+        :viewportTransform="viewportTransform"
+      />
+    </template>
     <div class="reset-zoom" v-if="zoomLevel && zoomLevel !== 1">
       <p class="zoom-value">Zoom: {{ zoomLevelPercentage }}%</p>
       <button v-on:click="resetZoom">Reset</button>
