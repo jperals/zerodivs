@@ -18,7 +18,7 @@ import { get } from "lodash";
 import Workspace from "./EditorWorkspace.vue";
 import Layers from "./ProjectLayers.vue";
 import PropsForm from "./PropsForm.vue";
-import Toolbar from "@/toolbar/ToolBar.vue";
+import Toolbar from "@/toolbar/Toolbar.vue";
 import reactToKeyboard from "@/react-to-keyboard";
 import store from "@/store";
 export default {
