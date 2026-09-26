@@ -1,4 +1,4 @@
-import uuid from "uuid/v1";
+import { v4 as uuidv4 } from 'uuid';
 import { get } from "lodash";
 import { warn } from "@/warn";
 import persistence from "@/persistence";
@@ -46,7 +46,7 @@ const projects = {
   },
   actions: {
     async createNewProject({ commit, getters }) {
-      const id = uuid();
+      const id = uuidv4();
       commit("createNewProject", id);
       await persistence.set("divs", getters.projects);
       return id;

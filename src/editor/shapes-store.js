@@ -1,5 +1,5 @@
 import { get, isObject } from "lodash";
-import uuid from "uuid/v1";
+import { v4 as uuidv4 } from 'uuid';
 import { warn } from "@/warn";
 import { move, moveBy } from "./shapes";
 import { getSnaps, moveToSnaps } from "@/snap/snap";
@@ -52,7 +52,7 @@ const shapes = {
   mutations: {
     addNewStop(state, { shape, index }) {
       const lastStop = shape.stops[shape.stops.length - 1];
-      const newStop = { color: lastStop.color, id: uuid(), position: "" };
+      const newStop = { color: lastStop.color, id: uuidv4(), position: "" };
       if (typeof index === "number") {
         shape.stops.splice(index, 0, newStop);
       } else {
@@ -60,7 +60,7 @@ const shapes = {
       }
     },
     addShape(state, { layerName, shape }) {
-      get(shape, "stops", []).forEach(stop => (stop.id = uuid()));
+      get(shape, "stops", []).forEach(stop => (stop.id = uuidv4()));
       state.layers[layerName].shapes.push(shape);
     },
     moveShapeBy(state, { shape, left, top }) {
@@ -425,7 +425,7 @@ function deepCopy(obj) {
 }
 
 function newShape(shape) {
-  return { ...shape, id: uuid() };
+  return { ...shape, id: uuidv4() };
 }
 
 export default shapes;
