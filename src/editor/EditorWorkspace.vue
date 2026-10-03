@@ -77,6 +77,31 @@ export default {
         y: 0,
         scale: 1,
       },
+      _onResizeMouseMove: null,
+      _onResizeMouseUp: null,
+    };
+  },
+  created() {
+    this._onResizeMouseMove = (event) => {
+      if (!this.initialMousePosition || !this.resizeDirection) return;
+      this.dragging = true;
+      const { x, y } = this.transformCoords({ x: event.x, y: event.y });
+      const diff = {
+        left: x - this.initialMousePosition.x,
+        top: y - this.initialMousePosition.y,
+      };
+      this.resizeShape(diff);
+    };
+    this._onResizeMouseUp = (event) => {
+      document.removeEventListener('mousemove', this._onResizeMouseMove);
+      document.removeEventListener('mouseup', this._onResizeMouseUp);
+      this.initialMousePosition = null;
+      this.initialShapeProps = null;
+      this.resizeDirection = null;
+      if (this.dragging) {
+        this.onChange();
+        this.dragging = false;
+      }
     };
   },
   components: {
@@ -250,6 +275,9 @@ export default {
         width: { ...shape.width },
         height: { ...shape.height },
       };
+      // Attach document-level listeners so resize works across Firefox's pointer capture boundary
+      document.addEventListener('mousemove', this._onResizeMouseMove);
+      document.addEventListener('mouseup', this._onResizeMouseUp);
     },
     onShapeMouseDown(shape, event) {
       if (this.addingShape) {
@@ -337,6 +365,8 @@ export default {
     this.updateCanvasPosition();
   },
   beforeDestroy() {
+    document.removeEventListener('mousemove', this._onResizeMouseMove);
+    document.removeEventListener('mouseup', this._onResizeMouseUp);
     this.$refs.pinchZoom.removeEventListener("wheel", this.updateViewport);
     this.$refs.pinchZoom.removeEventListener(
       "pointermove",

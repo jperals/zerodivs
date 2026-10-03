@@ -9,41 +9,57 @@
     <template v-if="showHandles">
       <div
         class="handle top-left"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('top-left', $event)"
         :style="transformTopLeft"
       ></div>
       <div
         class="handle top"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('top', $event)"
         :style="transformTop"
       ></div>
       <div
         class="handle top-right"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('top-right', $event)"
         :style="transformTopRight"
       ></div>
       <div
         class="handle right"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('right', $event)"
         :style="transformRight"
       ></div>
       <div
         class="handle bottom-right"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
         :style="transformBottomRight"
       ></div>
       <div
         class="handle bottom"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('bottom', $event)"
         :style="transformBottom"
       ></div>
       <div
         class="handle bottom-left"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
         :style="transformBottomLeft"
       ></div>
       <div
         class="handle left"
+        draggable="false"
+        @dragstart.prevent
         v-on:mousedown="($event) => onMouseDown('left', $event)"
         :style="transformLeft"
       ></div>
