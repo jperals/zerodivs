@@ -7,69 +7,23 @@
     v-on:mouseup="onMouseUp"
   >
     <template v-if="showHandles">
-      <div
-        class="handle top-left"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('top-left', $event)"
-        :style="transformTopLeft"
-      ></div>
-      <div
-        class="handle top"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('top', $event)"
-        :style="transformTop"
-      ></div>
-      <div
-        class="handle top-right"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('top-right', $event)"
-        :style="transformTopRight"
-      ></div>
-      <div
-        class="handle right"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('right', $event)"
-        :style="transformRight"
-      ></div>
-      <div
-        class="handle bottom-right"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('bottom-right', $event)"
-        :style="transformBottomRight"
-      ></div>
-      <div
-        class="handle bottom"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('bottom', $event)"
-        :style="transformBottom"
-      ></div>
-      <div
-        class="handle bottom-left"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('bottom-left', $event)"
-        :style="transformBottomLeft"
-      ></div>
-      <div
-        class="handle left"
-        draggable="false"
-        @dragstart.prevent
-        v-on:mousedown="($event) => onMouseDown('left', $event)"
-        :style="transformLeft"
-      ></div>
+      <ResizeHandle position="top-left" :transform="transformTopLeft" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="top" :transform="transformTop" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="top-right" :transform="transformTopRight" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="right" :transform="transformRight" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="bottom-right" :transform="transformBottomRight" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="bottom" :transform="transformBottom" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="bottom-left" :transform="transformBottomLeft" :on-mouse-down="onMouseDown" />
+      <ResizeHandle position="left" :transform="transformLeft" :on-mouse-down="onMouseDown" />
     </template>
   </div>
 </template>
 
 <script>
 import shapes2css from "@/common/shapes2css";
+import ResizeHandle from './ResizeHandle.vue';
 export default {
+  components: { ResizeHandle },
   props: {
     canvasPosition: Object,
     showHandles: {
@@ -269,9 +223,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@use "sass:math";
-
-$handle-width: 8px;
 .shape-handles-wrapper {
   position: fixed;
   left: 0;
@@ -280,39 +231,5 @@ $handle-width: 8px;
   bottom: 0;
   pointer-events: none;
   overflow: hidden;
-}
-.handle {
-  background-color: white;
-  border: 1px solid var(--gray-400);
-  position: absolute;
-  width: $handle-width;
-  height: $handle-width;
-  pointer-events: all;
-  left: math.div(-$handle-width, 2);
-  top: math.div(-$handle-width, 2);
-}
-.top-left {
-  cursor: nwse-resize;
-}
-.top {
-  cursor: ns-resize;
-}
-.top-right {
-  cursor: nesw-resize;
-}
-.right {
-  cursor: ew-resize;
-}
-.bottom-right {
-  cursor: nwse-resize;
-}
-.bottom {
-  cursor: ns-resize;
-}
-.bottom-left {
-  cursor: nesw-resize;
-}
-.left {
-  cursor: ew-resize;
 }
 </style>
