@@ -3,31 +3,27 @@
     class="handle"
     :class="position"
     draggable="false"
-    @dragstart.prevent
     v-on:mousedown="($event) => onMouseDown(position, $event)"
     :style="transform"
   ></div>
 </template>
 
-<script>
-export default {
-  props: {
-    position: {
-      type: String,
-      required: true,
-      validator: (v) =>
-        ['top-left', 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left'].includes(v),
-    },
-    transform: {
-      type: String,
-      required: true,
-    },
-    onMouseDown: {
-      type: Function,
-      required: true,
-    },
-  },
-};
+<script setup lang="ts">
+type HandlePosition =
+  | 'top-left'
+  | 'top'
+  | 'top-right'
+  | 'right'
+  | 'bottom-right'
+  | 'bottom'
+  | 'bottom-left'
+  | 'left';
+
+defineProps<{
+  position: HandlePosition;
+  transform: string;
+  onMouseDown: (position: HandlePosition, event: MouseEvent) => void;
+}>();
 </script>
 
 <style scoped lang="scss">
