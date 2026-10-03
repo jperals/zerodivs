@@ -51,362 +51,346 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import store from "@/store";
 import EditorCanvas from "./EditorCanvas.vue";
 import { deepCopy } from "@/common/utils";
-import { transformCoords } from "@/common/geometry";
+import { transformCoords as transformCoordsUtil } from "@/common/geometry";
 import ShapeOverlays from "./ShapeOverlays.vue";
 import ShapeResizeHandles from "./ShapeResizeHandles.vue";
 import "pinch-zoom-element";
-export default {
-  data() {
-    return {
-      canvasPosition: null,
-      currentAction: null,
-      dragging: false,
-      initialNewShapePosition: null,
-      initialShapeProps: null,
-      initialMousePosition: null,
-      initialPointerPosition: null,
-      resizeDirection: null,
-      shapeBeingAdded: null,
-      shapesBeingMoved: null,
-      viewportTransform: {
-        x: 0,
-        y: 0,
-        scale: 1,
-      },
-      _onResizeMouseMove: null,
-      _onResizeMouseUp: null,
-    };
-  },
-  created() {
-    this._onResizeMouseMove = (event) => {
-      if (!this.initialMousePosition || !this.resizeDirection) return;
-      this.dragging = true;
-      const { x, y } = this.transformCoords({ x: event.x, y: event.y });
-      const diff = {
-        left: x - this.initialMousePosition.x,
-        top: y - this.initialMousePosition.y,
-      };
-      this.resizeShape(diff);
-    };
-    this._onResizeMouseUp = (event) => {
-      document.removeEventListener('mousemove', this._onResizeMouseMove);
-      document.removeEventListener('mouseup', this._onResizeMouseUp);
-      this.initialMousePosition = null;
-      this.initialShapeProps = null;
-      this.resizeDirection = null;
-      if (this.dragging) {
-        this.onChange();
-        this.dragging = false;
-      }
-    };
-  },
-  components: {
-    EditorCanvas,
-    ShapeOverlays,
-    ShapeResizeHandles,
-  },
-  methods: {
-    dragNewShape(diff) {
-      const roundedDiff = {
-        left: Math.round(diff.left),
-        top: Math.round(diff.top),
-      };
-      const x =
-        0 <= roundedDiff.left
-          ? this.initialNewShapePosition.left
-          : this.initialNewShapePosition.left + roundedDiff.left;
-      const width = Math.abs(roundedDiff.left);
-      const y =
-        0 <= roundedDiff.top
-          ? this.initialNewShapePosition.top
-          : this.initialNewShapePosition.top + roundedDiff.top;
-      const height = Math.abs(roundedDiff.top);
-      store.dispatch("updateShape", {
-        shape: store.getters.shapeToBeAdded,
-        width: { value: width },
-        height: { value: height },
-        top: { value: y },
-        left: { value: x },
-        round: true,
-      });
-    },
-    initDrag({ event }) {
-      this.shapesBeingMoved = {};
-      for (const shape of store.getters.selectedShapes) {
-        this.shapesBeingMoved[shape.id] = deepCopy(shape);
-      }
-      this.updateCanvasPosition();
-      this.initialMousePosition = this.transformCoords({
-        x: event.x,
-        y: event.y,
-      });
-    },
-    moveShapes(diff) {
-      const selectedShapes = store.getters.selectedShapes;
-      if (selectedShapes.length === 1) {
-        const newPosition = {
-          left: this.initialShapeProps.left.value + diff.left,
-          top: this.initialShapeProps.top.value + diff.top,
-        };
-        store.dispatch("moveShape", {
-          shape: selectedShapes[0],
-          left: { value: newPosition.left, units: "px" },
-          top: { value: newPosition.top, units: "px" },
-        });
-      } else {
-        for (const shape of store.getters.selectedShapes) {
-          const initialShapeProps = this.shapesBeingMoved[shape.id];
-          store.dispatch("moveShape", {
-            shape,
-            left: {
-              value: initialShapeProps.left.value + diff.left,
-              units: "px",
-            },
-            top: { value: initialShapeProps.top.value + diff.top, units: "px" },
-          });
-        }
-      }
-    },
-    onChange() {
-      store.dispatch("setCurrentSnaps");
-      store.dispatch("commitChange");
-    },
-    onDrag(event) {
-      if (!this.initialMousePosition) {
-        this.updateViewport();
-        return;
-      }
-      event.stopPropagation();
-      this.dragging = true;
-      const { x, y } = this.transformCoords({ x: event.x, y: event.y });
-      const diff = {
-        left: x - this.initialMousePosition.x,
-        top: y - this.initialMousePosition.y,
-      };
-      if (this.addingShape) {
-        this.dragNewShape(diff);
-      } else if (this.resizeDirection) {
-        this.resizeShape(diff);
-      } else if (this.shapesBeingMoved) {
-        this.moveShapes(diff);
-      }
-    },
-    onMouseDown(event) {
-      this.$refs.focus.focus();
-      if (this.addingShape) {
-        event.stopPropagation();
-        this.updateCanvasPosition();
-        this.initialMousePosition = this.transformCoords({
-          x: event.x,
-          y: event.y,
-        });
-        this.initialNewShapePosition = {
-          left:
-            (event.x - this.canvasPosition.x) / this.viewportTransform.scale,
-          top: (event.y - this.canvasPosition.y) / this.viewportTransform.scale,
-        };
-        this.shapeBeingAdded = {
-          ...store.getters.shapeToBeAdded,
-          width: {
-            units: "px",
-            value: 0,
-          },
-          height: {
-            units: "px",
-            value: 0,
-          },
-          left: {
-            units: "px",
-            value: this.initialNewShapePosition.left,
-          },
-          top: {
-            units: "px",
-            value: this.initialNewShapePosition.top,
-          },
-        };
-        store.dispatch("setShapeToBeAdded", this.shapeBeingAdded);
-      } else {
-        store.dispatch("unselectShape");
-      }
-    },
-    onMouseUp(event) {
-      event.stopPropagation();
-      this.initialMousePosition = null;
-      this.initialShapeProps = null;
-      this.resizeDirection = null;
-      this.shapesBeingMoved = null;
-      if (this.addingShape) {
-        store
-          .dispatch("addShape", {
-            layerName: store.getters.selectedLayer,
-            shape: store.getters.shapeToBeAdded,
-          })
-          .then((newShape) => {
-            store
-              .dispatch("selectShape", { shape: newShape })
-              .then(() => store.dispatch("generateSnapPoints"));
-          });
-        this.shapeBeingAdded = null;
-      }
-      if (this.dragging) {
-        this.onChange();
-        this.dragging = false;
-      }
-    },
-    onResizeHandleMouseDown(direction, event) {
-      event.stopPropagation();
-      const shape = store.getters.selectedShape;
-      if (!shape) {
-        return;
-      }
-      this.resizeDirection = direction;
-      this.updateCanvasPosition();
-      this.initialMousePosition = this.transformCoords({
-        x: event.x,
-        y: event.y,
-      });
-      this.initialShapeProps = {
-        left: { ...shape.left },
-        top: { ...shape.top },
-        width: { ...shape.width },
-        height: { ...shape.height },
-      };
-      // Attach document-level listeners so resize works across Firefox's pointer capture boundary
-      document.addEventListener('mousemove', this._onResizeMouseMove);
-      document.addEventListener('mouseup', this._onResizeMouseUp);
-    },
-    onShapeMouseDown(shape, event) {
-      if (this.addingShape) {
-        return;
-      }
-      event.stopPropagation();
-      this.initDrag({ event });
-      this.initialShapeProps = {
-        left: { ...shape.left },
-        top: { ...shape.top },
-        width: { ...shape.width },
-        height: { ...shape.height },
-      };
-      if (!this.selectingMultipleShapes) {
-        store
-          .dispatch("selectShape", { shape })
-          .then(() => store.dispatch("generateSnapPoints"));
-      }
-    },
-    onShapeMouseUp(shape, event) {
-      if (this.addingShape) {
-        return;
-      }
-      event.stopPropagation();
-      this.initialMousePosition = null;
-      this.initialShapeProps = null;
-      this.resizeDirection = null;
-      this.shapesBeingMoved = null;
-      if (this.dragging) {
-        this.onChange();
-        this.dragging = false;
-      } else if (this.selectingMultipleShapes) {
-        store
-          .dispatch("selectShape", {
-            shape,
-            keepSelection: store.getters.isKeyPressed("Shift"),
-          })
-          .then(() => store.dispatch("generateSnapPoints"));
-      }
-    },
-    resetZoom() {
-      this.$refs.pinchZoom.setTransform({ scale: 1, x: 0, y: 0 });
-      this.updateViewport();
-    },
-    resizeShape(diff) {
-      store.dispatch("resizeShape", {
-        diff,
-        direction: this.resizeDirection,
-        initialShapeProps: this.initialShapeProps,
-        shape: store.getters.selectedShape,
-      });
-    },
-    preventZoom(event) {
-      event.stopPropagation();
-    },
-    transformCoords({ x, y }) {
-      return transformCoords({
-        x,
-        y,
-        viewportTransform: this.viewportTransform,
-      });
-    },
-    updateCanvasPosition() {
-      const canvasRect = this.$refs.canvas.getBoundingClientRect();
-      this.canvasPosition = { x: canvasRect.left, y: canvasRect.top };
-    },
-    updateViewport() {
-      // Use setTimeout to let the pinch-zoom web component render first,
-      // so that we can access its updated properties.
-      setTimeout(() => {
-        this.updateCanvasPosition();
-        this.viewportTransform = {
-          x: this.$refs.pinchZoom.x,
-          y: this.$refs.pinchZoom.y,
-          scale: this.$refs.pinchZoom.scale,
-        };
-      }, 0);
-    },
-  },
-  mounted() {
-    this.$refs.pinchZoom.addEventListener("wheel", this.updateViewport, {
-      passive: true,
-    });
-    this.$refs.pinchZoom.addEventListener("pointermove", this.updateViewport);
-    this.updateCanvasPosition();
-  },
-  beforeDestroy() {
-    document.removeEventListener('mousemove', this._onResizeMouseMove);
-    document.removeEventListener('mouseup', this._onResizeMouseUp);
-    this.$refs.pinchZoom.removeEventListener("wheel", this.updateViewport);
-    this.$refs.pinchZoom.removeEventListener(
-      "pointermove",
-      this.updateViewport
-    );
-    store.dispatch("unselectShape");
-  },
-  computed: {
-    addingShape() {
-      return !!store.getters.shapeToBeAdded;
-    },
-    projectId() {
-      return store.getters.currentProject.id;
-    },
-    selectedShape() {
-      return store.getters.selectedShape;
-    },
-    selectedShapes() {
-      return store.getters.selectedShapes;
-    },
-    selectingMultipleShapes() {
-      const selectMultiple = store.getters.isKeyPressed("Shift");
-      return selectMultiple || 1 < store.getters.selectedShapes.length;
-    },
-    shapes() {
-      return store.getters.shapes;
-    },
-    shapesLayers() {
-      return store.getters.allLayers;
-    },
-    zoomLevel() {
-      return this.viewportTransform.scale;
-    },
-    zoomLevelPercentage() {
-      return decimals(this.zoomLevel * 100, 0);
-    },
-  },
+
+// --- Template refs ---
+const workspace = ref<HTMLDivElement | null>(null);
+const focus = ref<HTMLInputElement | null>(null);
+const pinchZoom = ref<any>(null);
+const pinchZoomInner = ref<HTMLDivElement | null>(null);
+const canvas = ref<HTMLDivElement | null>(null);
+
+// --- Reactive state ---
+const canvasPosition = ref<{ x: number; y: number } | null>(null);
+const currentAction = ref<any>(null);
+const dragging = ref(false);
+const initialNewShapePosition = ref<{ left: number; top: number } | null>(null);
+const initialShapeProps = ref<any>(null);
+const initialMousePosition = ref<{ x: number; y: number } | null>(null);
+const initialPointerPosition = ref<any>(null);
+const resizeDirection = ref<any>(null);
+const shapeBeingAdded = ref<any>(null);
+const shapesBeingMoved = ref<Record<string, any> | null>(null);
+const viewportTransform = ref({ x: 0, y: 0, scale: 1 });
+
+// --- Computed ---
+const addingShape = computed(() => !!store.getters.shapeToBeAdded);
+const projectId = computed(() => store.getters.currentProject.id);
+const selectedShape = computed(() => store.getters.selectedShape);
+const selectedShapes = computed(() => store.getters.selectedShapes);
+const selectingMultipleShapes = computed(() => {
+  const selectMultiple = store.getters.isKeyPressed("Shift");
+  return selectMultiple || 1 < store.getters.selectedShapes.length;
+});
+const shapes = computed(() => store.getters.shapes);
+const shapesLayers = computed(() => store.getters.allLayers);
+const zoomLevel = computed(() => viewportTransform.value.scale);
+const zoomLevelPercentage = computed(() => decimals(zoomLevel.value * 100, 0));
+
+// --- Stable resize event handlers (top-level consts — same reference across add/remove) ---
+const _onResizeMouseMove = (event: MouseEvent) => {
+  if (!initialMousePosition.value || !resizeDirection.value) return;
+  dragging.value = true;
+  const { x, y } = transformCoords({ x: event.x, y: event.y });
+  const diff = {
+    left: x - initialMousePosition.value.x,
+    top: y - initialMousePosition.value.y,
+  };
+  resizeShape(diff);
 };
 
-function decimals(n, desiredDecimals) {
+const _onResizeMouseUp = (_event: MouseEvent) => {
+  document.removeEventListener("mousemove", _onResizeMouseMove);
+  document.removeEventListener("mouseup", _onResizeMouseUp);
+  initialMousePosition.value = null;
+  initialShapeProps.value = null;
+  resizeDirection.value = null;
+  if (dragging.value) {
+    onChange();
+    dragging.value = false;
+  }
+};
+
+// --- Methods ---
+function dragNewShape(diff: { left: number; top: number }) {
+  const roundedDiff = {
+    left: Math.round(diff.left),
+    top: Math.round(diff.top),
+  };
+  const x =
+    0 <= roundedDiff.left
+      ? initialNewShapePosition.value!.left
+      : initialNewShapePosition.value!.left + roundedDiff.left;
+  const width = Math.abs(roundedDiff.left);
+  const y =
+    0 <= roundedDiff.top
+      ? initialNewShapePosition.value!.top
+      : initialNewShapePosition.value!.top + roundedDiff.top;
+  const height = Math.abs(roundedDiff.top);
+  store.dispatch("updateShape", {
+    shape: store.getters.shapeToBeAdded,
+    width: { value: width },
+    height: { value: height },
+    top: { value: y },
+    left: { value: x },
+    round: true,
+  });
+}
+
+function initDrag({ event }: { event: MouseEvent }) {
+  shapesBeingMoved.value = {};
+  for (const shape of store.getters.selectedShapes) {
+    shapesBeingMoved.value[shape.id] = deepCopy(shape);
+  }
+  updateCanvasPosition();
+  initialMousePosition.value = transformCoords({ x: event.x, y: event.y });
+}
+
+function moveShapes(diff: { left: number; top: number }) {
+  const selectedShapes = store.getters.selectedShapes;
+  if (selectedShapes.length === 1) {
+    const newPosition = {
+      left: initialShapeProps.value.left.value + diff.left,
+      top: initialShapeProps.value.top.value + diff.top,
+    };
+    store.dispatch("moveShape", {
+      shape: selectedShapes[0],
+      left: { value: newPosition.left, units: "px" },
+      top: { value: newPosition.top, units: "px" },
+    });
+  } else {
+    for (const shape of store.getters.selectedShapes) {
+      const initialProps = shapesBeingMoved.value![shape.id];
+      store.dispatch("moveShape", {
+        shape,
+        left: {
+          value: initialProps.left.value + diff.left,
+          units: "px",
+        },
+        top: { value: initialProps.top.value + diff.top, units: "px" },
+      });
+    }
+  }
+}
+
+function onChange() {
+  store.dispatch("setCurrentSnaps");
+  store.dispatch("commitChange");
+}
+
+function onDrag(event: MouseEvent) {
+  if (!initialMousePosition.value) {
+    updateViewport();
+    return;
+  }
+  event.stopPropagation();
+  dragging.value = true;
+  const { x, y } = transformCoords({ x: event.x, y: event.y });
+  const diff = {
+    left: x - initialMousePosition.value.x,
+    top: y - initialMousePosition.value.y,
+  };
+  if (addingShape.value) {
+    dragNewShape(diff);
+  } else if (resizeDirection.value) {
+    resizeShape(diff);
+  } else if (shapesBeingMoved.value) {
+    moveShapes(diff);
+  }
+}
+
+function onMouseDown(event: MouseEvent) {
+  focus.value!.focus();
+  if (addingShape.value) {
+    event.stopPropagation();
+    updateCanvasPosition();
+    initialMousePosition.value = transformCoords({ x: event.x, y: event.y });
+    initialNewShapePosition.value = {
+      left:
+        (event.x - canvasPosition.value!.x) / viewportTransform.value.scale,
+      top: (event.y - canvasPosition.value!.y) / viewportTransform.value.scale,
+    };
+    shapeBeingAdded.value = {
+      ...store.getters.shapeToBeAdded,
+      width: {
+        units: "px",
+        value: 0,
+      },
+      height: {
+        units: "px",
+        value: 0,
+      },
+      left: {
+        units: "px",
+        value: initialNewShapePosition.value.left,
+      },
+      top: {
+        units: "px",
+        value: initialNewShapePosition.value.top,
+      },
+    };
+    store.dispatch("setShapeToBeAdded", shapeBeingAdded.value);
+  } else {
+    store.dispatch("unselectShape");
+  }
+}
+
+function onMouseUp(event: MouseEvent) {
+  event.stopPropagation();
+  initialMousePosition.value = null;
+  initialShapeProps.value = null;
+  resizeDirection.value = null;
+  shapesBeingMoved.value = null;
+  if (addingShape.value) {
+    store
+      .dispatch("addShape", {
+        layerName: store.getters.selectedLayer,
+        shape: store.getters.shapeToBeAdded,
+      })
+      .then((newShape: any) => {
+        store
+          .dispatch("selectShape", { shape: newShape })
+          .then(() => store.dispatch("generateSnapPoints"));
+      });
+    shapeBeingAdded.value = null;
+  }
+  if (dragging.value) {
+    onChange();
+    dragging.value = false;
+  }
+}
+
+function onResizeHandleMouseDown(direction: any, event: MouseEvent) {
+  event.stopPropagation();
+  const shape = store.getters.selectedShape;
+  if (!shape) {
+    return;
+  }
+  resizeDirection.value = direction;
+  updateCanvasPosition();
+  initialMousePosition.value = transformCoords({ x: event.x, y: event.y });
+  initialShapeProps.value = {
+    left: { ...shape.left },
+    top: { ...shape.top },
+    width: { ...shape.width },
+    height: { ...shape.height },
+  };
+  // Attach document-level listeners so resize works across Firefox's pointer capture boundary
+  document.addEventListener("mousemove", _onResizeMouseMove);
+  document.addEventListener("mouseup", _onResizeMouseUp);
+}
+
+function onShapeMouseDown(shape: any, event: MouseEvent) {
+  if (addingShape.value) {
+    return;
+  }
+  event.stopPropagation();
+  initDrag({ event });
+  initialShapeProps.value = {
+    left: { ...shape.left },
+    top: { ...shape.top },
+    width: { ...shape.width },
+    height: { ...shape.height },
+  };
+  if (!selectingMultipleShapes.value) {
+    store
+      .dispatch("selectShape", { shape })
+      .then(() => store.dispatch("generateSnapPoints"));
+  }
+}
+
+function onShapeMouseUp(shape: any, event: MouseEvent) {
+  if (addingShape.value) {
+    return;
+  }
+  event.stopPropagation();
+  initialMousePosition.value = null;
+  initialShapeProps.value = null;
+  resizeDirection.value = null;
+  shapesBeingMoved.value = null;
+  if (dragging.value) {
+    onChange();
+    dragging.value = false;
+  } else if (selectingMultipleShapes.value) {
+    store
+      .dispatch("selectShape", {
+        shape,
+        keepSelection: store.getters.isKeyPressed("Shift"),
+      })
+      .then(() => store.dispatch("generateSnapPoints"));
+  }
+}
+
+function resetZoom() {
+  pinchZoom.value.setTransform({ scale: 1, x: 0, y: 0 });
+  updateViewport();
+}
+
+function resizeShape(diff: { left: number; top: number }) {
+  store.dispatch("resizeShape", {
+    diff,
+    direction: resizeDirection.value,
+    initialShapeProps: initialShapeProps.value,
+    shape: store.getters.selectedShape,
+  });
+}
+
+function preventZoom(event: Event) {
+  event.stopPropagation();
+}
+
+function transformCoords({ x, y }: { x: number; y: number }) {
+  return transformCoordsUtil({
+    x,
+    y,
+    viewportTransform: viewportTransform.value,
+  });
+}
+
+function updateCanvasPosition() {
+  const canvasRect = canvas.value!.getBoundingClientRect();
+  canvasPosition.value = { x: canvasRect.left, y: canvasRect.top };
+}
+
+function updateViewport() {
+  // Use setTimeout to let the pinch-zoom web component render first,
+  // so that we can access its updated properties.
+  setTimeout(() => {
+    updateCanvasPosition();
+    viewportTransform.value = {
+      x: pinchZoom.value.x,
+      y: pinchZoom.value.y,
+      scale: pinchZoom.value.scale,
+    };
+  }, 0);
+}
+
+// --- Lifecycle ---
+onMounted(() => {
+  pinchZoom.value.addEventListener("wheel", updateViewport, { passive: true });
+  pinchZoom.value.addEventListener("pointermove", updateViewport);
+  updateCanvasPosition();
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("mousemove", _onResizeMouseMove);
+  document.removeEventListener("mouseup", _onResizeMouseUp);
+  pinchZoom.value.removeEventListener("wheel", updateViewport);
+  pinchZoom.value.removeEventListener("pointermove", updateViewport);
+  store.dispatch("unselectShape");
+});
+</script>
+
+<script lang="ts">
+function decimals(n: number, desiredDecimals: number): string | number {
   if (!desiredDecimals) {
     return Math.round(n);
   }
