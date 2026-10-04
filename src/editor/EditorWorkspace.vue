@@ -61,27 +61,25 @@ import ShapeOverlays from "./ShapeOverlays.vue";
 import ShapeResizeHandles from "./ShapeResizeHandles.vue";
 import "pinch-zoom-element";
 
-// --- Template refs ---
+// Template refs
 const workspace = ref<HTMLDivElement | null>(null);
 const focus = ref<HTMLInputElement | null>(null);
 const pinchZoom = ref<any>(null);
 const pinchZoomInner = ref<HTMLDivElement | null>(null);
 const canvas = ref<HTMLDivElement | null>(null);
 
-// --- Reactive state ---
+// Reactive state
 const canvasPosition = ref<{ x: number; y: number } | null>(null);
-const currentAction = ref<any>(null);
 const dragging = ref(false);
 const initialNewShapePosition = ref<{ left: number; top: number } | null>(null);
 const initialShapeProps = ref<any>(null);
 const initialMousePosition = ref<{ x: number; y: number } | null>(null);
-const initialPointerPosition = ref<any>(null);
 const resizeDirection = ref<any>(null);
 const shapeBeingAdded = ref<any>(null);
 const shapesBeingMoved = ref<Record<string, any> | null>(null);
 const viewportTransform = ref({ x: 0, y: 0, scale: 1 });
 
-// --- Computed ---
+// Computed
 const addingShape = computed(() => !!store.getters.shapeToBeAdded);
 const projectId = computed(() => store.getters.currentProject.id);
 const selectedShape = computed(() => store.getters.selectedShape);
@@ -90,13 +88,12 @@ const selectingMultipleShapes = computed(() => {
   const selectMultiple = store.getters.isKeyPressed("Shift");
   return selectMultiple || 1 < store.getters.selectedShapes.length;
 });
-const shapes = computed(() => store.getters.shapes);
 const shapesLayers = computed(() => store.getters.allLayers);
 const zoomLevel = computed(() => viewportTransform.value.scale);
 const zoomLevelPercentage = computed(() => decimals(zoomLevel.value * 100, 0));
 
-// --- Stable resize event handlers (top-level consts — same reference across add/remove) ---
-const _onResizeMouseMove = (event: MouseEvent) => {
+// Stable resize event handlers — top-level consts so the same reference is used across add/remove
+const onResizeMouseMove = (event: MouseEvent) => {
   if (!initialMousePosition.value || !resizeDirection.value) return;
   dragging.value = true;
   const { x, y } = transformCoords({ x: event.x, y: event.y });
@@ -107,9 +104,9 @@ const _onResizeMouseMove = (event: MouseEvent) => {
   resizeShape(diff);
 };
 
-const _onResizeMouseUp = (_event: MouseEvent) => {
-  document.removeEventListener("mousemove", _onResizeMouseMove);
-  document.removeEventListener("mouseup", _onResizeMouseUp);
+const onResizeMouseUp = (_event: MouseEvent) => {
+  document.removeEventListener("mousemove", onResizeMouseMove);
+  document.removeEventListener("mouseup", onResizeMouseUp);
   initialMousePosition.value = null;
   initialShapeProps.value = null;
   resizeDirection.value = null;
@@ -119,7 +116,7 @@ const _onResizeMouseUp = (_event: MouseEvent) => {
   }
 };
 
-// --- Methods ---
+// Methods
 function dragNewShape(diff: { left: number; top: number }) {
   const roundedDiff = {
     left: Math.round(diff.left),
@@ -284,8 +281,8 @@ function onResizeHandleMouseDown(direction: any, event: MouseEvent) {
     height: { ...shape.height },
   };
   // Attach document-level listeners so resize works across Firefox's pointer capture boundary
-  document.addEventListener("mousemove", _onResizeMouseMove);
-  document.addEventListener("mouseup", _onResizeMouseUp);
+  document.addEventListener("mousemove", onResizeMouseMove);
+  document.addEventListener("mouseup", onResizeMouseUp);
 }
 
 function onShapeMouseDown(shape: any, event: MouseEvent) {
@@ -373,7 +370,7 @@ function updateViewport() {
   }, 0);
 }
 
-// --- Lifecycle ---
+// Lifecycle
 onMounted(() => {
   pinchZoom.value.addEventListener("wheel", updateViewport, { passive: true });
   pinchZoom.value.addEventListener("pointermove", updateViewport);
@@ -381,8 +378,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener("mousemove", _onResizeMouseMove);
-  document.removeEventListener("mouseup", _onResizeMouseUp);
+  document.removeEventListener("mousemove", onResizeMouseMove);
+  document.removeEventListener("mouseup", onResizeMouseUp);
   pinchZoom.value.removeEventListener("wheel", updateViewport);
   pinchZoom.value.removeEventListener("pointermove", updateViewport);
   store.dispatch("unselectShape");
